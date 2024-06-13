@@ -10,9 +10,16 @@
 		B85C86CB2C1AD61B00143CC7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C86CA2C1AD61B00143CC7 /* AppDelegate.swift */; };
 		B85C86CD2C1AD61B00143CC7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C86CC2C1AD61B00143CC7 /* SceneDelegate.swift */; };
 		B85C86CF2C1AD61B00143CC7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C86CE2C1AD61B00143CC7 /* ViewController.swift */; };
-		B85C86D22C1AD61B00143CC7 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = B85C86D12C1AD61B00143CC7 /* Base */; };
 		B85C86D42C1AD61C00143CC7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B85C86D32C1AD61C00143CC7 /* Assets.xcassets */; };
 		B85C86D72C1AD61C00143CC7 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = B85C86D62C1AD61C00143CC7 /* Base */; };
+		B85C86DF2C1AD6CA00143CC7 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B85C86DE2C1AD6CA00143CC7 /* .gitignore */; };
+		B85C86E12C1AD6D800143CC7 /* APIInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C86E02C1AD6D800143CC7 /* APIInfo.swift */; };
+		B85C86E62C1AD7A400143CC7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = B85C86E52C1AD7A400143CC7 /* Alamofire */; };
+		B85C86E92C1AD7B300143CC7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B85C86E82C1AD7B300143CC7 /* Kingfisher */; };
+		B85C86EC2C1AD7BC00143CC7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B85C86EB2C1AD7BC00143CC7 /* SnapKit */; };
+		B85C86EF2C1AD7C300143CC7 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B85C86EE2C1AD7C300143CC7 /* IQKeyboardManagerSwift */; };
+		B85C86F22C1AD7CB00143CC7 /* SwiftyUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = B85C86F12C1AD7CB00143CC7 /* SwiftyUserDefaults */; };
+		B85C86F52C1AD7D500143CC7 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = B85C86F42C1AD7D500143CC7 /* Toast */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +27,11 @@
 		B85C86CA2C1AD61B00143CC7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B85C86CC2C1AD61B00143CC7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B85C86CE2C1AD61B00143CC7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B85C86D12C1AD61B00143CC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B85C86D32C1AD61C00143CC7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B85C86D62C1AD61C00143CC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B85C86D82C1AD61C00143CC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B85C86DE2C1AD6CA00143CC7 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		B85C86E02C1AD6D800143CC7 /* APIInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +39,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B85C86F52C1AD7D500143CC7 /* Toast in Frameworks */,
+				B85C86EC2C1AD7BC00143CC7 /* SnapKit in Frameworks */,
+				B85C86EF2C1AD7C300143CC7 /* IQKeyboardManagerSwift in Frameworks */,
+				B85C86E92C1AD7B300143CC7 /* Kingfisher in Frameworks */,
+				B85C86F22C1AD7CB00143CC7 /* SwiftyUserDefaults in Frameworks */,
+				B85C86E62C1AD7A400143CC7 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +54,7 @@
 		B85C86BE2C1AD61B00143CC7 = {
 			isa = PBXGroup;
 			children = (
+				B85C86DE2C1AD6CA00143CC7 /* .gitignore */,
 				B85C86C92C1AD61B00143CC7 /* MeaningOutApp */,
 				B85C86C82C1AD61B00143CC7 /* Products */,
 			);
@@ -56,15 +71,31 @@
 		B85C86C92C1AD61B00143CC7 /* MeaningOutApp */ = {
 			isa = PBXGroup;
 			children = (
-				B85C86CA2C1AD61B00143CC7 /* AppDelegate.swift */,
-				B85C86CC2C1AD61B00143CC7 /* SceneDelegate.swift */,
+				B85C86E32C1AD6FD00143CC7 /* APIService */,
+				B85C86E22C1AD6ED00143CC7 /* App */,
 				B85C86CE2C1AD61B00143CC7 /* ViewController.swift */,
-				B85C86D02C1AD61B00143CC7 /* Main.storyboard */,
 				B85C86D32C1AD61C00143CC7 /* Assets.xcassets */,
 				B85C86D52C1AD61C00143CC7 /* LaunchScreen.storyboard */,
 				B85C86D82C1AD61C00143CC7 /* Info.plist */,
 			);
 			path = MeaningOutApp;
+			sourceTree = "<group>";
+		};
+		B85C86E22C1AD6ED00143CC7 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B85C86CA2C1AD61B00143CC7 /* AppDelegate.swift */,
+				B85C86CC2C1AD61B00143CC7 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		B85C86E32C1AD6FD00143CC7 /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				B85C86E02C1AD6D800143CC7 /* APIInfo.swift */,
+			);
+			path = APIService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +114,14 @@
 			dependencies = (
 			);
 			name = MeaningOutApp;
+			packageProductDependencies = (
+				B85C86E52C1AD7A400143CC7 /* Alamofire */,
+				B85C86E82C1AD7B300143CC7 /* Kingfisher */,
+				B85C86EB2C1AD7BC00143CC7 /* SnapKit */,
+				B85C86EE2C1AD7C300143CC7 /* IQKeyboardManagerSwift */,
+				B85C86F12C1AD7CB00143CC7 /* SwiftyUserDefaults */,
+				B85C86F42C1AD7D500143CC7 /* Toast */,
+			);
 			productName = MeaningOutApp;
 			productReference = B85C86C72C1AD61B00143CC7 /* MeaningOutApp.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +150,14 @@
 				Base,
 			);
 			mainGroup = B85C86BE2C1AD61B00143CC7;
+			packageReferences = (
+				B85C86E42C1AD7A400143CC7 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				B85C86E72C1AD7B300143CC7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				B85C86EA2C1AD7BC00143CC7 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				B85C86ED2C1AD7C300143CC7 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				B85C86F02C1AD7CB00143CC7 /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */,
+				B85C86F32C1AD7D500143CC7 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+			);
 			productRefGroup = B85C86C82C1AD61B00143CC7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -126,8 +173,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B85C86D42C1AD61C00143CC7 /* Assets.xcassets in Resources */,
+				B85C86DF2C1AD6CA00143CC7 /* .gitignore in Resources */,
 				B85C86D72C1AD61C00143CC7 /* Base in Resources */,
-				B85C86D22C1AD61B00143CC7 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +187,7 @@
 			files = (
 				B85C86CF2C1AD61B00143CC7 /* ViewController.swift in Sources */,
 				B85C86CB2C1AD61B00143CC7 /* AppDelegate.swift in Sources */,
+				B85C86E12C1AD6D800143CC7 /* APIInfo.swift in Sources */,
 				B85C86CD2C1AD61B00143CC7 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,14 +195,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B85C86D02C1AD61B00143CC7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B85C86D12C1AD61B00143CC7 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B85C86D52C1AD61C00143CC7 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -218,7 +258,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -275,7 +315,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -297,9 +337,8 @@
 				INFOPLIST_FILE = MeaningOutApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,9 +346,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yeji.MeaningOutApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -325,9 +368,8 @@
 				INFOPLIST_FILE = MeaningOutApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -335,9 +377,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yeji.MeaningOutApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -363,6 +409,90 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B85C86E42C1AD7A400143CC7 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+		B85C86E72C1AD7B300143CC7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
+		B85C86EA2C1AD7BC00143CC7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		B85C86ED2C1AD7C300143CC7 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.3;
+			};
+		};
+		B85C86F02C1AD7CB00143CC7 /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sunshinejr/SwiftyUserDefaults.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.3.0;
+			};
+		};
+		B85C86F32C1AD7D500143CC7 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B85C86E52C1AD7A400143CC7 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B85C86E42C1AD7A400143CC7 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		B85C86E82C1AD7B300143CC7 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B85C86E72C1AD7B300143CC7 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		B85C86EB2C1AD7BC00143CC7 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B85C86EA2C1AD7BC00143CC7 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		B85C86EE2C1AD7C300143CC7 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B85C86ED2C1AD7C300143CC7 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+		B85C86F12C1AD7CB00143CC7 /* SwiftyUserDefaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B85C86F02C1AD7CB00143CC7 /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */;
+			productName = SwiftyUserDefaults;
+		};
+		B85C86F42C1AD7D500143CC7 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B85C86F32C1AD7D500143CC7 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B85C86BF2C1AD61B00143CC7 /* Project object */;
 }
