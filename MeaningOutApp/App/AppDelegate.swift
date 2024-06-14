@@ -6,14 +6,21 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        IQKeyboardManager.shared.enable = true
+        //IQKeyboardManager.shared.enableAutoToolbar = false
+        IQKeyboardManager.shared.resignOnTouchOutside = true
+        
+        IQKeyboardManager.shared.toolbarConfiguration.tintColor = Color.primaryOrange
+        IQKeyboardManager.shared.toolbarConfiguration.barTintColor = Color.white
+        //IQKeyboardManager.shared.toolbarConfiguration.previousNextDisplayMode = .alwaysHide
         return true
     }
 
