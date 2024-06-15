@@ -19,6 +19,7 @@ enum Localized {
     case profile_tab_title
     case tabbar_search
     case tabbar_setting
+    case result_count_text(count: Int)
     
     var text: String {
         switch self {
@@ -34,6 +35,8 @@ enum Localized {
             return "브랜드, 상품 등을 입력하세요"
         case .empty:
             return "최근 검색어가 없어요"
+        case .result_count_text(let count):
+            return "\(count.formatted())개의 검색결과"
         default:
             return ""
         }
