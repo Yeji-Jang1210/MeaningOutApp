@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Alamofire
+import SwiftyUserDefaults
 import Toast
 
 class MeaningOutListViewController: BaseVC {
@@ -35,9 +36,21 @@ class MeaningOutListViewController: BaseVC {
     var text: String = ""
     var filter: FilterType = .similarity {
         didSet {
-            let param = APIParameters(query: text, sort: filter)
+            let param = APIParameters(query: text, sort: filter, start: start)
+            start = 1
             callAPI(param)
         }
+    }
+    
+    var start = 1
+    var isEnd: Bool {
+        if let total = content?.total {
+            print(total)
+            if start > total - 30 || start > 1000 {
+                return true
+            }
+        }
+        return false
     }
     
     //MARK: - life cycle
@@ -87,7 +100,7 @@ class MeaningOutListViewController: BaseVC {
     private func configureCollectionView(){
         collectionView.delegate = self
         collectionView.dataSource = self
-        //collectionView.prefetchDataSource = self
+        collectionView.prefetchDataSource = self
         collectionView.keyboardDismissMode = .onDrag
         collectionView.register(MeaningOutListHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MeaningOutListHeaderView.identifier)
         collectionView.register(MeaningOutItemCell.self, forCellWithReuseIdentifier: MeaningOutItemCell.identifier)
@@ -105,9 +118,20 @@ class MeaningOutListViewController: BaseVC {
         APIService.networking(params: param) { networkResult in
             switch networkResult {
             case .success(let data):
-                self.content = data
+                print(data.start)
+                if self.start == 1 {
+                    self.content = data
+                } else {
+                    self.content?.items.append(contentsOf: data.items)
+                    
+                }
+                print(data.items.map{$0.productId})
                 self.header.resultCountLabel.text = Localized.result_count_text(count: data.total).text
                 self.collectionView.reloadData()
+                
+                if self.start == 1 {
+                    self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
             case .error(let error):
                 print(error)
             }
@@ -123,6 +147,23 @@ class MeaningOutListViewController: BaseVC {
             }
         }
         filter = FilterType(rawValue: sender.tag)!
+    }
+    
+    @objc func likeButtonTapped(_ sender: UIButton){
+        print(Defaults.cartList)
+        
+        sender.isSelected.toggle()
+        guard let productId = content?.items[sender.tag].productId else { return }
+
+        if sender.isSelected {
+            print("append")
+            Defaults.cartList.append(productId)
+        } else {
+            print("delete")
+            Defaults.cartList.removeAll { $0 == productId }
+        }
+        
+        print("tag:\(sender.tag), id: \(content!.items[sender.tag].productId)")
     }
 }
 
@@ -143,12 +184,31 @@ extension MeaningOutListViewController: UICollectionViewDelegate, UICollectionVi
         if let item = self.content?.items[indexPath.row] {
             cell.setData(item)
         }
+        
+        cell.cartButton.tag = indexPath.row
+        cell.cartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let item = content?.items[indexPath.row] {
+            let vc = DetailViewController(title: item.removedHTMLTagTitle, isChild: true)
+            vc.url = item.link
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 
-//extension MeaningOutListViewController: UICollectionViewDataSourcePrefetching {
-//    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-//        <#code#>
-//    }
-//}
+extension MeaningOutListViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if let count = content?.items.count {
+                if count - 2 == indexPath.row && !isEnd {
+                    start += 30
+                    let params = APIParameters(query: text, sort: filter, start: start)
+                    callAPI(params)
+                }
+            }
+        }
+    }
+}

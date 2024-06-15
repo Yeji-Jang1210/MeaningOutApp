@@ -45,8 +45,8 @@ struct APIParameters {
     let query: String
     let sort: FilterType
     
-    //default: 1, max: 100
-    let start:Int = 1
+    //default: 1, max: 1000
+    let start: Int
     
     var encodedParameters: [String: Any] {
         return [

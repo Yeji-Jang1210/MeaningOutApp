@@ -11,7 +11,7 @@ struct ShoppingItemList: Codable {
     let total: Int
     let start: Int
     let display: Int
-    let items: [Item]
+    var items: [Item]
 }
 
 // MARK: - Item
@@ -20,6 +20,7 @@ struct Item: Codable {
     let link: String
     let image: String
     let lprice: String
+    let productId: String
     let mallName: String
     
     var removedHTMLTagTitle: String {

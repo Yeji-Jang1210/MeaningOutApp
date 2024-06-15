@@ -82,8 +82,6 @@ class SearchViewController: BaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        print(#function)
         reloadTableView()
     }
     //MARK: - configure function

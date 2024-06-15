@@ -13,4 +13,5 @@ extension DefaultsKeys {
     
     //Search Item name
     var currentSearchList: DefaultsKey<[String]>{ .init("currentSearchList", defaultValue: []) }
+    var cartList: DefaultsKey<[String]>{ .init("cartList", defaultValue: []) }
 }

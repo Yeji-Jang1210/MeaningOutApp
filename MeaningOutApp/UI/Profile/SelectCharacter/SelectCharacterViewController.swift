@@ -99,7 +99,6 @@ extension SelectCharacterViewController: UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(#function, "\(indexPath.row)")
         selectNumber = indexPath.row
     }
 }

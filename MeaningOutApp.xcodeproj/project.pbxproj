@@ -50,6 +50,7 @@
 		B85C874C2C1C3DF400143CC7 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C874B2C1C3DF400143CC7 /* String+Extension.swift */; };
 		B85C874E2C1D4C4000143CC7 /* MeaningOutListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C874D2C1D4C4000143CC7 /* MeaningOutListHeaderView.swift */; };
 		B85C87502C1D507A00143CC7 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C874F2C1D507A00143CC7 /* FilterButton.swift */; };
+		B85C87522C1D936200143CC7 /* CartList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C87512C1D936200143CC7 /* CartList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +93,7 @@
 		B85C874B2C1C3DF400143CC7 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		B85C874D2C1D4C4000143CC7 /* MeaningOutListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningOutListHeaderView.swift; sourceTree = "<group>"; };
 		B85C874F2C1D507A00143CC7 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
+		B85C87512C1D936200143CC7 /* CartList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +257,7 @@
 				B85C873E2C1BFB8F00143CC7 /* SearchResults.swift */,
 				B85C87442C1C33F700143CC7 /* ShoppingItemList.swift */,
 				B85C87482C1C3B1D00143CC7 /* APIParameters.swift */,
+				B85C87512C1D936200143CC7 /* CartList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				B85C87502C1D507A00143CC7 /* FilterButton.swift in Sources */,
 				B85C87262C1B2DF700143CC7 /* SelectCharacterViewController.swift in Sources */,
 				B85C87182C1AE3E800143CC7 /* BaseVC.swift in Sources */,
+				B85C87522C1D936200143CC7 /* CartList.swift in Sources */,
 				B85C874E2C1D4C4000143CC7 /* MeaningOutListHeaderView.swift in Sources */,
 				B85C871C2C1AEA3A00143CC7 /* Localized.swift in Sources */,
 				B85C86FA2C1ADB3800143CC7 /* Color.swift in Sources */,
@@ -539,6 +543,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -570,6 +575,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

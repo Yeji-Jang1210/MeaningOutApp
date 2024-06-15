@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SwiftyUserDefaults
 
 class MeaningOutItemCell: UICollectionViewCell {
     
@@ -65,6 +66,9 @@ class MeaningOutItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        cartButton.backgroundColor = cartButton.isSelected ? Color.white : Color.black.withAlphaComponent(0.5)
+    }
     //MARK: - configure function
     private func configureHierarchy(){
         addSubview(itemImageView)
@@ -118,5 +122,8 @@ class MeaningOutItemCell: UICollectionViewCell {
         mallLabel.text = data.mallName
         itemTitle.text = data.removedHTMLTagTitle
         priceLabel.text = data.priceStr
+        
+        
+        cartButton.isSelected = Defaults.cartList.contains(data.productId)
     }
 }

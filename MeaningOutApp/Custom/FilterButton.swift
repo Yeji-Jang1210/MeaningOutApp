@@ -11,7 +11,6 @@ import SnapKit
 class FilterButton: UIButton {
     override var isSelected: Bool {
         didSet {
-            print(isSelected)
             backgroundColor = isSelected ? Color.darkGray : Color.white
             setTitleColor(isSelected ? Color.white : Color.black, for: .normal)
             layer.borderWidth = 1

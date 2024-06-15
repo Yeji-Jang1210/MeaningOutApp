@@ -18,27 +18,39 @@ class DetailViewController: BaseVC {
     }()
     
     //MARK: - properties
+    var url: String = ""
     
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHierarchy()
         configureLayout()
-        configureUI()
+        
+        loadWebLink()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        webView.stopLoading()
+        webView.navigationDelegate = nil
+        webView.removeFromSuperview()
     }
     
     //MARK: - configure function
     private func configureHierarchy(){
-        
+        view.addSubview(webView)
     }
     
     private func configureLayout(){
-        
+        webView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     
-    private func configureUI(){
-        
-    }
     //MARK: - function
-    
+    private func loadWebLink(){
+        print(url)
+        guard let url = URL(string: url) else { return }
+        webView.load(URLRequest(url: url))
+    }
 }
