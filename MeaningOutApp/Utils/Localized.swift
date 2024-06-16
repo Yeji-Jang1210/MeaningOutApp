@@ -11,6 +11,7 @@ enum Localized {
     case title
     case profile_setting
     case profile_edit
+    case profile_edit_save_button
     case start
     case complete
     case nickname_placeholder
@@ -20,6 +21,8 @@ enum Localized {
     case tabbar_search
     case tabbar_setting
     case result_count_text(count: Int)
+    case deleteAccount_dlg
+    case search_tab_nav
     
     var text: String {
         switch self {
@@ -48,12 +51,45 @@ enum Localized {
             return "PROFILE SETTING"
         case .profile_edit:
             return "EDIT PROFILE"
+        case .profile_edit_save_button:
+            return "저장"
         case .profile_tab_title:
             return "SETTING"
         case .tabbar_search:
             return "검색"
+        case .search_tab_nav:
+            return "\(User.nickname)'s MEANING OUT"
         case .tabbar_setting:
             return "설정"
+        case .deleteAccount_dlg:
+            return "탈퇴하기"
+        default:
+            return ""
+        }
+    }
+    
+    var message: String {
+        switch self {
+        case .deleteAccount_dlg:
+            return "탈퇴를 하면 데이터가 모두 초기화됩니다.\n탈퇴 하시겠습니까?"
+        default:
+            return ""
+        }
+    }
+    
+    var confirm: String {
+        switch self {
+        case .deleteAccount_dlg:
+            return "확인"
+        default:
+            return ""
+        }
+    }
+    
+    var cancel: String {
+        switch self {
+        case .deleteAccount_dlg:
+            return "취소"
         default:
             return ""
         }

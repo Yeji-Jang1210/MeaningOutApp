@@ -9,13 +9,12 @@ import UIKit
 
 class BaseVC: UIViewController {
     
-    private var navTitle: String = ""
     private var isChild: Bool = false
     
     init(title: String = "", isChild: Bool = false){
         super.init(nibName: nil, bundle: nil)
         self.isChild = isChild
-        self.navTitle = title
+        self.navigationItem.title = title
     }
     
     required init?(coder: NSCoder) {
@@ -28,7 +27,6 @@ class BaseVC: UIViewController {
         view.backgroundColor = Color.white
         
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : Color.black, .font: UIFont.boldSystemFont(ofSize: 16)]
-        self.navigationItem.title = navTitle
         
         if isChild {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: ImageAssets.leftArrow.image, style: .done, target: self, action: #selector(dismissButtonTapped))

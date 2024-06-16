@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+protocol SendProfileImageId {
+    func dataSend(id: Int)
+}
+
 class SelectCharacterViewController: BaseVC {
     //MARK: - object
     let characterView: CharacterView = {
@@ -34,12 +38,18 @@ class SelectCharacterViewController: BaseVC {
         }
     }
     
+    var delegate: SendProfileImageId?
+    
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHierarchy()
         configureLayout()
         configureUI()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        delegate?.dataSend(id: selectNumber)
     }
     
     //MARK: - configure function

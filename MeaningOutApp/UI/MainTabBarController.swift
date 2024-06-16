@@ -35,9 +35,9 @@ class MainTabBarController: UITabBarController {
         var vc: UIViewController {
             switch self {
             case .search:
-                return UINavigationController(rootViewController: SearchViewController(title: Defaults.nickname))
+                return UINavigationController(rootViewController: SearchViewController())
             case .profile:
-                return UINavigationController(rootViewController: ProfileViewController(title: Localized.profile_tab_title.title))
+                return UINavigationController(rootViewController: SettingViewController(title: Localized.profile_tab_title.title))
             }
         }
     }

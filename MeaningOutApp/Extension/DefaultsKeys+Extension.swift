@@ -9,7 +9,10 @@ import UIKit
 import SwiftyUserDefaults
 
 extension DefaultsKeys {
+    //User
     var nickname: DefaultsKey<String>{.init("nickname", defaultValue: "")}
+    var signupDate: DefaultsKey<Date?>{.init("signupDate", defaultValue: nil)}
+    var profileImageId: DefaultsKey<Int?>{.init("profileImageId", defaultValue: nil)}
     
     //Search Item name
     var currentSearchList: DefaultsKey<[String]>{ .init("currentSearchList", defaultValue: []) }

@@ -9,7 +9,8 @@ import UIKit
 import SnapKit
 import SwiftyUserDefaults
 
-class ProfileSettingViewController: BaseVC {
+class ProfileSettingViewController: BaseVC, SendProfileImageId {
+    
     //MARK: - object
     let characterView: CharacterView = {
         let object = CharacterView(style: .setting)
@@ -71,14 +72,6 @@ class ProfileSettingViewController: BaseVC {
         bindAction()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if type == .setting {
-            imageNum = Int.random(in: 0...11)
-        }
-    }
-    
     //MARK: - configure function
     private func configureHierarchy(){
         view.addSubview(characterView)
@@ -118,7 +111,14 @@ class ProfileSettingViewController: BaseVC {
         }
     }
     
-    private func configureUI(){    }
+    private func configureUI(){
+        if type == .edit {
+            acceptButton.isHidden = true
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localized.profile_edit_save_button.title, style: .done, target: self, action: #selector(saveData))
+            navigationItem.rightBarButtonItem?.tintColor = Color.black
+            setData()
+        }
+    }
     
     //MARK: - function
     private func bindAction(){
@@ -133,14 +133,42 @@ class ProfileSettingViewController: BaseVC {
     @objc func characterViewTapped(){
         guard let type else { return }
         let vc = SelectCharacterViewController(title: type.navTitle, isChild: true)
+        //delegate 연결
+        vc.delegate = self
         vc.selectNumber = imageNum
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func acceptButtonTapped(){
-        let vc = MainTabBarController()
+        saveData()
+    }
+    
+    func dataSend(id: Int) {
+        imageNum = id
+    }
+    
+    func setData(){
+        nicknameTextField.text = User.nickname
+        imageNum = User.profileImageId ?? 0
+    }
+    
+    @objc func saveData(){
+        //validate 작업 필요
+        User.nickname = nicknameTextField.text!
         
-        self.changeRootViewController(vc)
+        User.profileImageId = imageNum
+        User.signupDate = Date.now
+        
+        switch type {
+        case .setting:
+            let vc = MainTabBarController()
+            self.changeRootViewController(vc)
+            return
+        case .edit:
+            navigationController?.popViewController(animated: true)
+        case nil:
+            print("error")
+        }
     }
 }
 

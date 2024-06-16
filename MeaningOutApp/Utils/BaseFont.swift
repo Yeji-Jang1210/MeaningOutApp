@@ -12,7 +12,7 @@ enum BaseFont: CGFloat {
     case medium = 12
     case mediumLarge = 14
     case large = 16
-    case nickname = 24
+    case nickname = 20
     
     var basicFont: UIFont {
         return UIFont.systemFont(ofSize: self.rawValue)

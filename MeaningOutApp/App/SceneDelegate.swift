@@ -16,10 +16,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
-        let nav = UINavigationController(rootViewController: OnboardingViewController())
-        
-        //entry point
-        window?.rootViewController = nav
+        if User.nickname.isEmpty {
+            let nvc = UINavigationController(rootViewController: OnboardingViewController())
+            window?.rootViewController = nvc
+        } else {
+            let vc = MainTabBarController()
+            window?.rootViewController = vc
+        }
         
         //show
         window?.makeKeyAndVisible()

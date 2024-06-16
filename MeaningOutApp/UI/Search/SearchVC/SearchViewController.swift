@@ -65,13 +65,6 @@ class SearchViewController: BaseVC {
     //MARK: - properties
     
     //MARK: - life cycle
-    override init(title: String = "", isChild: Bool = false) {
-        super.init(title: "\(title)'s MEANING OUT")
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,8 +75,10 @@ class SearchViewController: BaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationItem.title = Localized.search_tab_nav.title
         reloadTableView()
     }
+    
     //MARK: - configure function
     private func configureHierarchy(){
         view.addSubview(tableView)
