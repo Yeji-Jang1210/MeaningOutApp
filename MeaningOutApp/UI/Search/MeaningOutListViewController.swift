@@ -41,6 +41,7 @@ class MeaningOutListViewController: BaseVC {
             callAPI(param)
         }
     }
+    var selectIndex:Int?
     
     var start = 1
     var isEnd: Bool {
@@ -73,6 +74,14 @@ class MeaningOutListViewController: BaseVC {
         
         header.buttonCollecction[0].isSelected = true
         filter = .similarity
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let index = selectIndex {
+            collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
+        }
     }
     
     //MARK: - configure function
@@ -118,14 +127,13 @@ class MeaningOutListViewController: BaseVC {
         APIService.networking(params: param) { networkResult in
             switch networkResult {
             case .success(let data):
-                print(data.start)
+ 
                 if self.start == 1 {
                     self.content = data
                 } else {
                     self.content?.items.append(contentsOf: data.items)
                     
                 }
-                print(data.items.map{$0.productId})
                 self.header.resultCountLabel.text = Localized.result_count_text(count: data.total).text
                 self.collectionView.reloadData()
                 
@@ -150,20 +158,17 @@ class MeaningOutListViewController: BaseVC {
     }
     
     @objc func likeButtonTapped(_ sender: UIButton){
-        print(Defaults.cartList)
+        guard let productId = content?.items[sender.tag].productId else { return }
         
         sender.isSelected.toggle()
-        guard let productId = content?.items[sender.tag].productId else { return }
 
         if sender.isSelected {
             print("append")
-            Defaults.cartList.append(productId)
+            User.cartList.append(productId)
         } else {
             print("delete")
-            Defaults.cartList.removeAll { $0 == productId }
+            User.cartList.removeAll { $0 == productId }
         }
-        
-        print("tag:\(sender.tag), id: \(content!.items[sender.tag].productId)")
     }
 }
 
@@ -192,8 +197,9 @@ extension MeaningOutListViewController: UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let item = content?.items[indexPath.row] {
+            selectIndex = indexPath.row
             let vc = DetailViewController(title: item.removedHTMLTagTitle, isChild: true)
-            vc.url = item.link
+            vc.setData(url: item.link, id: item.productId)
             navigationController?.pushViewController(vc, animated: true)
         }
     }

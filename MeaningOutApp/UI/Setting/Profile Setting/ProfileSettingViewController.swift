@@ -35,7 +35,6 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
         let object = UILabel()
         object.font = BaseFont.medium.basicFont
         object.textColor = Color.primaryOrange
-        object.text = "닉네임에 @ 는 포함할 수 없어요."
         return object
     }()
     
@@ -112,11 +111,17 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     }
     
     private func configureUI(){
-        if type == .edit {
+        switch type {
+        case .setting:
+            acceptButton.isEnabled = validateNickname(nicknameTextField.text)
+        case .edit:
             acceptButton.isHidden = true
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localized.profile_edit_save_button.title, style: .done, target: self, action: #selector(saveData))
             navigationItem.rightBarButtonItem?.tintColor = Color.black
+            navigationItem.rightBarButtonItem?.isEnabled = validateNickname(User.nickname)
             setData()
+        case nil:
+            return
         }
     }
     
@@ -128,6 +133,9 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
         
         //accept button Tap Action
         acceptButton.addTarget(self, action: #selector(acceptButtonTapped), for: .touchUpInside)
+        
+        //nicknameTextField addAction
+        nicknameTextField.addTarget(self, action: #selector(nicknameTextChanged), for: .editingChanged)
     }
     
     @objc func characterViewTapped(){
@@ -170,5 +178,40 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
             print("error")
         }
     }
-}
+    
+    @objc func nicknameTextChanged(_ sender: UITextField) {
+        switch type {
+        case .setting:
+            acceptButton.isEnabled = validateNickname(sender.text)
+        case .edit:
+            navigationItem.rightBarButtonItem?.isEnabled = validateNickname(sender.text)
+        case nil:
+            return
+        }
+    }
+    
+    func validateNickname(_ text: String? ) -> Bool {
+        guard let nickname = text else { return false }
+        
+        let specialCharacters = CharacterSet(charactersIn: "@#$%")
+        let numbers = CharacterSet.decimalDigits
+        
+        if nickname.count < 2 || nickname.count >= 10 {
+            nicknameStatusLabel.text = "2글자 이상 10글자 미만으로 입력해주세요"
+            return false
+        }
+        
+        if nickname.rangeOfCharacter(from: specialCharacters) != nil {
+            nicknameStatusLabel.text = "특수문자를 제거해주세요"
+            return false
+        }
 
+        if nickname.rangeOfCharacter(from: numbers) != nil {
+            nicknameStatusLabel.text = "숫자를 제거해주세요"
+            return false
+        }
+        
+        nicknameStatusLabel.text = ""
+        return true
+    }
+}

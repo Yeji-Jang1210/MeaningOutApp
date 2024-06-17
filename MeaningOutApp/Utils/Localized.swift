@@ -23,6 +23,8 @@ enum Localized {
     case result_count_text(count: Int)
     case deleteAccount_dlg
     case search_tab_nav
+    case detail_select_message
+    case detail_unselect_message
     
     var text: String {
         switch self {
@@ -72,6 +74,10 @@ enum Localized {
         switch self {
         case .deleteAccount_dlg:
             return "탈퇴를 하면 데이터가 모두 초기화됩니다.\n탈퇴 하시겠습니까?"
+        case .detail_select_message:
+            return "장바구니에 추가했습니다."
+        case .detail_unselect_message:
+            return "장바구니에서 삭제했습니다."
         default:
             return ""
         }

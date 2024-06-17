@@ -11,29 +11,41 @@ import SnapKit
 import Toast
 
 class DetailViewController: BaseVC {
+    
     //MARK: - object
     let webView: WKWebView = {
         let object = WKWebView()
         return object
     }()
     
+    let rightBarButtonItem: UIBarButtonItem = {
+        let object = UIBarButtonItem()
+        object.tintColor = .clear
+        return object
+    }()
+    
     //MARK: - properties
     var url: String = ""
+    var productId: String = ""
+    var isSelected: Bool = false {
+        didSet {
+            print(isSelected)
+            rightBarButtonItem.image = isSelected ? ImageAssets.like_selected.image :  ImageAssets.like_unselected.image
+        }
+    }
     
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHierarchy()
         configureLayout()
-        
+        configureUI()
         loadWebLink()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        webView.stopLoading()
-        webView.navigationDelegate = nil
-        webView.removeFromSuperview()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        webView.reload()
     }
     
     //MARK: - configure function
@@ -47,10 +59,41 @@ class DetailViewController: BaseVC {
         }
     }
     
+    private func configureUI(){
+        configureNavigationBar()
+        rightBarButtonItem.isSelected = User.cartList.contains(productId)
+    }
+    
+    private func configureNavigationBar(){
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        rightBarButtonItem.target = self
+        rightBarButtonItem.action = #selector(likeButtonTapped)
+        isSelected = User.cartList.contains(productId)
+    }
+    
     //MARK: - function
     private func loadWebLink(){
         print(url)
         guard let url = URL(string: url) else { return }
         webView.load(URLRequest(url: url))
+    }
+    
+    @objc func likeButtonTapped(_ sender: UIBarButtonItem){
+        isSelected.toggle()
+        if isSelected {
+            print("append")
+            User.cartList.append(productId)
+        } else {
+            print("delete")
+            User.cartList.removeAll { $0 == productId }
+        }
+        print(User.cartList)
+        
+        view.makeToast(isSelected ? Localized.detail_select_message.message : Localized.detail_unselect_message.message)
+    }
+    
+    public func setData(url: String, id: String){
+        self.url = url
+        productId = id
     }
 }

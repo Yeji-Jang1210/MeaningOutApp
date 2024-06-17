@@ -21,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.toolbarConfiguration.tintColor = Color.primaryOrange
         IQKeyboardManager.shared.toolbarConfiguration.barTintColor = Color.white
         //IQKeyboardManager.shared.toolbarConfiguration.previousNextDisplayMode = .alwaysHide
+        
+        sleep(2)
+        
         return true
     }
 

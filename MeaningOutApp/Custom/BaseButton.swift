@@ -9,8 +9,20 @@ import UIKit
 
 class BaseButton: UIButton {
     
+    override var isEnabled: Bool {
+        didSet {
+            if style == .primary {
+                backgroundColor = isEnabled ? Color.primaryOrange : Color.lightGray
+            }
+        }
+    }
+    
+    var style: BaseButtonStyle = .primary
+    
     init(style: BaseButtonStyle) {
         super.init(frame: .zero)
+        self.style = style
+        
         backgroundColor = style.backColor
         setTitleColor(style.fontColor, for: .normal)
         titleLabel?.font = style.font

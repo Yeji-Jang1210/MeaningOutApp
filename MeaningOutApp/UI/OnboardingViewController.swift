@@ -55,13 +55,10 @@ class OnboardingViewController: BaseVC {
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(launchImageView.snp.top).offset(-20)
-            make.horizontalEdges.equalTo(view.snp.horizontalEdges).inset(20)
-            make.top.greaterThanOrEqualTo(view.safeAreaLayoutGuide).offset(20)
-            make.height.equalTo(60)
         }
         
         launchImageView.snp.makeConstraints { make in
-            make.center.equalTo(view.safeAreaLayoutGuide)
+            make.center.equalToSuperview()
             make.width.equalToSuperview()
             make.height.equalTo(launchImageView.snp.width)
         }
