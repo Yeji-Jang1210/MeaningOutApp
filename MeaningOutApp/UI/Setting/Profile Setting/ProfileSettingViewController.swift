@@ -193,21 +193,21 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     func validateNickname(_ text: String? ) -> Bool {
         guard let nickname = text else { return false }
         
-        let specialCharacters = CharacterSet(charactersIn: "@#$%")
+        let specificCharacter = CharacterSet(charactersIn: "@#$%")
         let numbers = CharacterSet.decimalDigits
         
         if nickname.count < 2 || nickname.count >= 10 {
-            nicknameStatusLabel.text = "2글자 이상 10글자 미만으로 입력해주세요"
+            nicknameStatusLabel.text = Localized.nickname_range_error.text
             return false
         }
         
-        if nickname.rangeOfCharacter(from: specialCharacters) != nil {
-            nicknameStatusLabel.text = "특수문자를 제거해주세요"
+        if nickname.rangeOfCharacter(from: specificCharacter) != nil {
+            nicknameStatusLabel.text = Localized.nickname_contains_specific_character.text
             return false
         }
 
         if nickname.rangeOfCharacter(from: numbers) != nil {
-            nicknameStatusLabel.text = "숫자를 제거해주세요"
+            nicknameStatusLabel.text = Localized.nickname_contains_number.text
             return false
         }
         

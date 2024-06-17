@@ -127,7 +127,7 @@ class MeaningOutListViewController: BaseVC {
         APIService.networking(params: param) { networkResult in
             switch networkResult {
             case .success(let data):
- 
+                
                 if self.start == 1 {
                     self.content = data
                 } else {
@@ -141,7 +141,7 @@ class MeaningOutListViewController: BaseVC {
                     self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
                 }
             case .error(let error):
-                print(error)
+                self.handlingError(error)
             }
         }
     }
@@ -161,7 +161,7 @@ class MeaningOutListViewController: BaseVC {
         guard let productId = content?.items[sender.tag].productId else { return }
         
         sender.isSelected.toggle()
-
+        
         if sender.isSelected {
             print("append")
             User.cartList.append(productId)
@@ -169,6 +169,28 @@ class MeaningOutListViewController: BaseVC {
             print("delete")
             User.cartList.removeAll { $0 == productId }
         }
+        
+        view.makeToast(sender.isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
+    }
+    
+    func handlingError(_ error: AFError){
+        var errorMessage = ""
+        
+        if let underlyingError = error.underlyingError as NSError? {
+            if underlyingError.domain == NSURLErrorDomain {
+                switch underlyingError.code {
+                case NSURLErrorNotConnectedToInternet:
+                    errorMessage = Localized.NSURLErrorNotConnectedToInternet.message
+                case NSURLErrorTimedOut:
+                    errorMessage = Localized.NSURLErrorTimedOut.message
+                default:
+                    errorMessage = Localized.unownedError.message
+                }
+            }
+        }
+        
+        // 메인 스레드에서 토스트 메시지 표시
+        view.makeToast(errorMessage)
     }
 }
 

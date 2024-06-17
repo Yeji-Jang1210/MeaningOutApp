@@ -89,7 +89,7 @@ class DetailViewController: BaseVC {
         }
         print(User.cartList)
         
-        view.makeToast(isSelected ? Localized.detail_select_message.message : Localized.detail_unselect_message.message)
+        view.makeToast(isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
     }
     
     public func setData(url: String, id: String){

@@ -15,7 +15,6 @@ class MeaningOutListHeaderView: UIView {
     //MARK: - object
     let resultCountLabel: UILabel = {
         let object = UILabel()
-        object.text = "Test"
         object.textColor = Color.primaryOrange
         object.font = BaseFont.medium.boldFont
         return object

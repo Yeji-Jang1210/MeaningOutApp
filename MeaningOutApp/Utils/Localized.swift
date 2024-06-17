@@ -23,8 +23,18 @@ enum Localized {
     case result_count_text(count: Int)
     case deleteAccount_dlg
     case search_tab_nav
-    case detail_select_message
-    case detail_unselect_message
+    case like_select_message
+    case like_unselect_message
+    
+    //validate nickname
+    case nickname_range_error
+    case nickname_contains_specific_character
+    case nickname_contains_number
+    
+    //AFError
+    case NSURLErrorNotConnectedToInternet
+    case NSURLErrorTimedOut
+    case unownedError
     
     var text: String {
         switch self {
@@ -42,6 +52,12 @@ enum Localized {
             return "최근 검색어가 없어요"
         case .result_count_text(let count):
             return "\(count.formatted())개의 검색결과"
+        case .nickname_range_error:
+            return "2글자 이상 10글자 미만으로 입력해주세요"
+        case .nickname_contains_specific_character:
+            return "닉네임에 @, #, $, % 는 포함할 수 없어요"
+        case .nickname_contains_number:
+            return "닉네임에 숫자는 포함할 수 없어요ㅛ"
         default:
             return ""
         }
@@ -74,10 +90,16 @@ enum Localized {
         switch self {
         case .deleteAccount_dlg:
             return "탈퇴를 하면 데이터가 모두 초기화됩니다.\n탈퇴 하시겠습니까?"
-        case .detail_select_message:
+        case .like_select_message:
             return "장바구니에 추가했습니다."
-        case .detail_unselect_message:
+        case .like_unselect_message:
             return "장바구니에서 삭제했습니다."
+        case .NSURLErrorNotConnectedToInternet:
+            return "네트워크 통신이 원활하지 않습니다"
+        case .NSURLErrorTimedOut:
+            return "요청 시간이 초과되었습니다"
+        case .unownedError:
+            return "알 수 없는 네트워크 오류가 발생했습니다"
         default:
             return ""
         }

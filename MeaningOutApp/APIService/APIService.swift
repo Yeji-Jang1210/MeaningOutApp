@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import Toast
 
 struct APIService {
     
@@ -30,5 +31,5 @@ struct APIService {
 
 enum NetworkResult {
     case success(ShoppingItemList)
-    case error(Error)
+    case error(AFError)
 }
