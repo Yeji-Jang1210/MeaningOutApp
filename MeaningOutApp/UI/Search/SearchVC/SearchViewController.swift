@@ -19,6 +19,12 @@ class SearchViewController: BaseVC {
         return object
     }()
     
+    let headerView: UIView = {
+        let object = UIView()
+        return object
+    }()
+    
+    
     let tableView: UITableView = {
         let object = UITableView()
         object.backgroundColor = .clear
@@ -50,14 +56,14 @@ class SearchViewController: BaseVC {
     //Header View
     let headerLabel: UILabel = {
         let object = UILabel()
-        object.text = "최근검색"
-        object.font = BaseFont.medium.boldFont
+        object.text = Localized.current_search.text
+        object.font = BaseFont.large.boldFont
         return object
     }()
     
     let headerButton: UIButton = {
         let object = UIButton(type: .system)
-        object.setTitle("전체식제", for: .normal)
+        object.setTitle(Localized.delete_all.text, for: .normal)
         object.setTitleColor(Color.primaryOrange, for: .normal)
         return object
     }()
@@ -71,6 +77,8 @@ class SearchViewController: BaseVC {
         configureHierarchy()
         configureLayout()
         configureUI()
+        
+        bindAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,15 +91,26 @@ class SearchViewController: BaseVC {
     private func configureHierarchy(){
         view.addSubview(tableView)
         view.addSubview(emptyView)
+        view.addSubview(headerView)
         
         emptyView.addSubview(emptyImageView)
         emptyView.addSubview(emptyLabel)
+        
+        headerView.addSubview(headerLabel)
+        headerView.addSubview(headerButton)
     }
     
     private func configureLayout(){
         
+        headerView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(50)
+        }
+        
         tableView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(headerView.snp.bottom)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
         emptyView.snp.makeConstraints { make in
@@ -107,6 +126,16 @@ class SearchViewController: BaseVC {
         emptyLabel.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(20)
             make.top.equalTo(emptyImageView.snp.bottom).offset(-20)
+        }
+        
+        headerLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(20)
+        }
+        
+        headerButton.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().inset(20)
         }
     }
     
@@ -130,34 +159,17 @@ class SearchViewController: BaseVC {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(SearchItemCell.self, forCellReuseIdentifier: SearchItemCell.identifier)
-        setHeader()
-    }
-    
-    private func setHeader(){
-        let headerView = UIView()
-        headerView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50)
-        
-        headerView.addSubview(headerLabel)
-        headerView.addSubview(headerButton)
-        
-        headerLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(20)
-        }
-        
-        headerButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(20)
-        }
-        
-        headerButton.addTarget(self, action: #selector(deleteListAll), for: .touchUpInside)
-        tableView.tableHeaderView = headerView
     }
     
     //MARK: - function
+    private func bindAction(){
+        headerButton.addTarget(self, action: #selector(deleteListAll), for: .touchUpInside)
+    }
+    
     private func checkIsTableViewEmpty(){
         tableView.isHidden = SearchResults.list.isEmpty
         emptyView.isHidden = !SearchResults.list.isEmpty
+        headerView.isHidden = SearchResults.list.isEmpty
     }
     
     private func reloadTableView(){

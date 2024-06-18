@@ -211,7 +211,7 @@ class MeaningOutListViewController: BaseVC {
                 
                 self.animationType = .none
                 
-                if self.start == 1 {
+                if self.start == 1 && !data.items.isEmpty {
                     self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
                 }
             case .error(let error):
@@ -221,14 +221,17 @@ class MeaningOutListViewController: BaseVC {
     }
     
     @objc func filterButtonTapped(_ sender: FilterButton){
-        for button in header.buttonCollecction {
-            if button.tag == sender.tag {
-                button.isSelected = true
-            } else {
-                button.isSelected = false
+        guard let content else { return }
+        if !content.items.isEmpty {
+            for button in header.buttonCollecction {
+                if button.tag == sender.tag {
+                    button.isSelected = true
+                } else {
+                    button.isSelected = false
+                }
             }
+            filter = FilterType(rawValue: sender.tag)!
         }
-        filter = FilterType(rawValue: sender.tag)!
     }
     
     @objc func likeButtonTapped(_ sender: UIButton){
@@ -288,6 +291,7 @@ extension MeaningOutListViewController: UICollectionViewDelegate, UICollectionVi
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MeaningOutItemCell.identifier, for: indexPath) as! MeaningOutItemCell
         
         if let item = self.content?.items[indexPath.row] {
+            cell.searchText = text
             cell.setData(item)
         }
         

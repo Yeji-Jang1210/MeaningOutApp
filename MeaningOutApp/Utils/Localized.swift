@@ -16,6 +16,8 @@ enum Localized {
     case complete
     case nickname_placeholder
     case searchBar_placeholder
+    case current_search
+    case delete_all
     case empty
     case profile_tab_title
     case tabbar_search
@@ -46,6 +48,10 @@ enum Localized {
             return "완료"
         case .nickname_placeholder:
             return "닉네임을 입력해 주세요:)"
+        case .current_search:
+            return "최근검색"
+        case .delete_all:
+            return "전체삭제"
         case .searchBar_placeholder:
             return "브랜드, 상품 등을 입력하세요"
         case .empty:

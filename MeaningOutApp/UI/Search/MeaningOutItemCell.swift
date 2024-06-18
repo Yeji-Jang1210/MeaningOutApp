@@ -52,6 +52,7 @@ class MeaningOutItemCell: UICollectionViewCell {
     }()
     
     //MARK: - properties
+    var searchText: String = ""
     
     //MARK: - life cycle
     override init(frame: CGRect) {
@@ -120,7 +121,7 @@ class MeaningOutItemCell: UICollectionViewCell {
         }
         
         mallLabel.text = data.mallName
-        itemTitle.text = data.removedHTMLTagTitle
+        itemTitle.attributedText = data.removedHTMLTagTitle.highlightSearchText(searchText: searchText)
         priceLabel.text = data.priceStr
         
         
