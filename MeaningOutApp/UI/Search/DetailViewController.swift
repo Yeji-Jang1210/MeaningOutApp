@@ -7,6 +7,8 @@
 
 import UIKit
 import WebKit
+
+import Lottie
 import SnapKit
 import Toast
 
@@ -14,13 +16,28 @@ class DetailViewController: BaseVC {
     
     //MARK: - object
     let webView: WKWebView = {
-        let object = WKWebView()
+        let configuration = WKWebViewConfiguration()
+        
+        let object = WKWebView(frame: .zero, configuration: configuration)
         return object
     }()
     
     let rightBarButtonItem: UIBarButtonItem = {
         let object = UIBarButtonItem()
         object.tintColor = .clear
+        return object
+    }()
+    
+    let container: UIView = {
+        let object = UIView()
+        object.isHidden = true
+        object.backgroundColor = .white.withAlphaComponent(0.4)
+        return object
+    }()
+    
+    let loadingAnimationView: LottieAnimationView = {
+        let object = LottieAnimationView(name: "loading")
+        object.loopMode = .loop
         return object
     }()
     
@@ -34,6 +51,18 @@ class DetailViewController: BaseVC {
         }
     }
     
+    var isLoading: Bool = false {
+        didSet {
+            if isLoading {
+                container.isHidden = false
+                loadingAnimationView.play()
+            } else {
+                loadingAnimationView.stop()
+                container.isHidden = true
+            }
+        }
+    }
+    
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,25 +72,35 @@ class DetailViewController: BaseVC {
         loadWebLink()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        webView.reload()
-    }
-    
     //MARK: - configure function
     private func configureHierarchy(){
         view.addSubview(webView)
+        view.addSubview(container)
+        
+        container.addSubview(loadingAnimationView)
     }
     
     private func configureLayout(){
         webView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+        
+        container.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        loadingAnimationView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.5)
+            make.height.equalTo(loadingAnimationView.snp.width)
+        }
     }
     
     private func configureUI(){
         configureNavigationBar()
         rightBarButtonItem.isSelected = User.cartList.contains(productId)
+        
+        webView.navigationDelegate = self
     }
     
     private func configureNavigationBar(){
@@ -73,9 +112,8 @@ class DetailViewController: BaseVC {
     
     //MARK: - function
     private func loadWebLink(){
-        print(url)
         guard let url = URL(string: url) else { return }
-        webView.load(URLRequest(url: url))
+        self.webView.load(URLRequest(url: url))
     }
     
     @objc func likeButtonTapped(_ sender: UIBarButtonItem){
@@ -95,5 +133,15 @@ class DetailViewController: BaseVC {
     public func setData(url: String, id: String){
         self.url = url
         productId = id
+    }
+}
+
+extension DetailViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        isLoading = true
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        isLoading = false
     }
 }

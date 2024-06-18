@@ -8,10 +8,18 @@
 import UIKit
 import SnapKit
 import Alamofire
+import Lottie
 import SwiftyUserDefaults
 import Toast
 
 class MeaningOutListViewController: BaseVC {
+    
+    enum LottieAnimationType {
+        case none
+        case adding
+        case loading
+    }
+    
     //MARK: - object
     let collectionView: UICollectionView = {
         let layer = UICollectionViewFlowLayout()
@@ -30,28 +38,71 @@ class MeaningOutListViewController: BaseVC {
         return object
     }()
     
+    let container: UIView = {
+        let object = UIView()
+        object.backgroundColor = Color.white.withAlphaComponent(0.4)
+        object.isHidden = true
+        return object
+    }()
+    
+    let cartAnimation: LottieAnimationView = {
+        let object = LottieAnimationView(name: "cart")
+        object.animationSpeed = 1.5
+        object.loopMode = .playOnce
+        return object
+    }()
+    
+    let loadAnimation: LottieAnimationView = {
+        let object = LottieAnimationView(name: "loading")
+        object.loopMode = .loop
+        return object
+    }()
+    
     //MARK: - properties
     var content: ShoppingItemList?
     
     var text: String = ""
     var filter: FilterType = .similarity {
         didSet {
-            let param = APIParameters(query: text, sort: filter, start: start)
             start = 1
+            let param = APIParameters(query: text, sort: filter, start: start)
+            dump(param)
             callAPI(param)
         }
     }
-    var selectIndex:Int?
+    var selectIndex: Int?
     
     var start = 1
     var isEnd: Bool {
         if let total = content?.total {
-            print(total)
             if start > total - 30 || start > 1000 {
                 return true
             }
         }
         return false
+    }
+
+    var animationType: LottieAnimationType = .none {
+        didSet {
+            switch animationType {
+            case .none:
+                container.isHidden = true
+                cartAnimation.stop()
+                cartAnimation.isHidden = true
+                loadAnimation.stop()
+                loadAnimation.isHidden = true
+            case .adding:
+                container.isHidden = false
+                loadAnimation.isHidden = true
+                cartAnimation.isHidden = false
+                cartAnimation.play()
+            case .loading:
+                container.isHidden = false
+                cartAnimation.isHidden = true
+                loadAnimation.isHidden = false
+                loadAnimation.play()
+            }
+        }
     }
     
     //MARK: - life cycle
@@ -88,6 +139,10 @@ class MeaningOutListViewController: BaseVC {
     private func configureHierarchy(){
         view.addSubview(header)
         view.addSubview(collectionView)
+        view.addSubview(container)
+        
+        container.addSubview(cartAnimation)
+        container.addSubview(loadAnimation)
     }
     
     private func configureLayout(){
@@ -99,6 +154,22 @@ class MeaningOutListViewController: BaseVC {
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(header.snp.bottom)
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        loadAnimation.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.5)
+            make.height.equalTo(loadAnimation.snp.width)
+        }
+        
+        container.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        cartAnimation.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.5)
+            make.height.equalTo(cartAnimation.snp.width)
         }
     }
     
@@ -124,6 +195,7 @@ class MeaningOutListViewController: BaseVC {
     }
     
     private func callAPI(_ param: APIParameters){
+        animationType = .loading
         APIService.networking(params: param) { networkResult in
             switch networkResult {
             case .success(let data):
@@ -132,10 +204,12 @@ class MeaningOutListViewController: BaseVC {
                     self.content = data
                 } else {
                     self.content?.items.append(contentsOf: data.items)
-                    
                 }
+                
                 self.header.resultCountLabel.text = Localized.result_count_text(count: data.total).text
                 self.collectionView.reloadData()
+                
+                self.animationType = .none
                 
                 if self.start == 1 {
                     self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
@@ -164,7 +238,12 @@ class MeaningOutListViewController: BaseVC {
         
         if sender.isSelected {
             print("append")
+            animationType = .adding
             User.cartList.append(productId)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                self.animationType = .none
+            }
+            
         } else {
             print("delete")
             User.cartList.removeAll { $0 == productId }

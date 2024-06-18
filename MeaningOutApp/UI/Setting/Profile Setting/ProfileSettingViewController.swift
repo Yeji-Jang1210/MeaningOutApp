@@ -9,6 +9,23 @@ import UIKit
 import SnapKit
 import SwiftyUserDefaults
 
+enum ValidateNicknameError: Error {
+    case invalid_range
+    case contains_specific_character
+    case contains_number
+    
+    var message: String {
+        switch self {
+        case .invalid_range:
+            return Localized.nickname_range_error.text
+        case .contains_specific_character:
+            return Localized.nickname_contains_specific_character.text
+        case .contains_number:
+            return Localized.nickname_contains_number.text
+        }
+    }
+}
+
 class ProfileSettingViewController: BaseVC, SendProfileImageId {
     
     //MARK: - object
@@ -45,7 +62,7 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     }()
     
     //MARK: - properties
-    var type: ProfileVCType?
+    var type: ProfileVCType = .edit
     var imageNum: Int = 0 {
         didSet {
             characterView.image = Character.getImage(num: imageNum)
@@ -111,18 +128,14 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     }
     
     private func configureUI(){
-        switch type {
-        case .setting:
-            acceptButton.isEnabled = validateNickname(nicknameTextField.text)
-        case .edit:
+        if type == .edit {
             acceptButton.isHidden = true
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localized.profile_edit_save_button.title, style: .done, target: self, action: #selector(saveData))
             navigationItem.rightBarButtonItem?.tintColor = Color.black
-            navigationItem.rightBarButtonItem?.isEnabled = validateNickname(User.nickname)
             setData()
-        case nil:
-            return
         }
+        
+        setNicknameStatusLabel(nicknameTextField.text)
     }
     
     //MARK: - function
@@ -139,7 +152,6 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     }
     
     @objc func characterViewTapped(){
-        guard let type else { return }
         let vc = SelectCharacterViewController(title: type.navTitle, isChild: true)
         //delegate 연결
         vc.delegate = self
@@ -174,44 +186,56 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
             return
         case .edit:
             navigationController?.popViewController(animated: true)
-        case nil:
-            print("error")
         }
     }
     
     @objc func nicknameTextChanged(_ sender: UITextField) {
-        switch type {
-        case .setting:
-            acceptButton.isEnabled = validateNickname(sender.text)
-        case .edit:
-            navigationItem.rightBarButtonItem?.isEnabled = validateNickname(sender.text)
-        case nil:
-            return
+        setNicknameStatusLabel(sender.text)
+    }
+    
+    func setNicknameStatusLabel(_ text: String?){
+        do {
+            let result = try validateNickname(text)
+            
+            switch type {
+            case .setting:
+                acceptButton.isEnabled = result
+            case .edit:
+                navigationItem.rightBarButtonItem?.isEnabled = result
+            }
+            
+            nicknameStatusLabel.text = ""
+            
+        } catch(let error) {
+            let validateError = error as! ValidateNicknameError
+            nicknameStatusLabel.text = validateError.message
+            
+            switch type {
+            case .setting:
+                acceptButton.isEnabled = false
+            case .edit:
+                navigationItem.rightBarButtonItem?.isEnabled = false
+            }
         }
     }
     
-    func validateNickname(_ text: String? ) -> Bool {
+    func validateNickname(_ text: String?) throws -> Bool {
         guard let nickname = text else { return false }
         
         let specificCharacter = CharacterSet(charactersIn: "@#$%")
         let numbers = CharacterSet.decimalDigits
         
         if nickname.count < 2 || nickname.count >= 10 {
-            nicknameStatusLabel.text = Localized.nickname_range_error.text
-            return false
+            throw ValidateNicknameError.invalid_range
         }
         
         if nickname.rangeOfCharacter(from: specificCharacter) != nil {
-            nicknameStatusLabel.text = Localized.nickname_contains_specific_character.text
-            return false
+            throw ValidateNicknameError.contains_specific_character
         }
 
         if nickname.rangeOfCharacter(from: numbers) != nil {
-            nicknameStatusLabel.text = Localized.nickname_contains_number.text
-            return false
+            throw ValidateNicknameError.contains_number
         }
-        
-        nicknameStatusLabel.text = ""
         return true
     }
 }

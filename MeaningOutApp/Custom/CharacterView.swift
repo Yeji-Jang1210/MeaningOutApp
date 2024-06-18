@@ -9,39 +9,6 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-enum CharacterStyle {
-    case select
-    case unselect
-    case setting
-    
-    var borderWidth: CGFloat {
-        switch self {
-        case .unselect:
-            return 1
-        default:
-            return 3
-        }
-    }
-    
-    var borderColor: CGColor {
-        switch self {
-        case .unselect:
-            return Color.lightGray.cgColor
-        default:
-            return Color.primaryOrange.cgColor
-        }
-    }
-    
-    var alpha: CGFloat {
-        switch self {
-        case .unselect:
-            return 0.5
-        default:
-            return 1
-        }
-    }
-}
-
 class CharacterView: UIView {
     //MARK: - object
     let characterImageView: UIImageView = {
