@@ -9,14 +9,18 @@ import UIKit
 import Alamofire
 import Toast
 
-struct APIService {
+class APIService {
     
-    static let headers: HTTPHeaders = [
+    static let shared = APIService()
+    
+    private init(){}
+    
+    let headers: HTTPHeaders = [
         "X-Naver-Client-Id": APIInfo.clientId,
         "X-Naver-Client-Secret": APIInfo.clientSecret
     ]
     
-    static func networking(params: APIParameters, completion: @escaping (NetworkResult) -> ()){
+    func networking(params: APIParameters, completion: @escaping (NetworkResult) -> ()){
         guard let url = URL(string: APIInfo.baseUrl) else { return }
         AF.request(url, method: .get, parameters: params.encodedParameters, encoding: URLEncoding.queryString, headers: headers).responseDecodable(of: ShoppingItemList.self){ response in
             switch response.result {

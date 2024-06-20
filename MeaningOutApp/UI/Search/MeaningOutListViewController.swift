@@ -196,7 +196,7 @@ class MeaningOutListViewController: BaseVC {
     
     private func callAPI(_ param: APIParameters){
         animationType = .loading
-        APIService.networking(params: param) { networkResult in
+        APIService.shared.networking(params: param) { networkResult in
             switch networkResult {
             case .success(let data):
                 
