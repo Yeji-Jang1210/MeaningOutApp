@@ -28,6 +28,13 @@ enum Localized {
     case like_select_message
     case like_unselect_message
     
+    //settingType
+    case cartList
+    case faq
+    case contactUs
+    case notification_settings
+    case deleteAccount
+    
     //validate nickname
     case nickname_range_error
     case nickname_contains_specific_character
@@ -85,8 +92,16 @@ enum Localized {
             return "\(User.nickname)'s MEANING OUT"
         case .tabbar_setting:
             return "설정"
-        case .deleteAccount_dlg:
+        case .deleteAccount_dlg, .deleteAccount:
             return "탈퇴하기"
+        case .cartList:
+            return "나의 장바구니 목록"
+        case .faq:
+            return "자주 묻는 질문"
+        case .contactUs:
+            return "1:1 문의"
+        case .notification_settings:
+            return  "알림 설정"
         default:
             return ""
         }

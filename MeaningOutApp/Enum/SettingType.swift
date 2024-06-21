@@ -17,15 +17,15 @@ enum SettingType: Int, CaseIterable {
     var title: String {
         switch self {
         case .cartList:
-            return "나의 장바구니 목록"
+            return Localized.cartList.title
         case .faq:
-            return "자주 묻는 질문"
+            return Localized.faq.title
         case .contactUs:
-            return "1:1 문의"
+            return Localized.contactUs.title
         case .notificationSettings:
-            return "알림 설정"
+            return Localized.notification_settings.title
         case .deleteAccount:
-            return "탈퇴하기"
+            return Localized.deleteAccount.title
         }
     }
 }
