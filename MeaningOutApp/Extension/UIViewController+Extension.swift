@@ -18,4 +18,28 @@ extension UIViewController {
         //show
         sceneDelegate?.window?.makeKeyAndVisible()
     }
+    
+    func presentAlert(localized: Localized, 
+                      confirm: @escaping ()->Void,
+                      cancel: @escaping ()->Void){
+        let alert = UIAlertController(title: localized.title, message: localized.message, preferredStyle: .alert)
+        
+        if !localized.confirm.isEmpty {
+            let confirmAction = UIAlertAction(title: localized.confirm, style: .default){ _ in
+                confirm()
+            }
+            confirmAction.setValue(Color.primaryOrange, forKey: "titleTextColor")
+            alert.addAction(confirmAction)
+        }
+        
+        if !localized.cancel.isEmpty {
+            let cancelAction = UIAlertAction(title: localized.cancel, style: .cancel){_ in
+                cancel()
+            }
+            cancelAction.setValue(Color.warmGray, forKey: "titleTextColor")
+            alert.addAction(cancelAction)
+        }
+        
+        present(alert, animated: true)
+    }
 }

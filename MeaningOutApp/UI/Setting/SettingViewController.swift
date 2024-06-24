@@ -78,32 +78,6 @@ class SettingViewController: BaseVC {
         let vc = ProfileSettingViewController(type: .edit)
         navigationController?.pushViewController(vc, animated: true)
     }
-    
-    func presentDeleteAccountAlert(){
-        let alert = UIAlertController(title: Localized.deleteAccount_dlg.title, message: Localized.deleteAccount_dlg.message, preferredStyle: .alert)
-        
-        let confirmAction = UIAlertAction(title: Localized.deleteAccount_dlg.confirm, style: .default) { _ in
-            User.delete()
-            
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-            
-            let nvc = UINavigationController(rootViewController: OnboardingViewController())
-            
-            //entry point
-            sceneDelegate?.window?.rootViewController = nvc
-            
-            //show
-            sceneDelegate?.window?.makeKeyAndVisible()
-        }
-        
-        let cancelAction = UIAlertAction(title: Localized.deleteAccount_dlg.cancel, style: .cancel)
-        
-        alert.addAction(confirmAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true)
-    }
 }
 
 extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
@@ -130,6 +104,12 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presentDeleteAccountAlert()
+        presentAlert(localized: Localized.deleteAccount_dlg) {
+            User.delete()
+            let nvc = UINavigationController(rootViewController: OnboardingViewController())
+            self.changeRootViewController(nvc)
+        } cancel: {
+            
+        }
     }
 }
