@@ -23,8 +23,6 @@ struct Character {
         
         return list
     }
-    
-    
 
     static func getImage(num: Int) -> UIImage? {
         return UIImage(named: "profile_\(num)")

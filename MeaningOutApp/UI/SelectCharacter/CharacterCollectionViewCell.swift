@@ -17,14 +17,11 @@ class CharacterCollectionViewCell: UICollectionViewCell {
         return object
     }()
 
-    //MARK: - properties
-    
     //MARK: - life cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureHierarchy()
         configureLayout()
-        configureUI()
     }
     
     required init?(coder: NSCoder) {
@@ -40,10 +37,6 @@ class CharacterCollectionViewCell: UICollectionViewCell {
         characterView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-    }
-    
-    private func configureUI(){
-        
     }
     
     //MARK: - function

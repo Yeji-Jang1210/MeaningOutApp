@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SearchItemCell: UITableViewCell {
+class SearchItemCell: BaseTableViewCell {
     static let identifier = String(describing: SearchItemCell.self)
     
     //MARK: - object
@@ -32,28 +32,20 @@ class SearchItemCell: UITableViewCell {
         object.setImage(ImageAssets.xmark.image, for: .normal)
         return object
     }()
-    //MARK: - properties
     
     //MARK: - life cycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureHierarchy()
-        configureLayout()
-        configureUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - configure function
-    private func configureHierarchy(){
+    override func configureHierarchy(){
         contentView.addSubview(clockImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(deleteButton)
     }
     
-    private func configureLayout(){
+    override func configureLayout(){
         clockImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.size.equalTo(20)
@@ -72,8 +64,4 @@ class SearchItemCell: UITableViewCell {
             make.trailing.equalToSuperview().inset(20)
         }
     }
-    
-    private func configureUI(){ }
-    //MARK: - function
-    
 }
