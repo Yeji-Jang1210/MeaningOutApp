@@ -43,9 +43,6 @@ class SelectCharacterViewController: BaseVC {
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureHierarchy()
-        configureLayout()
-        configureUI()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -53,12 +50,12 @@ class SelectCharacterViewController: BaseVC {
     }
     
     //MARK: - configure function
-    private func configureHierarchy(){
+    override func configureHierarchy(){
         view.addSubview(characterView)
         view.addSubview(collectionView)
     }
     
-    private func configureLayout(){
+    override func configureLayout(){
         characterView.snp.makeConstraints { make in
             make.centerX.equalTo(view.safeAreaLayoutGuide)
             make.size.equalTo(120)
@@ -72,7 +69,7 @@ class SelectCharacterViewController: BaseVC {
         }
     }
     
-    private func configureUI(){ 
+    override func configureUI(){
         configureCollectionView()
     }
     

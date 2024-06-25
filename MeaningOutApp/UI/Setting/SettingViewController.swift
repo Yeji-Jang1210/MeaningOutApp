@@ -26,10 +26,6 @@ class SettingViewController: BaseVC {
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureHierarchy()
-        configureLayout()
-        configureUI()
-        
         bindAction()
     }
     
@@ -41,12 +37,12 @@ class SettingViewController: BaseVC {
     }
     
     //MARK: - configure function
-    private func configureHierarchy(){
+    override func configureHierarchy(){
         view.addSubview(headerView)
         view.addSubview(tableView)
     }
     
-    private func configureLayout(){
+    override func configureLayout(){
         headerView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(120)
@@ -58,7 +54,7 @@ class SettingViewController: BaseVC {
         }
     }
     
-    private func configureUI(){
+    override func configureUI(){
         configureTableView()
     }
     
@@ -90,7 +86,7 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
         cell.settingLabel.text = SettingType.allCases[indexPath.row].title
         
         if SettingType(rawValue: indexPath.row) == .cartList {
-            cell.setCartList(attributes: User.cartListText)
+            cell.setCartList(attributes: User.shared.cartListText)
         }
         
         return cell
@@ -105,7 +101,7 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         presentAlert(localized: Localized.deleteAccount_dlg) {
-            User.delete()
+            User.shared.delete()
             let nvc = UINavigationController(rootViewController: OnboardingViewController())
             self.changeRootViewController(nvc)
         } cancel: {

@@ -74,10 +74,6 @@ class SearchViewController: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureHierarchy()
-        configureLayout()
-        configureUI()
-        
         bindAction()
     }
     
@@ -88,7 +84,7 @@ class SearchViewController: BaseVC {
     }
     
     //MARK: - configure function
-    private func configureHierarchy(){
+    override func configureHierarchy(){
         view.addSubview(tableView)
         view.addSubview(emptyView)
         view.addSubview(headerView)
@@ -100,7 +96,7 @@ class SearchViewController: BaseVC {
         headerView.addSubview(headerButton)
     }
     
-    private func configureLayout(){
+    override func configureLayout(){
         
         headerView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
@@ -139,7 +135,7 @@ class SearchViewController: BaseVC {
         }
     }
     
-    private func configureUI(){
+    override func configureUI(){
         configureTableView()
         configureNavigationBar()
     }
@@ -167,9 +163,9 @@ class SearchViewController: BaseVC {
     }
     
     private func checkIsTableViewEmpty(){
-        tableView.isHidden = SearchResults.list.isEmpty
-        emptyView.isHidden = !SearchResults.list.isEmpty
-        headerView.isHidden = SearchResults.list.isEmpty
+        tableView.isHidden = SearchResults.shared.list.isEmpty
+        emptyView.isHidden = !SearchResults.shared.list.isEmpty
+        headerView.isHidden = SearchResults.shared.list.isEmpty
     }
     
     private func reloadTableView(){
@@ -178,17 +174,17 @@ class SearchViewController: BaseVC {
     }
     
     @objc func deleteItem(_ sender: UIButton){
-        SearchResults.deleteItem(sender.tag)
+        SearchResults.shared.deleteItem(sender.tag)
         reloadTableView()
     }
     
     @objc func deleteListAll(){
-        SearchResults.deleteAll()
+        SearchResults.shared.deleteAll()
         reloadTableView()
     }
     
     func searchItem(text: String){
-        SearchResults.saveItem(text)
+        SearchResults.shared.saveItem(text)
         reloadTableView()
         
         let vc = MeaningOutListViewController(title: text, isChild: true)
@@ -199,19 +195,19 @@ class SearchViewController: BaseVC {
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SearchResults.list.count
+        return SearchResults.shared.list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchItemCell.identifier, for: indexPath) as! SearchItemCell
-        cell.titleLabel.text = SearchResults.list[indexPath.row]
+        cell.titleLabel.text = SearchResults.shared.list[indexPath.row]
         cell.deleteButton.tag = indexPath.row
         cell.deleteButton.addTarget(self, action: #selector(deleteItem), for: .touchUpInside)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        searchItem(text: SearchResults.list[indexPath.row])
+        searchItem(text: SearchResults.shared.list[indexPath.row])
     }
 }
 

@@ -117,10 +117,6 @@ class MeaningOutListViewController: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureHierarchy()
-        configureLayout()
-        configureUI()
-        
         bindAction()
         
         header.buttonCollecction[0].isSelected = true
@@ -136,7 +132,7 @@ class MeaningOutListViewController: BaseVC {
     }
     
     //MARK: - configure function
-    private func configureHierarchy(){
+    override func configureHierarchy(){
         view.addSubview(header)
         view.addSubview(collectionView)
         view.addSubview(container)
@@ -145,7 +141,7 @@ class MeaningOutListViewController: BaseVC {
         container.addSubview(loadAnimation)
     }
     
-    private func configureLayout(){
+    override func configureLayout(){
         header.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(80)
@@ -173,7 +169,7 @@ class MeaningOutListViewController: BaseVC {
         }
     }
     
-    private func configureUI(){
+    override func configureUI(){
         configureCollectionView()
     }
     
@@ -242,14 +238,14 @@ class MeaningOutListViewController: BaseVC {
         if sender.isSelected {
             print("append")
             animationType = .adding
-            User.cartList.append(productId)
+            User.shared.cartList.append(productId)
             DispatchQueue.main.asyncAfter(deadline: .now() + 2){
                 self.animationType = .none
             }
             
         } else {
             print("delete")
-            User.cartList.removeAll { $0 == productId }
+            User.shared.cartList.removeAll { $0 == productId }
         }
         
         view.makeToast(sender.isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)

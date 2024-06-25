@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         
-        if User.nickname.isEmpty {
+        if User.shared.nickname.isEmpty {
             let nvc = UINavigationController(rootViewController: OnboardingViewController())
             window?.rootViewController = nvc
         } else {

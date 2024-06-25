@@ -45,6 +45,7 @@ class BaseButton: UIButton {
         self.layer.cornerRadius = self.bounds.height / 2
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

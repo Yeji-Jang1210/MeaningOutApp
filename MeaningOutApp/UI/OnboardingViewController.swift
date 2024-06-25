@@ -37,21 +37,18 @@ class OnboardingViewController: BaseVC {
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureHierarchy()
-        configureLayout()
-        configureUI()
         
         bindAction()
     }
     
     //MARK: - configure function
-    private func configureHierarchy(){
+    override func configureHierarchy(){
         view.addSubview(titleLabel)
         view.addSubview(startButton)
         view.addSubview(launchImageView)
     }
     
-    private func configureLayout(){
+    override func configureLayout(){
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(launchImageView.snp.top).offset(-20)
@@ -70,9 +67,6 @@ class OnboardingViewController: BaseVC {
         }
     }
     
-    private func configureUI(){
-        
-    }
     //MARK: - function
     
     private func bindAction(){

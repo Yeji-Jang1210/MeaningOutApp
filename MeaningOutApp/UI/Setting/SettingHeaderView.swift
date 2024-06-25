@@ -94,8 +94,8 @@ class SettingHeaderView: UIView {
     //MARK: - function
     
     public func setData(){
-        nicknameLabel.text = User.nickname
-        signupDateLabel.text = User.signupDateText
-        characterView.image = Character.getImage(num: User.profileImageId ?? 0)
+        nicknameLabel.text = User.shared.nickname
+        signupDateLabel.text = User.shared.signupDateText
+        characterView.image = Character.getImage(num: User.shared.profileImageId ?? 0)
     }
 }

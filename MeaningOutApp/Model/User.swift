@@ -8,10 +8,12 @@
 import UIKit
 import SwiftyUserDefaults
 
-struct User {
+class User {
+    static var shared = User()
+    
     private init(){}
     
-    static var nickname: String {
+    var nickname: String {
         get {
             return Defaults.nickname
         }
@@ -21,7 +23,7 @@ struct User {
         }
     }
     
-    static var signupDate: Date? {
+    var signupDate: Date? {
         get {
             return Defaults.signupDate
         }
@@ -31,7 +33,7 @@ struct User {
         }
     }
     
-    static var profileImageId: Int? {
+    var profileImageId: Int? {
         get {
             return Defaults.profileImageId
         }
@@ -41,7 +43,7 @@ struct User {
         }
     }
     
-    static var cartList: [String] {
+    var cartList: [String] {
         get {
             return Defaults.cartList
         }
@@ -51,14 +53,14 @@ struct User {
         }
     }
     
-    static var signupDateText: String {
+    var signupDateText: String {
         guard let date = signupDate else { return "" }
         let format = DateFormatter()
         format.dateFormat = "yyyy. MM. dd"
         return "\(format.string(from: date)) 가입"
     }
     
-    static var cartListText: NSMutableAttributedString {
+    var cartListText: NSMutableAttributedString {
         let boldString = "\(cartList.count)개"
         let fullString = boldString + "의 상품"
         
@@ -74,7 +76,7 @@ struct User {
         return attributedString
     }
     
-    static func delete(){
+    func delete(){
         nickname = ""
         profileImageId = nil
         signupDate = nil

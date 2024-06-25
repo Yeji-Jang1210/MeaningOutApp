@@ -8,15 +8,18 @@
 import UIKit
 
 class BaseVC: UIViewController {
-    
+
+//MARK: - property
     private var isChild: Bool = false
-    
+  
+//MARK: - life cycle
     init(title: String = "", isChild: Bool = false){
         super.init(nibName: nil, bundle: nil)
         self.isChild = isChild
         self.navigationItem.title = title
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -32,7 +35,18 @@ class BaseVC: UIViewController {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: ImageAssets.leftArrow.image, style: .done, target: self, action: #selector(dismissButtonTapped))
             navigationItem.leftBarButtonItem?.tintColor = .black
         }
+        
+        configureHierarchy()
+        configureLayout()
+        configureUI()
     }
+    
+//MARK: - configure function
+    func configureHierarchy(){ }
+    
+    func configureLayout(){ }
+    
+    func configureUI(){ }
     
 //MARK: - function
     @objc private func dismissButtonTapped(){
@@ -41,6 +55,5 @@ class BaseVC: UIViewController {
         } else {
             self.dismiss(animated: true)
         }
-        
     }
 }

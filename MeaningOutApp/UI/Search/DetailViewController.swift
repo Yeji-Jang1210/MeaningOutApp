@@ -66,21 +66,18 @@ class DetailViewController: BaseVC {
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureHierarchy()
-        configureLayout()
-        configureUI()
         loadWebLink()
     }
     
     //MARK: - configure function
-    private func configureHierarchy(){
+    override func configureHierarchy(){
         view.addSubview(webView)
         view.addSubview(container)
         
         container.addSubview(loadingAnimationView)
     }
     
-    private func configureLayout(){
+    override func configureLayout(){
         webView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
@@ -96,9 +93,9 @@ class DetailViewController: BaseVC {
         }
     }
     
-    private func configureUI(){
+    override func configureUI(){
         configureNavigationBar()
-        rightBarButtonItem.isSelected = User.cartList.contains(productId)
+        rightBarButtonItem.isSelected = User.shared.cartList.contains(productId)
         
         webView.navigationDelegate = self
     }
@@ -107,7 +104,7 @@ class DetailViewController: BaseVC {
         navigationItem.rightBarButtonItem = rightBarButtonItem
         rightBarButtonItem.target = self
         rightBarButtonItem.action = #selector(likeButtonTapped)
-        isSelected = User.cartList.contains(productId)
+        isSelected = User.shared.cartList.contains(productId)
     }
     
     //MARK: - function
@@ -120,12 +117,12 @@ class DetailViewController: BaseVC {
         isSelected.toggle()
         if isSelected {
             print("append")
-            User.cartList.append(productId)
+            User.shared.cartList.append(productId)
         } else {
             print("delete")
-            User.cartList.removeAll { $0 == productId }
+            User.shared.cartList.removeAll { $0 == productId }
         }
-        print(User.cartList)
+        print(User.shared.cartList)
         
         view.makeToast(isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
     }

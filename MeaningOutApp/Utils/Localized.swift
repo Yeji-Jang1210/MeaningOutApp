@@ -89,7 +89,7 @@ enum Localized {
         case .tabbar_search:
             return "검색"
         case .search_tab_nav:
-            return "\(User.nickname)'s MEANING OUT"
+            return "\(User.shared.nickname)'s MEANING OUT"
         case .tabbar_setting:
             return "설정"
         case .deleteAccount_dlg, .deleteAccount:

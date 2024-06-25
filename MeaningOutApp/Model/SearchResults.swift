@@ -10,9 +10,11 @@ import SwiftyUserDefaults
 
 class SearchResults {
     
+    static var shared = SearchResults()
+    
     private init(){}
     
-    static var list: [String] {
+    var list: [String] {
         get {
             return Defaults.currentSearchList
         }
@@ -22,7 +24,7 @@ class SearchResults {
         }
     }
     
-    static func saveItem(_ text: String){
+    func saveItem(_ text: String){
         if list.contains(text){
             while let index = list.firstIndex(of: text) {
                 list.remove(at: index)
@@ -31,11 +33,11 @@ class SearchResults {
         list.insert(text, at: 0)
     }
     
-    static func deleteItem(_ index: Int){
+    func deleteItem(_ index: Int){
         list.remove(at: index)
     }
     
-    static func deleteAll(){
+    func deleteAll(){
         list = []
     }
 }

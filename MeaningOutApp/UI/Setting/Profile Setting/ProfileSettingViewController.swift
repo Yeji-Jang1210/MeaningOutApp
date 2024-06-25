@@ -81,15 +81,11 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureHierarchy()
-        configureLayout()
-        configureUI()
-        
         bindAction()
     }
     
     //MARK: - configure function
-    private func configureHierarchy(){
+    override func configureHierarchy(){
         view.addSubview(characterView)
         view.addSubview(separatorLine)
         view.addSubview(nicknameTextField)
@@ -97,7 +93,7 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
         view.addSubview(acceptButton)
     }
     
-    private func configureLayout(){
+    override func configureLayout(){
         characterView.snp.makeConstraints { make in
             make.centerX.equalTo(view.safeAreaLayoutGuide)
             make.size.equalTo(120)
@@ -127,7 +123,7 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
         }
     }
     
-    private func configureUI(){
+    override func configureUI(){
         if type == .edit {
             acceptButton.isHidden = true
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localized.profile_edit_save_button.title, style: .done, target: self, action: #selector(saveData))
@@ -168,16 +164,16 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     }
     
     func setData(){
-        nicknameTextField.text = User.nickname
-        imageNum = User.profileImageId ?? 0
+        nicknameTextField.text = User.shared.nickname
+        imageNum = User.shared.profileImageId ?? 0
     }
     
     @objc func saveData(){
         //validate 작업 필요
-        User.nickname = nicknameTextField.text!
+        User.shared.nickname = nicknameTextField.text!
         
-        User.profileImageId = imageNum
-        User.signupDate = Date.now
+        User.shared.profileImageId = imageNum
+        User.shared.signupDate = Date.now
         
         switch type {
         case .setting:
