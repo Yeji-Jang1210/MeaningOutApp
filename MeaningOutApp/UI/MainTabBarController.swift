@@ -26,9 +26,9 @@ class MainTabBarController: UITabBarController {
         var icon: UIImage? {
             switch self {
             case .search:
-                return ImageAssets.search.image
+                return ImageAssets.search
             case .profile:
-                return ImageAssets.person.image
+                return ImageAssets.person
             }
         }
         

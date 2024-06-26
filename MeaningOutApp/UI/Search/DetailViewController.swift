@@ -47,7 +47,7 @@ class DetailViewController: BaseVC {
     var isSelected: Bool = false {
         didSet {
             print(isSelected)
-            rightBarButtonItem.image = isSelected ? ImageAssets.like_selected.image :  ImageAssets.like_unselected.image
+            rightBarButtonItem.image = isSelected ? ImageAssets.like_selected :  ImageAssets.like_unselected
         }
     }
     

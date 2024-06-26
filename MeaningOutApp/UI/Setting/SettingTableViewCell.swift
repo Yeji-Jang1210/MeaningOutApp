@@ -71,7 +71,7 @@ class SettingTableViewCell: BaseTableViewCell {
     
     //MARK: - function
     public func setCartList(attributes: NSMutableAttributedString){
-        detailViewIcon.image = ImageAssets.like_selected.image
+        detailViewIcon.image = ImageAssets.like_selected
         detailLabel.attributedText = attributes
     }
 }

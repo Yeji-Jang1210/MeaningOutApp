@@ -32,7 +32,7 @@ class BaseVC: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : Color.black, .font: UIFont.boldSystemFont(ofSize: 16)]
         
         if isChild {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: ImageAssets.leftArrow.image, style: .done, target: self, action: #selector(dismissButtonTapped))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: ImageAssets.leftArrow, style: .done, target: self, action: #selector(dismissButtonTapped))
             navigationItem.leftBarButtonItem?.tintColor = .black
         }
         

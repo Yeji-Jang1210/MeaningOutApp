@@ -31,7 +31,7 @@ class SettingHeaderView: UIView {
     
     let editSettingButton: UIButton = {
         let object = UIButton()
-        object.setImage(ImageAssets.rightArrow.image, for: .normal)
+        object.setImage(ImageAssets.rightArrow, for: .normal)
         object.tintColor = Color.warmGray
         return object
     }()

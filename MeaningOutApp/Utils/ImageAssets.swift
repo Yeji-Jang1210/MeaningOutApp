@@ -7,30 +7,22 @@
 
 import UIKit
 
-enum ImageAssets: String {
+struct ImageAssets {
+    
+    private init(){}
+    
 //MARK: systemNamed
-    case search = "magnifyingglass"
-    case person = "person"
-    case leftArrow = "chevron.left"
-    case rightArrow = "chevron.right"
-    case clock = "clock"
-    case xmark = "xmark"
-    case camera = "camera.fill"
+    static var search = UIImage(systemName: "magnifyingglass")
+    static var person = UIImage(systemName: "person")
+    static var leftArrow = UIImage(systemName: "chevron.left")
+    static var rightArrow = UIImage(systemName: "chevron.right")
+    static var clock = UIImage(systemName: "clock")
+    static var xmark = UIImage(systemName: "xmark")
+    static var camera = UIImage(systemName: "camera.fill")
 
 //MARK: - Assets
-    case empty = "empty"
-    case launch = "launch"
-    case like_selected = "like_selected"
-    case like_unselected = "like_unselected"
-    
-    var image: UIImage? {
-        switch self {
-        case .empty, .launch, .like_selected, .like_unselected:
-            return UIImage(named: self.rawValue)
-        default:
-            return UIImage(systemName: self.rawValue)
-        }
-    }
-    
-
+    static var empty = UIImage(named: "empty")
+    static var launch = UIImage(named: "launch")
+    static var like_selected = UIImage(named: "like_selected")
+    static var like_unselected = UIImage(named: "like_unselected")
 }

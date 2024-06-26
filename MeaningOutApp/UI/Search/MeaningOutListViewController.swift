@@ -65,9 +65,7 @@ class MeaningOutListViewController: BaseVC {
     var filter: FilterType = .similarity {
         didSet {
             start = 1
-            let param = APIParameters(query: text, sort: filter, start: start)
-            dump(param)
-            callAPI(param)
+            callAPI()
         }
     }
     var selectIndex: Int?
@@ -190,9 +188,9 @@ class MeaningOutListViewController: BaseVC {
         }
     }
     
-    private func callAPI(_ param: APIParameters){
+    private func callAPI(){
         animationType = .loading
-        APIService.shared.networking(params: param) { networkResult in
+        APIService.shared.networking(api: .search(query: text, sort: filter, start: start), of: ShoppingItemList.self) { networkResult in
             switch networkResult {
             case .success(let data):
                 
@@ -312,8 +310,7 @@ extension MeaningOutListViewController: UICollectionViewDataSourcePrefetching {
             if let count = content?.items.count {
                 if count - 2 == indexPath.row && !isEnd {
                     start += 30
-                    let params = APIParameters(query: text, sort: filter, start: start)
-                    callAPI(params)
+                    callAPI()
                 }
             }
         }

@@ -44,8 +44,8 @@ class MeaningOutItemCell: UICollectionViewCell {
     
     let cartButton: UIButton = {
         let object = UIButton()
-        object.setImage(ImageAssets.like_selected.image, for: .selected)
-        object.setImage(ImageAssets.like_unselected.image, for: .normal)
+        object.setImage(ImageAssets.like_selected, for: .selected)
+        object.setImage(ImageAssets.like_unselected, for: .normal)
         object.backgroundColor = object.isSelected ? Color.white : Color.black.withAlphaComponent(0.5)
         object.clipsToBounds = true
         return object

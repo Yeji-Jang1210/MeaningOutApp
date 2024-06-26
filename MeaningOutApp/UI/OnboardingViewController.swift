@@ -29,7 +29,7 @@ class OnboardingViewController: BaseVC {
     let launchImageView: UIImageView = {
         let object = UIImageView()
         object.contentMode = .scaleAspectFit
-        object.image = ImageAssets.launch.image
+        object.image = ImageAssets.launch
         return object
     }()
     //MARK: - properties

@@ -40,7 +40,7 @@ class SearchViewController: BaseVC {
     let emptyImageView: UIImageView = {
         let object = UIImageView()
         object.contentMode = .scaleAspectFit
-        object.image = ImageAssets.empty.image
+        object.image = ImageAssets.empty
         return object
     }()
     

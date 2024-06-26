@@ -30,7 +30,7 @@ class CharacterView: UIView {
     let cameraImageView: UIImageView = {
         let object = UIImageView()
         object.contentMode = .scaleAspectFit
-        object.image = ImageAssets.camera.image
+        object.image = ImageAssets.camera
         object.tintColor = Color.white
         return object
     }()

@@ -16,7 +16,7 @@ class SearchItemCell: BaseTableViewCell {
         let object = UIImageView()
         object.contentMode = .scaleAspectFit
         object.tintColor = Color.black
-        object.image = ImageAssets.clock.image
+        object.image = ImageAssets.clock
         return object
     }()
     
@@ -29,7 +29,7 @@ class SearchItemCell: BaseTableViewCell {
     let deleteButton: UIButton = {
         let object = UIButton(type: .system)
         object.tintColor = Color.black
-        object.setImage(ImageAssets.xmark.image, for: .normal)
+        object.setImage(ImageAssets.xmark, for: .normal)
         return object
     }()
     

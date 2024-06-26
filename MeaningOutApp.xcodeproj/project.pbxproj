@@ -47,7 +47,6 @@
 		B85C87432C1C028600143CC7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C87422C1C028600143CC7 /* UIViewController+Extension.swift */; };
 		B85C87452C1C33F700143CC7 /* ShoppingItemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C87442C1C33F700143CC7 /* ShoppingItemList.swift */; };
 		B85C87472C1C3AC900143CC7 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C87462C1C3AC900143CC7 /* APIService.swift */; };
-		B85C87492C1C3B1D00143CC7 /* APIParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C87482C1C3B1D00143CC7 /* APIParameters.swift */; };
 		B85C874C2C1C3DF400143CC7 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C874B2C1C3DF400143CC7 /* String+Extension.swift */; };
 		B85C874E2C1D4C4000143CC7 /* MeaningOutListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C874D2C1D4C4000143CC7 /* MeaningOutListHeaderView.swift */; };
 		B85C87502C1D507A00143CC7 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C874F2C1D507A00143CC7 /* FilterButton.swift */; };
@@ -57,6 +56,7 @@
 		B85C875B2C1F26C500143CC7 /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C875A2C1F26C500143CC7 /* FilterType.swift */; };
 		B85C875D2C1F26E400143CC7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C875C2C1F26E400143CC7 /* User.swift */; };
 		B8759EFC2C2AC1F700D8B30B /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8759EFB2C2AC1F700D8B30B /* BaseTableViewCell.swift */; };
+		B89D65F42C2C004B004E418F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89D65F32C2C004B004E418F /* APIManager.swift */; };
 		B8D93ED52C21601D00034165 /* CharacterStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D93ED42C21601D00034165 /* CharacterStyle.swift */; };
 		B8D93ED72C216B4D00034165 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = B8D93ED62C216B4D00034165 /* loading.json */; };
 		B8FE7B3B2C21030B00566592 /* cart.json in Resources */ = {isa = PBXBuildFile; fileRef = B8FE7B3A2C21030B00566592 /* cart.json */; };
@@ -98,7 +98,6 @@
 		B85C87422C1C028600143CC7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		B85C87442C1C33F700143CC7 /* ShoppingItemList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItemList.swift; sourceTree = "<group>"; };
 		B85C87462C1C3AC900143CC7 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
-		B85C87482C1C3B1D00143CC7 /* APIParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIParameters.swift; sourceTree = "<group>"; };
 		B85C874B2C1C3DF400143CC7 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		B85C874D2C1D4C4000143CC7 /* MeaningOutListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningOutListHeaderView.swift; sourceTree = "<group>"; };
 		B85C874F2C1D507A00143CC7 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
@@ -108,6 +107,7 @@
 		B85C875A2C1F26C500143CC7 /* FilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
 		B85C875C2C1F26E400143CC7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B8759EFB2C2AC1F700D8B30B /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		B89D65F32C2C004B004E418F /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		B8D93ED42C21601D00034165 /* CharacterStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterStyle.swift; sourceTree = "<group>"; };
 		B8D93ED62C216B4D00034165 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		B8FE7B3A2C21030B00566592 /* cart.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cart.json; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 				B85C87552C1F258D00143CC7 /* Enum */,
 				B85C873D2C1BFB8400143CC7 /* Model */,
 				B85C86E22C1AD6ED00143CC7 /* App */,
-				B85C86E32C1AD6FD00143CC7 /* APIService */,
+				B85C86E32C1AD6FD00143CC7 /* API */,
 				B85C87392C1B43F500143CC7 /* UI */,
 				B85C87002C1ADE5100143CC7 /* Custom */,
 				B85C86F82C1ADAC400143CC7 /* Utils */,
@@ -176,13 +176,14 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		B85C86E32C1AD6FD00143CC7 /* APIService */ = {
+		B85C86E32C1AD6FD00143CC7 /* API */ = {
 			isa = PBXGroup;
 			children = (
 				B85C86E02C1AD6D800143CC7 /* APIInfo.swift */,
 				B85C87462C1C3AC900143CC7 /* APIService.swift */,
+				B89D65F32C2C004B004E418F /* APIManager.swift */,
 			);
-			path = APIService;
+			path = API;
 			sourceTree = "<group>";
 		};
 		B85C86F62C1ADA9600143CC7 /* Setting */ = {
@@ -279,7 +280,6 @@
 			children = (
 				B85C873E2C1BFB8F00143CC7 /* SearchResults.swift */,
 				B85C87442C1C33F700143CC7 /* ShoppingItemList.swift */,
-				B85C87482C1C3B1D00143CC7 /* APIParameters.swift */,
 				B85C875C2C1F26E400143CC7 /* User.swift */,
 			);
 			path = Model;
@@ -415,7 +415,6 @@
 				B85C870E2C1AE00200143CC7 /* DefaultsKeys+Extension.swift in Sources */,
 				B85C87452C1C33F700143CC7 /* ShoppingItemList.swift in Sources */,
 				B85C87472C1C3AC900143CC7 /* APIService.swift in Sources */,
-				B85C87492C1C3B1D00143CC7 /* APIParameters.swift in Sources */,
 				B85C86CB2C1AD61B00143CC7 /* AppDelegate.swift in Sources */,
 				B85C873C2C1B449000143CC7 /* SettingViewController.swift in Sources */,
 				B85C872F2C1B3B3C00143CC7 /* Character.swift in Sources */,
@@ -443,6 +442,7 @@
 				B85C87592C1F260100143CC7 /* SettingHeaderView.swift in Sources */,
 				B85C87162C1AE3D800143CC7 /* BaseButton.swift in Sources */,
 				B85C87082C1ADF8900143CC7 /* OnboardingViewController.swift in Sources */,
+				B89D65F42C2C004B004E418F /* APIManager.swift in Sources */,
 				B85C87572C1F259D00143CC7 /* SettingType.swift in Sources */,
 				B85C875B2C1F26C500143CC7 /* FilterType.swift in Sources */,
 			);
