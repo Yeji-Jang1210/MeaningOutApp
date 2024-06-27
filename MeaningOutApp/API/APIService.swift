@@ -25,27 +25,27 @@ enum NetworkingError: Error {
     var message: String {
         switch self {
         case .invalidURL:
-            return "유효하지 않은 URL입니다."
+            return Localized.invalidURL.message
         case .invalidData:
-            return "데이터를 가져오는데 오류가 생겼습니다."
+            return Localized.invalidData.message
         case .invalidResponse:
-            return "잘못된 응답입니다."
+            return Localized.invalidResponse.message
         case .redirection:
-            return "리다이렉션 오류입니다."
+            return Localized.redirection.message
         case .badRequest:
-            return "잘못된 요청입니다."
+            return Localized.badRequest.message
         case .forbidden:
-            return "접근이 금지되었습니다."
+            return Localized.forbidden.message
         case .notFound:
-            return "요청한 리소스를 찾을 수 없습니다."
+            return Localized.notFound.message
         case .clientError:
-            return "클라이언트 오류입니다."
+            return Localized.clientError.message
         case .serverError:
-            return "서버 오류입니다."
+            return Localized.serverError.message
         case .jsonDecodedError:
-            return "JSON 디코딩 오류입니다."
+            return Localized.jsonDecodedError.message
         case .unownedError:
-            return "알 수 없는 오류입니다."
+            return Localized.unownedError.message
         }
     }
 }

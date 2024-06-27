@@ -40,9 +40,17 @@ enum Localized {
     case nickname_contains_specific_character
     case nickname_contains_number
     
-    //AFError
-    case NSURLErrorNotConnectedToInternet
-    case NSURLErrorTimedOut
+    //NetworkingError
+    case invalidURL
+    case invalidData
+    case invalidResponse
+    case redirection
+    case badRequest
+    case forbidden
+    case notFound
+    case clientError
+    case serverError
+    case jsonDecodedError
     case unownedError
     
     var text: String {
@@ -115,12 +123,28 @@ enum Localized {
             return "장바구니에 추가했습니다."
         case .like_unselect_message:
             return "장바구니에서 삭제했습니다."
-        case .NSURLErrorNotConnectedToInternet:
-            return "네트워크 통신이 원활하지 않습니다"
-        case .NSURLErrorTimedOut:
-            return "요청 시간이 초과되었습니다"
+        case .invalidURL:
+            return "유효하지 않은 URL입니다."
+        case .invalidData:
+            return "데이터를 가져오는데 오류가 생겼습니다."
+        case .invalidResponse:
+            return "잘못된 응답입니다."
+        case .redirection:
+            return "리다이렉션 오류입니다."
+        case .badRequest:
+            return "잘못된 요청입니다."
+        case .forbidden:
+            return "접근이 금지되었습니다."
+        case .notFound:
+            return "요청한 리소스를 찾을 수 없습니다."
+        case .clientError:
+            return "클라이언트 오류입니다."
+        case .serverError:
+            return "서버 오류입니다."
+        case .jsonDecodedError:
+            return "JSON 디코딩 오류입니다."
         case .unownedError:
-            return "알 수 없는 네트워크 오류가 발생했습니다"
+            return "알 수 없는 오류입니다."
         default:
             return ""
         }
