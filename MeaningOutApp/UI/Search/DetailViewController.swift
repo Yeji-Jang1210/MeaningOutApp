@@ -46,7 +46,6 @@ class DetailViewController: BaseVC {
     var productId: String = ""
     var isSelected: Bool = false {
         didSet {
-            print(isSelected)
             rightBarButtonItem.image = isSelected ? ImageAssets.like_selected :  ImageAssets.like_unselected
         }
     }

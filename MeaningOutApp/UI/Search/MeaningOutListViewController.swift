@@ -200,16 +200,22 @@ class MeaningOutListViewController: BaseVC {
                     self.content?.items.append(contentsOf: data.items)
                 }
                 
-                self.header.resultCountLabel.text = Localized.result_count_text(count: data.total).text
-                self.collectionView.reloadData()
-                
-                self.animationType = .none
-                
-                if self.start == 1 && !data.items.isEmpty {
-                    self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                DispatchQueue.main.async {
+                    self.header.resultCountLabel.text = Localized.result_count_text(count: data.total).text
+                    self.collectionView.reloadData()
+                    
+                    self.animationType = .none
+                    
+                    if self.start == 1 && !data.items.isEmpty {
+                        self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                    }
                 }
+                
             case .error(let error):
                 self.handlingError(error)
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
         }
     }
@@ -249,24 +255,9 @@ class MeaningOutListViewController: BaseVC {
         view.makeToast(sender.isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
     }
     
-    func handlingError(_ error: AFError){
-        var errorMessage = ""
-        
-        if let underlyingError = error.underlyingError as NSError? {
-            if underlyingError.domain == NSURLErrorDomain {
-                switch underlyingError.code {
-                case NSURLErrorNotConnectedToInternet:
-                    errorMessage = Localized.NSURLErrorNotConnectedToInternet.message
-                case NSURLErrorTimedOut:
-                    errorMessage = Localized.NSURLErrorTimedOut.message
-                default:
-                    errorMessage = Localized.unownedError.message
-                }
-            }
-        }
-        
+    func handlingError(_ error: NetworkingError){
         // 메인 스레드에서 토스트 메시지 표시
-        view.makeToast(errorMessage)
+        view.makeToast(error.message)
     }
 }
 

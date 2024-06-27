@@ -13,13 +13,13 @@ enum APIManager {
     case search(query: String, sort: FilterType, start: Int)
     
     var baseURL: String {
-        return "https://openapi.naver.com/v1/"
+        return "https://openapi.naver.com"
     }
     
-    var url: String {
+    var path: String {
         switch self {
         case .search:
-            return baseURL+"search/shop.json"
+            return "/v1/search/shop.json"
         }
     }
     
@@ -30,14 +30,21 @@ enum APIManager {
         ]
     }
     
-    var parameters: Parameters {
+    var method: HTTPMethod {
+        switch self {
+        case .search:
+            return .get
+        }
+    }
+    
+    var queryItems: [URLQueryItem] {
         switch self {
         case .search(let query, let sort, let start):
             return [
-                "query": query,
-                "sort": sort.queryString,
-                "start": start,
-                "display": 30,
+                URLQueryItem(name: "query", value: query),
+                URLQueryItem(name: "sort", value: sort.queryString),
+                URLQueryItem(name: "start", value: String(start)),
+                URLQueryItem(name: "display", value: "30")
             ]
         }
     }
