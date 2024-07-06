@@ -59,6 +59,12 @@
 		B89D65F42C2C004B004E418F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89D65F32C2C004B004E418F /* APIManager.swift */; };
 		B8D93ED52C21601D00034165 /* CharacterStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D93ED42C21601D00034165 /* CharacterStyle.swift */; };
 		B8D93ED72C216B4D00034165 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = B8D93ED62C216B4D00034165 /* loading.json */; };
+		B8F4ED022C37A77E004D68E5 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B8F4ED012C37A77E004D68E5 /* RealmSwift */; };
+		B8F4ED072C37A7CB004D68E5 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4ED062C37A7CB004D68E5 /* CartViewController.swift */; };
+		B8F4ED092C37A871004D68E5 /* CartItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4ED082C37A871004D68E5 /* CartItemModel.swift */; };
+		B8F4ED0B2C37ADE5004D68E5 /* CartRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4ED0A2C37ADE5004D68E5 /* CartRepository.swift */; };
+		B8F4ED0D2C37C8ED004D68E5 /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4ED0C2C37C8ED004D68E5 /* FileManager+Extension.swift */; };
+		B8F4ED0F2C390CFF004D68E5 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4ED0E2C390CFF004D68E5 /* UIView+Extension.swift */; };
 		B8FE7B3B2C21030B00566592 /* cart.json in Resources */ = {isa = PBXBuildFile; fileRef = B8FE7B3A2C21030B00566592 /* cart.json */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +116,11 @@
 		B89D65F32C2C004B004E418F /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		B8D93ED42C21601D00034165 /* CharacterStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterStyle.swift; sourceTree = "<group>"; };
 		B8D93ED62C216B4D00034165 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
+		B8F4ED062C37A7CB004D68E5 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
+		B8F4ED082C37A871004D68E5 /* CartItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItemModel.swift; sourceTree = "<group>"; };
+		B8F4ED0A2C37ADE5004D68E5 /* CartRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepository.swift; sourceTree = "<group>"; };
+		B8F4ED0C2C37C8ED004D68E5 /* FileManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
+		B8F4ED0E2C390CFF004D68E5 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		B8FE7B3A2C21030B00566592 /* cart.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cart.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8F4ED022C37A77E004D68E5 /* RealmSwift in Frameworks */,
 				B85C86F52C1AD7D500143CC7 /* Toast in Frameworks */,
 				B828B08D2C20FE92002B82AF /* Lottie in Frameworks */,
 				B85C86EC2C1AD7BC00143CC7 /* SnapKit in Frameworks */,
@@ -151,6 +163,7 @@
 		B85C86C92C1AD61B00143CC7 /* MeaningOutApp */ = {
 			isa = PBXGroup;
 			children = (
+				B8F4ED032C37A786004D68E5 /* Repository */,
 				B8FE7B392C2102FE00566592 /* Resource */,
 				B85C87552C1F258D00143CC7 /* Enum */,
 				B85C873D2C1BFB8400143CC7 /* Model */,
@@ -190,9 +203,9 @@
 			isa = PBXGroup;
 			children = (
 				B85C873B2C1B449000143CC7 /* SettingViewController.swift */,
+				B8F4ED052C37A7BB004D68E5 /* Cell */,
+				B85C87292C1B2E0A00143CC7 /* SelectCharacter */,
 				B85C873A2C1B447D00143CC7 /* Profile Setting */,
-				B85C87532C1F1CB700143CC7 /* SettingTableViewCell.swift */,
-				B85C87582C1F260100143CC7 /* SettingHeaderView.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -230,6 +243,8 @@
 				B85C870D2C1AE00200143CC7 /* DefaultsKeys+Extension.swift */,
 				B85C87422C1C028600143CC7 /* UIViewController+Extension.swift */,
 				B85C874B2C1C3DF400143CC7 /* String+Extension.swift */,
+				B8F4ED0C2C37C8ED004D68E5 /* FileManager+Extension.swift */,
+				B8F4ED0E2C390CFF004D68E5 /* UIView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -262,7 +277,7 @@
 				B85C87072C1ADF8900143CC7 /* OnboardingViewController.swift */,
 				B85C86F72C1ADAA000143CC7 /* Search */,
 				B85C86F62C1ADA9600143CC7 /* Setting */,
-				B85C87292C1B2E0A00143CC7 /* SelectCharacter */,
+				B8F4ED042C37A798004D68E5 /* Cart */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -281,6 +296,7 @@
 				B85C873E2C1BFB8F00143CC7 /* SearchResults.swift */,
 				B85C87442C1C33F700143CC7 /* ShoppingItemList.swift */,
 				B85C875C2C1F26E400143CC7 /* User.swift */,
+				B8F4ED082C37A871004D68E5 /* CartItemModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -302,6 +318,31 @@
 				B8D93ED42C21601D00034165 /* CharacterStyle.swift */,
 			);
 			path = Enum;
+			sourceTree = "<group>";
+		};
+		B8F4ED032C37A786004D68E5 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				B8F4ED0A2C37ADE5004D68E5 /* CartRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		B8F4ED042C37A798004D68E5 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				B8F4ED062C37A7CB004D68E5 /* CartViewController.swift */,
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
+		B8F4ED052C37A7BB004D68E5 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B85C87532C1F1CB700143CC7 /* SettingTableViewCell.swift */,
+				B85C87582C1F260100143CC7 /* SettingHeaderView.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		B8FE7B392C2102FE00566592 /* Resource */ = {
@@ -337,6 +378,7 @@
 				B85C86F12C1AD7CB00143CC7 /* SwiftyUserDefaults */,
 				B85C86F42C1AD7D500143CC7 /* Toast */,
 				B828B08C2C20FE92002B82AF /* Lottie */,
+				B8F4ED012C37A77E004D68E5 /* RealmSwift */,
 			);
 			productName = MeaningOutApp;
 			productReference = B85C86C72C1AD61B00143CC7 /* MeaningOutApp.app */;
@@ -374,6 +416,7 @@
 				B85C86F02C1AD7CB00143CC7 /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */,
 				B85C86F32C1AD7D500143CC7 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				B828B08B2C20FE92002B82AF /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				B8F4ED002C37A77E004D68E5 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = B85C86C82C1AD61B00143CC7 /* Products */;
 			projectDirPath = "";
@@ -410,9 +453,11 @@
 				B85C871A2C1AE79A00143CC7 /* ButtonType.swift in Sources */,
 				B85C87432C1C028600143CC7 /* UIViewController+Extension.swift in Sources */,
 				B85C87242C1B227D00143CC7 /* BaseFont.swift in Sources */,
+				B8F4ED092C37A871004D68E5 /* CartItemModel.swift in Sources */,
 				B85C87042C1ADEB500143CC7 /* CharacterView.swift in Sources */,
 				B85C87062C1ADF1C00143CC7 /* MainTabBarController.swift in Sources */,
 				B85C870E2C1AE00200143CC7 /* DefaultsKeys+Extension.swift in Sources */,
+				B8F4ED0F2C390CFF004D68E5 /* UIView+Extension.swift in Sources */,
 				B85C87452C1C33F700143CC7 /* ShoppingItemList.swift in Sources */,
 				B85C87472C1C3AC900143CC7 /* APIService.swift in Sources */,
 				B85C86CB2C1AD61B00143CC7 /* AppDelegate.swift in Sources */,
@@ -420,6 +465,7 @@
 				B85C872F2C1B3B3C00143CC7 /* Character.swift in Sources */,
 				B85C871E2C1AF34500143CC7 /* ProfileSettingViewController.swift in Sources */,
 				B85C874C2C1C3DF400143CC7 /* String+Extension.swift in Sources */,
+				B8F4ED072C37A7CB004D68E5 /* CartViewController.swift in Sources */,
 				B85C87412C1C006500143CC7 /* SearchItemCell.swift in Sources */,
 				B85C86FF2C1ADD9300143CC7 /* ImageAssets.swift in Sources */,
 				B85C87312C1B430D00143CC7 /* SearchViewController.swift in Sources */,
@@ -428,6 +474,7 @@
 				B85C86E12C1AD6D800143CC7 /* APIInfo.swift in Sources */,
 				B85C86FD2C1ADBE000143CC7 /* UIColor+Extension.swift in Sources */,
 				B85C87352C1B437500143CC7 /* DetailViewController.swift in Sources */,
+				B8F4ED0D2C37C8ED004D68E5 /* FileManager+Extension.swift in Sources */,
 				B85C87332C1B433800143CC7 /* MeaningOutListViewController.swift in Sources */,
 				B85C87502C1D507A00143CC7 /* FilterButton.swift in Sources */,
 				B85C875D2C1F26E400143CC7 /* User.swift in Sources */,
@@ -443,6 +490,7 @@
 				B85C87162C1AE3D800143CC7 /* BaseButton.swift in Sources */,
 				B85C87082C1ADF8900143CC7 /* OnboardingViewController.swift in Sources */,
 				B89D65F42C2C004B004E418F /* APIManager.swift in Sources */,
+				B8F4ED0B2C37ADE5004D68E5 /* CartRepository.swift in Sources */,
 				B85C87572C1F259D00143CC7 /* SettingType.swift in Sources */,
 				B85C875B2C1F26C500143CC7 /* FilterType.swift in Sources */,
 			);
@@ -727,6 +775,14 @@
 				minimumVersion = 5.1.1;
 			};
 		};
+		B8F4ED002C37A77E004D68E5 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				kind = exactVersion;
+				version = 10.52.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -764,6 +820,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B85C86F32C1AD7D500143CC7 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
+		};
+		B8F4ED012C37A77E004D68E5 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B8F4ED002C37A77E004D68E5 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

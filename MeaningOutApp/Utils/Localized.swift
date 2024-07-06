@@ -8,6 +8,12 @@
 import Foundation
 
 enum Localized {
+    
+    //tabbar
+    case tabbar_search
+    case tabbar_setting
+    case tabbar_cart
+    
     case title
     case profile_setting
     case profile_edit
@@ -20,13 +26,12 @@ enum Localized {
     case delete_all
     case empty
     case profile_tab_title
-    case tabbar_search
-    case tabbar_setting
     case result_count_text(count: Int)
     case deleteAccount_dlg
     case search_tab_nav
     case like_select_message
     case like_unselect_message
+    case search_cartItem_placeholder
     
     //settingType
     case cartList
@@ -78,7 +83,9 @@ enum Localized {
         case .nickname_contains_specific_character:
             return "닉네임에 @, #, $, % 는 포함할 수 없어요"
         case .nickname_contains_number:
-            return "닉네임에 숫자는 포함할 수 없어요ㅛ"
+            return "닉네임에 숫자는 포함할 수 없어요"
+        case .search_cartItem_placeholder:
+            return "상품의 이름을 입력해주세요."
         default:
             return ""
         }
@@ -96,10 +103,12 @@ enum Localized {
             return "SETTING"
         case .tabbar_search:
             return "검색"
-        case .search_tab_nav:
-            return "\(User.shared.nickname)'s MEANING OUT"
         case .tabbar_setting:
             return "설정"
+        case .tabbar_cart:
+            return "장바구니"
+        case .search_tab_nav:
+            return "\(User.shared.nickname)'s MEANING OUT"
         case .deleteAccount_dlg, .deleteAccount:
             return "탈퇴하기"
         case .cartList:

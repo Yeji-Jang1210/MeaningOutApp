@@ -13,6 +13,7 @@ class MainTabBarController: UITabBarController {
     enum Tab: Int, CaseIterable {
         case search
         case profile
+        case cart
         
         var title: String {
             switch self {
@@ -20,6 +21,8 @@ class MainTabBarController: UITabBarController {
                 return Localized.tabbar_search.title
             case .profile:
                 return Localized.tabbar_setting.title
+            case .cart:
+                return Localized.tabbar_cart.title
             }
         }
         
@@ -29,6 +32,8 @@ class MainTabBarController: UITabBarController {
                 return ImageAssets.search
             case .profile:
                 return ImageAssets.person
+            case .cart:
+                return ImageAssets.cart
             }
         }
         
@@ -38,6 +43,8 @@ class MainTabBarController: UITabBarController {
                 return UINavigationController(rootViewController: SearchViewController())
             case .profile:
                 return UINavigationController(rootViewController: SettingViewController(title: Localized.profile_tab_title.title))
+            case .cart:
+                return UINavigationController(rootViewController: CartViewController(title: Localized.tabbar_cart.title))
             }
         }
     }

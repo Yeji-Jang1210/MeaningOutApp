@@ -11,11 +11,11 @@ struct ShoppingItemList: Codable {
     let total: Int
     let start: Int
     let display: Int
-    var items: [Item]
+    var items: [Product]
 }
 
 // MARK: - Item
-struct Item: Codable {
+struct Product: Codable {
     let title: String
     let link: String
     let image: String
@@ -27,8 +27,17 @@ struct Item: Codable {
         return title.removingHTMLTags()
         
     }
+    
     var priceStr: String {
-        guard let price = Int(lprice) else { return "" }
+        return Product.formattedPrice(lprice)
+    }
+    
+    static func formattedPrice(_ price: String) -> String {
+        guard let price = Int(price) else { return "" }
         return "\(price.formatted())원"
+    }
+    
+    static func formattedPrice(_ price: Int) -> String {
+        return "\(price.formatted())"
     }
 }

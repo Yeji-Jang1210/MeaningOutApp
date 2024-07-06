@@ -59,8 +59,8 @@ class MeaningOutListViewController: BaseVC {
     }()
     
     //MARK: - properties
+    var repository: CartRepository = CartRepository()
     var content: ShoppingItemList?
-    
     var text: String = ""
     var filter: FilterType = .similarity {
         didSet {
@@ -123,10 +123,7 @@ class MeaningOutListViewController: BaseVC {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if let index = selectIndex {
-            collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
-        }
+        collectionView.reloadData()
     }
     
     //MARK: - configure function
@@ -235,21 +232,29 @@ class MeaningOutListViewController: BaseVC {
     }
     
     @objc func likeButtonTapped(_ sender: UIButton){
-        guard let productId = content?.items[sender.tag].productId else { return }
+        guard let product = content?.items[sender.tag] else { return }
         
         sender.isSelected.toggle()
         
         if sender.isSelected {
+            
             print("append")
             animationType = .adding
-            User.shared.cartList.append(productId)
+            
+            //add record
+            let item = CartItem(product)
+            //이미지 파일에 저장
+
+            repository.addItem(item: item)
             DispatchQueue.main.asyncAfter(deadline: .now() + 2){
                 self.animationType = .none
             }
             
         } else {
             print("delete")
-            User.shared.cartList.removeAll { $0 == productId }
+            
+            //delete record
+            repository.deleteItemForId(productId: product.productId)
         }
         
         view.makeToast(sender.isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
@@ -276,8 +281,7 @@ extension MeaningOutListViewController: UICollectionViewDelegate, UICollectionVi
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MeaningOutItemCell.identifier, for: indexPath) as! MeaningOutItemCell
         
         if let item = self.content?.items[indexPath.row] {
-            cell.searchText = text
-            cell.setData(item)
+            cell.setData(item, searchText: text, isSelected: repository.findProductId(productId: item.productId))
         }
         
         cell.cartButton.tag = indexPath.row
@@ -289,7 +293,7 @@ extension MeaningOutListViewController: UICollectionViewDelegate, UICollectionVi
         if let item = content?.items[indexPath.row] {
             selectIndex = indexPath.row
             let vc = DetailViewController(title: item.removedHTMLTagTitle, isChild: true)
-            vc.setData(url: item.link, id: item.productId)
+            vc.setData(url: item.link, product: item)
             navigationController?.pushViewController(vc, animated: true)
         }
     }

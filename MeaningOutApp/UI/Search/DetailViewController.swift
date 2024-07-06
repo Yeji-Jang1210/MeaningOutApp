@@ -42,8 +42,9 @@ class DetailViewController: BaseVC {
     }()
     
     //MARK: - properties
+    var repository = CartRepository()
     var url: String = ""
-    var productId: String = ""
+    var product: Product?
     var isSelected: Bool = false {
         didSet {
             rightBarButtonItem.image = isSelected ? ImageAssets.like_selected :  ImageAssets.like_unselected
@@ -94,8 +95,6 @@ class DetailViewController: BaseVC {
     
     override func configureUI(){
         configureNavigationBar()
-        rightBarButtonItem.isSelected = User.shared.cartList.contains(productId)
-        
         webView.navigationDelegate = self
     }
     
@@ -103,7 +102,9 @@ class DetailViewController: BaseVC {
         navigationItem.rightBarButtonItem = rightBarButtonItem
         rightBarButtonItem.target = self
         rightBarButtonItem.action = #selector(likeButtonTapped)
-        isSelected = User.shared.cartList.contains(productId)
+        if let id = product?.productId {
+            isSelected = repository.findProductId(productId: id)
+        }
     }
     
     //MARK: - function
@@ -114,21 +115,26 @@ class DetailViewController: BaseVC {
     
     @objc func likeButtonTapped(_ sender: UIBarButtonItem){
         isSelected.toggle()
-        if isSelected {
-            print("append")
-            User.shared.cartList.append(productId)
-        } else {
-            print("delete")
-            User.shared.cartList.removeAll { $0 == productId }
-        }
-        print(User.shared.cartList)
         
-        view.makeToast(isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
+        if let product = product {
+            let item = CartItem(product)
+            if isSelected {
+                print("append")
+                
+                repository.addItem(item: item)
+                
+            } else {
+                print("delete")
+                repository.deleteItemForId(productId: product.productId)
+            }
+            
+            view.makeToast(isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
+        }
     }
     
-    public func setData(url: String, id: String){
+    public func setData(url: String, product: Product){
         self.url = url
-        productId = id
+        self.product = product
     }
 }
 

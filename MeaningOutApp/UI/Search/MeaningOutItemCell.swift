@@ -9,9 +9,14 @@ import UIKit
 import Kingfisher
 import SwiftyUserDefaults
 
+protocol PassImageDelegate {
+    func passImage(_ image: UIImage)
+}
+
 class MeaningOutItemCell: UICollectionViewCell {
     
     static var identifier = String(describing: MeaningOutItemCell.self)
+    var delegate: PassImageDelegate?
     
     //MARK: - object
     let itemImageView: UIImageView = {
@@ -51,9 +56,22 @@ class MeaningOutItemCell: UICollectionViewCell {
         return object
     }()
     
-    //MARK: - properties
-    var searchText: String = ""
+    let errorView: UIView = {
+        let object = UIView()
+        object.isHidden = true
+        object.backgroundColor = .systemGray6
+        object.clipsToBounds = true
+        return object
+    }()
     
+    let errorImagView: UIImageView = {
+        let object = UIImageView()
+        object.image = UIImage(systemName: "exclamationmark.triangle")
+        object.tintColor = .darkGray
+        object.contentMode = .scaleAspectFit
+        return object
+    }()
+
     //MARK: - life cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,16 +91,31 @@ class MeaningOutItemCell: UICollectionViewCell {
     //MARK: - configure function
     private func configureHierarchy(){
         addSubview(itemImageView)
+        addSubview(errorView)
         addSubview(mallLabel)
         addSubview(itemTitle)
         addSubview(priceLabel)
         addSubview(cartButton)
+        
+        
+        errorView.addSubview(errorImagView)
+        
     }
     
     private func configureLayout(){
         itemImageView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
             make.height.equalTo(itemImageView.snp.width).multipliedBy(1.2)
+        }
+        
+        errorView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalToSuperview()
+            make.height.equalTo(itemImageView.snp.width).multipliedBy(1.2)
+        }
+        
+        errorImagView.snp.makeConstraints { make in
+            make.size.equalTo(50)
+            make.center.equalToSuperview()
         }
         
         mallLabel.snp.makeConstraints { make in
@@ -112,10 +145,12 @@ class MeaningOutItemCell: UICollectionViewCell {
     private func configureUI(){
         itemImageView.layer.cornerRadius = 8
         cartButton.layer.cornerRadius = 4
+        errorView.layer.cornerRadius = 8
     }
     
     //MARK: - function
-    public func setData(_ data: Item){
+    public func setData(_ data: Product, searchText: String, isSelected: Bool){
+        
         if let url = URL(string: data.image) {
             itemImageView.kf.setImage(with: url)
         }
@@ -124,7 +159,21 @@ class MeaningOutItemCell: UICollectionViewCell {
         itemTitle.attributedText = data.removedHTMLTagTitle.highlightSearchText(searchText: searchText)
         priceLabel.text = data.priceStr
         
+        cartButton.isSelected = isSelected
+    }
+    
+    public func setData(data: CartItem, isSelected: Bool){
+        if let url = URL(string: data.image) {
+            itemImageView.kf.setImage(with: url)
+        } else {
+            itemImageView.isHidden = true
+            errorView.isHidden = false
+        }
         
-        cartButton.isSelected = Defaults.cartList.contains(data.productId)
+        mallLabel.text = data.mallName
+        itemTitle.text = data.title
+        priceLabel.text = Product.formattedPrice(data.price)
+        
+        cartButton.isSelected = isSelected
     }
 }

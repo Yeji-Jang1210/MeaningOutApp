@@ -19,6 +19,7 @@ struct ImageAssets {
     static var clock = UIImage(systemName: "clock")
     static var xmark = UIImage(systemName: "xmark")
     static var camera = UIImage(systemName: "camera.fill")
+    static var cart = UIImage(systemName: "cart")
 
 //MARK: - Assets
     static var empty = UIImage(named: "empty")
