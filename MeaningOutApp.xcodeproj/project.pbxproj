@@ -65,8 +65,23 @@
 		B8F4ED0B2C37ADE5004D68E5 /* CartRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4ED0A2C37ADE5004D68E5 /* CartRepository.swift */; };
 		B8F4ED0D2C37C8ED004D68E5 /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4ED0C2C37C8ED004D68E5 /* FileManager+Extension.swift */; };
 		B8F4ED0F2C390CFF004D68E5 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4ED0E2C390CFF004D68E5 /* UIView+Extension.swift */; };
+		B8F74E222C3B60EB00075BB7 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = B8F4ED012C37A77E004D68E5 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B8FE7B3B2C21030B00566592 /* cart.json in Resources */ = {isa = PBXBuildFile; fileRef = B8FE7B3A2C21030B00566592 /* cart.json */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B8F74E232C3B60EB00075BB7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B8F74E222C3B60EB00075BB7 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B85C86C72C1AD61B00143CC7 /* MeaningOutApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOutApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -364,6 +379,7 @@
 				B85C86C32C1AD61B00143CC7 /* Sources */,
 				B85C86C42C1AD61B00143CC7 /* Frameworks */,
 				B85C86C52C1AD61B00143CC7 /* Resources */,
+				B8F74E232C3B60EB00075BB7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
