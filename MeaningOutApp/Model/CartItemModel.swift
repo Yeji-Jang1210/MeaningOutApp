@@ -18,6 +18,8 @@ class CartItem: Object {
     @Persisted var image: String
     @Persisted var link: String
     
+    @Persisted(originProperty: "products") var category: LinkingObjects<Category>
+    
     func formattedPrice() -> String {
         return Product.formattedPrice(price)
     }
@@ -31,5 +33,19 @@ class CartItem: Object {
         self.addedDate = Date()
         self.image = product.image
         self.link = product.link
+    }
+}
+
+class Category: Object {
+    @Persisted(primaryKey: true) var id: ObjectId
+    @Persisted var name: String
+    @Persisted var categoryDescription: String?
+    
+    @Persisted var products: List<CartItem>
+    
+    convenience init(name: String, categoryDescription: String? = nil) {
+        self.init()
+        self.name = name
+        self.categoryDescription = categoryDescription
     }
 }

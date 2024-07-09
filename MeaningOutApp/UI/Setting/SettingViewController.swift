@@ -11,8 +11,12 @@ import SwiftyUserDefaults
 
 class SettingViewController: BaseVC {
     //MARK: - object
-    let tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let object = UITableView()
+        object.delegate = self
+        object.dataSource = self
+        object.alwaysBounceVertical = false
+        object.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.identifier)
         return object
     }()
     
@@ -53,18 +57,7 @@ class SettingViewController: BaseVC {
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
-    
-    override func configureUI(){
-        configureTableView()
-    }
-    
-    private func configureTableView(){
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.alwaysBounceVertical = false
-        tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.identifier)
-    }
-    
+
     //MARK: - function
     private func bindAction(){
         headerView.editSettingButton.addTarget(self, action: #selector(editSettingButtonTapped), for: .touchUpInside)
@@ -93,19 +86,26 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.row == 4 {
+        if indexPath.row == 4 || indexPath.row == 0 {
             return indexPath
         }
         return nil
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presentAlert(localized: Localized.deleteAccount_dlg) {
-            User.shared.delete()
-            let nvc = UINavigationController(rootViewController: OnboardingViewController())
-            self.changeRootViewController(nvc)
-        } cancel: {
-            
+        switch indexPath.row {
+        case 0:
+            navigationController?.pushViewController(CartCategoryViewController(title: Localized.usersCartList.title, isChild: true), animated: true)
+        case 4:
+            presentAlert(localized: Localized.deleteAccount_dlg) {
+                User.shared.delete()
+                let nvc = UINavigationController(rootViewController: OnboardingViewController())
+                self.changeRootViewController(nvc)
+            } cancel: {
+                
+            }
+        default:
+            return
         }
     }
 }

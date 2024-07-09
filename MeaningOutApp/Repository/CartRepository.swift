@@ -47,16 +47,21 @@ final class CartRepository: CartRepositoryProtocol {
     }
 }
 
+extension CartRepository {
+    func fetchCategory() -> Results<Category> {
+        return realm.objects(Category.self)
+    }
+}
+
 protocol CartRepositoryProtocol {
     // Create
     func addItem(item: CartItem)
     
     // Read
     func fetch() -> Results<CartItem>
-//    func fetchSort(_ sort: String) -> Results<CartItem>
-//    func fetchFilter(_ filter: String) -> Results<CartItem>
     
     // Delete
     func deleteItem(item: CartItem)
     func deleteItemForId(productId: String)
 }
+

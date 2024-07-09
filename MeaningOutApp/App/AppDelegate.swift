@@ -25,9 +25,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         print(Realm.Configuration.defaultConfiguration.fileURL)
         
-        let config = Realm.Configuration(schemaVersion: 2){ migration, oldSchemaVersion in
+        let config = Realm.Configuration(schemaVersion: 4){ migration, oldSchemaVersion in
             
             if oldSchemaVersion < 1 {
+            }
+            
+            if oldSchemaVersion < 3 {
+                //category 추가, linkedobject 추가
+            }
+            
+            if oldSchemaVersion < 4 {
+                //category description 추가
             }
             
         }

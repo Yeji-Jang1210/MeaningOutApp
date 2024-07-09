@@ -35,6 +35,7 @@ enum Localized {
     
     //settingType
     case cartList
+    case usersCartList
     case faq
     case contactUs
     case notification_settings
@@ -113,6 +114,8 @@ enum Localized {
             return "탈퇴하기"
         case .cartList:
             return "나의 장바구니 목록"
+        case .usersCartList:
+            return "\(User.shared.nickname)의 장바구니 목록"
         case .faq:
             return "자주 묻는 질문"
         case .contactUs:
