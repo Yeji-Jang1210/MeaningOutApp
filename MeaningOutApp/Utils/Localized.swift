@@ -60,6 +60,9 @@ enum Localized {
     case jsonDecodedError
     case unownedError
     
+    //dataBase
+    case category_allProducs
+    
     var text: String {
         switch self {
         case .title:
@@ -90,6 +93,8 @@ enum Localized {
             return "상품의 이름을 입력해주세요."
         case .user_info_saved_error:
             return "저장에 실패했습니다."
+        case .category_allProducs:
+            return "장바구니에 추가한 전체 상품을 보여줘요"
         default:
             return ""
         }
@@ -125,6 +130,8 @@ enum Localized {
             return "1:1 문의"
         case .notification_settings:
             return  "알림 설정"
+        case .category_allProducs:
+            return "전체"
         default:
             return ""
         }

@@ -13,13 +13,21 @@ final class CartRepository: CartRepositoryProtocol {
     private let realm = try! Realm()
     
     func addItem(item: CartItem) {
-        try! realm.write {
-            realm.add(item)
+        if let category = realm.objects(Category.self).first {
+            try! realm.write {
+                category.products.append(item)
+            }
         }
     }
     
     func fetch() -> RealmSwift.Results<CartItem> {
         realm.objects(CartItem.self)
+    }
+    
+    func deleteAll() {
+        try! realm.write {
+            realm.deleteAll()
+        }
     }
     
     func deleteItem(item: CartItem) {
@@ -50,6 +58,14 @@ final class CartRepository: CartRepositoryProtocol {
 extension CartRepository {
     func fetchCategory() -> Results<Category> {
         return realm.objects(Category.self)
+    }
+    
+    func createDefaultCategory(){
+        let category = Category(name: Localized.category_allProducs.title, categoryDescription: Localized.category_allProducs.text)
+        
+        try! realm.write {
+            realm.add(category)
+        }
     }
 }
 

@@ -26,6 +26,23 @@ class SettingViewController: BaseVC {
     }()
     
     //MARK: - properties
+    let repository = CartRepository()
+    
+    var cartListText: NSMutableAttributedString {
+        let boldString = "\(repository.fetch().count)개"
+        let fullString = boldString + "의 상품"
+        
+        let attributedString = NSMutableAttributedString(string: fullString)
+        let boldFontAttribute: [NSAttributedString.Key: Any] = [.font: BaseFont.medium.boldFont]
+        
+        if let boldRange = fullString.range(of: boldString){
+            let nsRange = NSRange(boldRange, in: fullString)
+            
+            attributedString.addAttributes(boldFontAttribute, range: nsRange)
+        }
+        
+        return attributedString
+    }
     
     //MARK: - life cycle
     override func viewDidLoad() {
@@ -67,6 +84,8 @@ class SettingViewController: BaseVC {
         let vc = ProfileSettingViewController(type: .edit)
         navigationController?.pushViewController(vc, animated: true)
     }
+    
+    
 }
 
 extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
@@ -79,7 +98,7 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
         cell.settingLabel.text = SettingType.allCases[indexPath.row].title
         
         if SettingType(rawValue: indexPath.row) == .cartList {
-            cell.setCartList(attributes: User.shared.cartListText)
+            cell.setCartList(attributes: cartListText)
         }
         
         return cell
@@ -99,6 +118,8 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
         case 4:
             presentAlert(localized: Localized.deleteAccount_dlg) {
                 User.shared.delete()
+                let repository = CartRepository()
+                repository.deleteAll()
                 let nvc = UINavigationController(rootViewController: OnboardingViewController())
                 self.changeRootViewController(nvc)
             } cancel: {

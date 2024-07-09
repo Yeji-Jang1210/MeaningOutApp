@@ -46,6 +46,7 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     
     //MARK: - properties
     let viewModel = ProfileSettingViewModel()
+    let repository = CartRepository()
     var type: ProfileVCType = .edit
     
     //MARK: - life cycle
@@ -151,6 +152,7 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
             if result {
                 switch self.type {
                 case .setting:
+                    self.repository.createDefaultCategory()
                     let vc = MainTabBarController()
                     self.changeRootViewController(vc)
                     return

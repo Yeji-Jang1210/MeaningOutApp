@@ -43,6 +43,7 @@ class DetailViewController: BaseVC {
     
     //MARK: - properties
     var repository = CartRepository()
+    lazy var categories = repository.fetchCategory()
     var url: String = ""
     var product: Product?
     var isSelected: Bool = false {
