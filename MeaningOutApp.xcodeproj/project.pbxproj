@@ -57,6 +57,8 @@
 		B85C875D2C1F26E400143CC7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C875C2C1F26E400143CC7 /* User.swift */; };
 		B87313092C3CB183000AF9FB /* CartCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313082C3CB183000AF9FB /* CartCategoryViewController.swift */; };
 		B873130C2C3CB294000AF9FB /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873130B2C3CB294000AF9FB /* CategoryListTableViewCell.swift */; };
+		B87313162C3D1B42000AF9FB /* ProfileSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313152C3D1B42000AF9FB /* ProfileSettingViewModel.swift */; };
+		B87313182C3D1C1D000AF9FB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313172C3D1C1D000AF9FB /* Observable.swift */; };
 		B8759EFC2C2AC1F700D8B30B /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8759EFB2C2AC1F700D8B30B /* BaseTableViewCell.swift */; };
 		B89D65F42C2C004B004E418F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89D65F32C2C004B004E418F /* APIManager.swift */; };
 		B8D93ED52C21601D00034165 /* CharacterStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D93ED42C21601D00034165 /* CharacterStyle.swift */; };
@@ -131,6 +133,8 @@
 		B85C875C2C1F26E400143CC7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B87313082C3CB183000AF9FB /* CartCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCategoryViewController.swift; sourceTree = "<group>"; };
 		B873130B2C3CB294000AF9FB /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
+		B87313152C3D1B42000AF9FB /* ProfileSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewModel.swift; sourceTree = "<group>"; };
+		B87313172C3D1C1D000AF9FB /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		B8759EFB2C2AC1F700D8B30B /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		B89D65F32C2C004B004E418F /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		B8D93ED42C21601D00034165 /* CharacterStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterStyle.swift; sourceTree = "<group>"; };
@@ -252,6 +256,7 @@
 				B85C87212C1AFEFE00143CC7 /* ProfileVCType.swift */,
 				B85C87232C1B227D00143CC7 /* BaseFont.swift */,
 				B85C872E2C1B3B3C00143CC7 /* Character.swift */,
+				B87313172C3D1C1D000AF9FB /* Observable.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -306,6 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				B85C871D2C1AF34500143CC7 /* ProfileSettingViewController.swift */,
+				B87313152C3D1B42000AF9FB /* ProfileSettingViewModel.swift */,
 			);
 			path = "Profile Setting";
 			sourceTree = "<group>";
@@ -506,6 +512,7 @@
 				B8F4ED072C37A7CB004D68E5 /* CartViewController.swift in Sources */,
 				B85C87412C1C006500143CC7 /* SearchItemCell.swift in Sources */,
 				B85C86FF2C1ADD9300143CC7 /* ImageAssets.swift in Sources */,
+				B87313162C3D1B42000AF9FB /* ProfileSettingViewModel.swift in Sources */,
 				B85C87312C1B430D00143CC7 /* SearchViewController.swift in Sources */,
 				B85C873F2C1BFB8F00143CC7 /* SearchResults.swift in Sources */,
 				B873130C2C3CB294000AF9FB /* CategoryListTableViewCell.swift in Sources */,
@@ -520,6 +527,7 @@
 				B85C87262C1B2DF700143CC7 /* SelectCharacterViewController.swift in Sources */,
 				B85C87182C1AE3E800143CC7 /* BaseVC.swift in Sources */,
 				B87313092C3CB183000AF9FB /* CartCategoryViewController.swift in Sources */,
+				B87313182C3D1C1D000AF9FB /* Observable.swift in Sources */,
 				B85C874E2C1D4C4000143CC7 /* MeaningOutListHeaderView.swift in Sources */,
 				B85C87542C1F1CB700143CC7 /* SettingTableViewCell.swift in Sources */,
 				B85C871C2C1AEA3A00143CC7 /* Localized.swift in Sources */,

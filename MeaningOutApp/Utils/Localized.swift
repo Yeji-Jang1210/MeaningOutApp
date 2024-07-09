@@ -32,6 +32,7 @@ enum Localized {
     case like_select_message
     case like_unselect_message
     case search_cartItem_placeholder
+    case user_info_saved_error
     
     //settingType
     case cartList
@@ -87,6 +88,8 @@ enum Localized {
             return "닉네임에 숫자는 포함할 수 없어요"
         case .search_cartItem_placeholder:
             return "상품의 이름을 입력해주세요."
+        case .user_info_saved_error:
+            return "저장에 실패했습니다."
         default:
             return ""
         }

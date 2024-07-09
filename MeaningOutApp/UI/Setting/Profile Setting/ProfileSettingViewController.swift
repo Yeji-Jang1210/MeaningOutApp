@@ -9,23 +9,6 @@ import UIKit
 import SnapKit
 import SwiftyUserDefaults
 
-enum ValidateNicknameError: Error {
-    case invalid_range
-    case contains_specific_character
-    case contains_number
-    
-    var message: String {
-        switch self {
-        case .invalid_range:
-            return Localized.nickname_range_error.text
-        case .contains_specific_character:
-            return Localized.nickname_contains_specific_character.text
-        case .contains_number:
-            return Localized.nickname_contains_number.text
-        }
-    }
-}
-
 class ProfileSettingViewController: BaseVC, SendProfileImageId {
     
     //MARK: - object
@@ -62,12 +45,8 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     }()
     
     //MARK: - properties
+    let viewModel = ProfileSettingViewModel()
     var type: ProfileVCType = .edit
-    var imageNum: Int = 0 {
-        didSet {
-            characterView.image = Character.getImage(num: imageNum)
-        }
-    }
     
     //MARK: - life cycle
     init(type: ProfileVCType){
@@ -81,7 +60,8 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindAction()
+        configureUIAction()
+        bindData()
     }
     
     //MARK: - configure function
@@ -128,14 +108,10 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
             acceptButton.isHidden = true
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localized.profile_edit_save_button.title, style: .done, target: self, action: #selector(saveData))
             navigationItem.rightBarButtonItem?.tintColor = Color.black
-            setData()
         }
-        
-        setNicknameStatusLabel(nicknameTextField.text)
     }
     
-    //MARK: - function
-    private func bindAction(){
+    private func configureUIAction(){
         //characterView Tap Action
         let gesture = UITapGestureRecognizer(target: self, action: #selector(characterViewTapped))
         characterView.addGestureRecognizer(gesture)
@@ -147,91 +123,69 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
         nicknameTextField.addTarget(self, action: #selector(nicknameTextChanged), for: .editingChanged)
     }
     
+    private func bindData(){
+        viewModel.outputImageNum.bind { num in
+            self.characterView.image = Character.getImage(num: num)
+        }
+        
+        viewModel.outputNickname.bind { nickname in
+            self.nicknameTextField.text = nickname
+        }
+        
+        viewModel.outputNicknameStatus.bind { status in
+            self.nicknameStatusLabel.text = status?.message
+        }
+        
+        viewModel.outputIsNicknameValid.bind { result in
+            switch self.type {
+            case .setting:
+                self.acceptButton.isEnabled = result
+            case .edit:
+                self.navigationItem.rightBarButtonItem?.isEnabled = result
+            }
+        }
+        
+        viewModel.outputIsSaved.bind { result in
+            guard let result else { return }
+            
+            if result {
+                switch self.type {
+                case .setting:
+                    let vc = MainTabBarController()
+                    self.changeRootViewController(vc)
+                    return
+                case .edit:
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } else {
+                self.view.makeToast(Localized.user_info_saved_error.text)
+            }
+            
+        }
+    }
+    
+    //MARK: - function
     @objc func characterViewTapped(){
         let vc = SelectCharacterViewController(title: type.navTitle, isChild: true)
         //delegate 연결
         vc.delegate = self
-        vc.selectNumber = imageNum
+        vc.selectNumber = viewModel.outputImageNum.value
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func acceptButtonTapped(){
-        saveData()
+        viewModel.inputIsSaved.value = true
     }
     
     func dataSend(id: Int) {
-        imageNum = id
-    }
-    
-    func setData(){
-        nicknameTextField.text = User.shared.nickname
-        imageNum = User.shared.profileImageId ?? 0
+        viewModel.inputImageNum.value = id
     }
     
     @objc func saveData(){
-        //validate 작업 필요
-        User.shared.nickname = nicknameTextField.text!
-        
-        User.shared.profileImageId = imageNum
-        User.shared.signupDate = Date.now
-        
-        switch type {
-        case .setting:
-            let vc = MainTabBarController()
-            self.changeRootViewController(vc)
-            return
-        case .edit:
-            navigationController?.popViewController(animated: true)
-        }
+        viewModel.inputIsSaved.value = true
     }
     
     @objc func nicknameTextChanged(_ sender: UITextField) {
-        setNicknameStatusLabel(sender.text)
-    }
-    
-    func setNicknameStatusLabel(_ text: String?){
-        do {
-            let result = try validateNickname(text)
-            
-            switch type {
-            case .setting:
-                acceptButton.isEnabled = result
-            case .edit:
-                navigationItem.rightBarButtonItem?.isEnabled = result
-            }
-            
-            nicknameStatusLabel.text = ""
-            
-        } catch(let error) {
-            let validateError = error as! ValidateNicknameError
-            nicknameStatusLabel.text = validateError.message
-            
-            switch type {
-            case .setting:
-                acceptButton.isEnabled = false
-            case .edit:
-                navigationItem.rightBarButtonItem?.isEnabled = false
-            }
-        }
-    }
-    
-    func validateNickname(_ text: String?) throws -> Bool {
-        guard let nickname = text else { return false }
-        
-        let specificCharacter = CharacterSet(charactersIn: "@#$%")
-        let numbers = CharacterSet.decimalDigits
-        
-        if nickname.count < 2 || nickname.count >= 10 {
-            throw ValidateNicknameError.invalid_range
-        }
-        
-        if nickname.rangeOfCharacter(from: specificCharacter) != nil {
-            throw ValidateNicknameError.contains_specific_character
-        }
-
-        if nickname.rangeOfCharacter(from: numbers) != nil {
-            throw ValidateNicknameError.contains_number
-        }
-        return true
+        viewModel.inputNickname.value = sender.text
     }
 }

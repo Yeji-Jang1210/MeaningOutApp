@@ -75,7 +75,6 @@ class OnboardingViewController: BaseVC {
     
     @objc func startButtonTapped(){
         let vc = ProfileSettingViewController(type: .setting)
-        vc.imageNum = Int.random(in: 0...Character.maxCount)
         navigationController?.pushViewController(vc, animated: true)
     }
     
