@@ -169,6 +169,7 @@ class SearchViewController: BaseVC {
             self.tableView.isHidden = isEmpty
             self.emptyView.isHidden = !isEmpty
             self.headerView.isHidden = isEmpty
+            self.searchController.searchBar.text = ""
         }
         
         viewModel.outputSelectedCellTrigger.bind { text in

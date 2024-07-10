@@ -24,9 +24,14 @@ final class CartRepository: CartRepositoryProtocol {
         realm.objects(CartItem.self)
     }
     
-    func deleteAll() {
-        try! realm.write {
-            realm.deleteAll()
+    func deleteAll(completion: @escaping ((Bool) -> Void)) {
+        do {
+            try realm.write{
+                realm.deleteAll()
+                completion(true)
+            }
+        } catch {
+            completion(false)
         }
     }
     

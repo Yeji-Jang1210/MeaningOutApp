@@ -26,27 +26,14 @@ class SettingViewController: BaseVC {
     }()
     
     //MARK: - properties
-    let repository = CartRepository()
+    let viewModel = SettingViewModel()
     
-    var cartListText: NSMutableAttributedString {
-        let boldString = "\(repository.fetch().count)개"
-        let fullString = boldString + "의 상품"
-        
-        let attributedString = NSMutableAttributedString(string: fullString)
-        let boldFontAttribute: [NSAttributedString.Key: Any] = [.font: BaseFont.medium.boldFont]
-        
-        if let boldRange = fullString.range(of: boldString){
-            let nsRange = NSRange(boldRange, in: fullString)
-            
-            attributedString.addAttributes(boldFontAttribute, range: nsRange)
-        }
-        
-        return attributedString
-    }
+    var cartListText: NSMutableAttributedString!
     
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        headerView.editSettingButton.addTarget(self, action: #selector(editSettingButtonTapped), for: .touchUpInside)
         bindAction()
     }
     
@@ -54,7 +41,7 @@ class SettingViewController: BaseVC {
         super.viewDidAppear(animated)
         print(#function)
         headerView.setData()
-        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+        viewModel.inputRefreshCartListCountTrigger.value = ()
     }
     
     //MARK: - configure function
@@ -74,10 +61,43 @@ class SettingViewController: BaseVC {
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
-
+    
     //MARK: - function
     private func bindAction(){
-        headerView.editSettingButton.addTarget(self, action: #selector(editSettingButtonTapped), for: .touchUpInside)
+        viewModel.outputCartListText.bind { boldString, fullString in
+            let attributedString = NSMutableAttributedString(string: fullString)
+            let boldFontAttribute: [NSAttributedString.Key: Any] = [.font: BaseFont.medium.boldFont]
+            
+            if let boldRange = fullString.range(of: boldString){
+                let nsRange = NSRange(boldRange, in: fullString)
+                
+                attributedString.addAttributes(boldFontAttribute, range: nsRange)
+            }
+            
+            self.cartListText = attributedString
+            
+            self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+        }
+        
+        viewModel.outputSelectSettingType.bind { type in
+            guard let type else { return }
+            switch type {
+            case .cartList:
+                self.navigationController?.pushViewController(CartCategoryViewController(title: Localized.usersCartList.title, isChild: true), animated: true)
+            case .deleteAccount:
+                self.presentDeleteAlert()
+            default:
+                return
+            }
+        }
+        
+        viewModel.outputIsDeleteSucceeded.bind { result in
+            guard let result else { return }
+            if result {
+                let nvc = UINavigationController(rootViewController: OnboardingViewController())
+                self.changeRootViewController(nvc)
+            }
+        }
     }
     
     @objc func editSettingButtonTapped(){
@@ -85,7 +105,13 @@ class SettingViewController: BaseVC {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    
+    private func presentDeleteAlert(){
+        self.presentAlert(localized: Localized.deleteAccount_dlg) {
+            self.viewModel.inputDeleteAccountTrigger.value = ()
+        } cancel: {
+            
+        }
+    }
 }
 
 extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
@@ -112,21 +138,6 @@ extension SettingViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0:
-            navigationController?.pushViewController(CartCategoryViewController(title: Localized.usersCartList.title, isChild: true), animated: true)
-        case 4:
-            presentAlert(localized: Localized.deleteAccount_dlg) {
-                User.shared.delete()
-                let repository = CartRepository()
-                repository.deleteAll()
-                let nvc = UINavigationController(rootViewController: OnboardingViewController())
-                self.changeRootViewController(nvc)
-            } cancel: {
-                
-            }
-        default:
-            return
-        }
+        viewModel.inputSelectSettingType.value = indexPath.row
     }
 }
