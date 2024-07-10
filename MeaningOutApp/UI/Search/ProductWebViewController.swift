@@ -1,5 +1,5 @@
 //
-//  DetailViewController.swift
+//  ProductWebViewController.swift
 //  MeaningOutApp
 //
 //  Created by 장예지 on 6/14/24.
@@ -12,7 +12,7 @@ import Lottie
 import SnapKit
 import Toast
 
-class DetailViewController: BaseVC {
+class ProductWebViewController: BaseVC {
     
     //MARK: - object
     let webView: WKWebView = {
@@ -25,6 +25,7 @@ class DetailViewController: BaseVC {
     let rightBarButtonItem: UIBarButtonItem = {
         let object = UIBarButtonItem()
         object.tintColor = .clear
+        object.isSelected = false
         return object
     }()
     
@@ -34,7 +35,7 @@ class DetailViewController: BaseVC {
         object.backgroundColor = .white.withAlphaComponent(0.4)
         return object
     }()
-    
+
     let loadingAnimationView: LottieAnimationView = {
         let object = LottieAnimationView(name: "loading")
         object.loopMode = .loop
@@ -42,39 +43,26 @@ class DetailViewController: BaseVC {
     }()
     
     //MARK: - properties
-    var repository = CartRepository()
-    lazy var categories = repository.fetchCategory()
-    var url: String = ""
-    var product: Product?
-    var isSelected: Bool = false {
-        didSet {
-            rightBarButtonItem.image = isSelected ? ImageAssets.like_selected :  ImageAssets.like_unselected
-        }
-    }
-    
-    var isLoading: Bool = false {
-        didSet {
-            if isLoading {
-                container.isHidden = false
-                loadingAnimationView.play()
-            } else {
-                loadingAnimationView.stop()
-                container.isHidden = true
-            }
-        }
-    }
+    var viewModel: ProductWebViewModel!
     
     //MARK: - life cycle
+    init(title: String = "", isChild: Bool = false, url: String, product: Product) {
+        super.init(title: title, isChild: isChild)
+        viewModel = ProductWebViewModel(url: url, product: product)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadWebLink()
+        viewModel.inputLoadWebLinkTrigger.value = ()
+        viewModel.inputFindProductTrigger.value = ()
+        bindAction()
     }
     
     //MARK: - configure function
     override func configureHierarchy(){
         view.addSubview(webView)
         view.addSubview(container)
-        
+
         container.addSubview(loadingAnimationView)
     }
     
@@ -86,7 +74,7 @@ class DetailViewController: BaseVC {
         container.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
+
         loadingAnimationView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.5)
@@ -103,48 +91,61 @@ class DetailViewController: BaseVC {
         navigationItem.rightBarButtonItem = rightBarButtonItem
         rightBarButtonItem.target = self
         rightBarButtonItem.action = #selector(likeButtonTapped)
-        if let id = product?.productId {
-            isSelected = repository.findProductId(productId: id)
+    }
+    
+    private func bindAction(){
+        viewModel.outputIsSelected.bind { isSelected in
+            guard let isSelected else { return }
+            
+            self.rightBarButtonItem.isSelected = isSelected
+            self.rightBarButtonItem.image = isSelected ? ImageAssets.like_selected :  ImageAssets.like_unselected
+        }
+        
+        viewModel.outputPresentToast.bind { isSelected in
+            guard let isSelected else { return }
+            
+            DispatchQueue.main.async {
+                self.view.makeToast(isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
+            }
+        }
+        
+        viewModel.outputWebLink.bind { url in
+            guard let url else { return }
+            print(url)
+            self.webView.load(URLRequest(url: url))
+        }
+        
+        viewModel.outputIsLoading.bind { [self] isLoading in
+            guard let isLoading else { return }
+            
+            if isLoading {
+                self.container.isHidden = false
+                self.loadingAnimationView.play()
+            } else {
+                self.loadingAnimationView.stop()
+                container.isHidden = true
+            }
         }
     }
     
     //MARK: - function
-    private func loadWebLink(){
-        guard let url = URL(string: url) else { return }
-        self.webView.load(URLRequest(url: url))
-    }
-    
     @objc func likeButtonTapped(_ sender: UIBarButtonItem){
-        isSelected.toggle()
-        
-        if let product = product {
-            let item = CartItem(product)
-            if isSelected {
-                print("append")
-                
-                repository.addItem(item: item)
-                
-            } else {
-                print("delete")
-                repository.deleteItemForId(productId: product.productId)
-            }
-            
-            view.makeToast(isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
-        }
+        sender.isSelected.toggle()
+        viewModel.inputIsSelected.value = sender.isSelected
     }
     
     public func setData(url: String, product: Product){
-        self.url = url
-        self.product = product
+        self.viewModel.url = url
+        self.viewModel.product = product
     }
 }
 
-extension DetailViewController: WKNavigationDelegate {
+extension ProductWebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        isLoading = true
+        viewModel.outputIsLoading.value = true
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        isLoading = false
+        viewModel.outputIsLoading.value = false
     }
 }

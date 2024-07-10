@@ -39,7 +39,7 @@
 		B85C872F2C1B3B3C00143CC7 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C872E2C1B3B3C00143CC7 /* Character.swift */; };
 		B85C87312C1B430D00143CC7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C87302C1B430D00143CC7 /* SearchViewController.swift */; };
 		B85C87332C1B433800143CC7 /* MeaningOutListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C87322C1B433800143CC7 /* MeaningOutListViewController.swift */; };
-		B85C87352C1B437500143CC7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C87342C1B437400143CC7 /* DetailViewController.swift */; };
+		B85C87352C1B437500143CC7 /* ProductWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C87342C1B437400143CC7 /* ProductWebViewController.swift */; };
 		B85C87382C1B43AD00143CC7 /* MeaningOutItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C87372C1B43AD00143CC7 /* MeaningOutItemCell.swift */; };
 		B85C873C2C1B449000143CC7 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C873B2C1B449000143CC7 /* SettingViewController.swift */; };
 		B85C873F2C1BFB8F00143CC7 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C873E2C1BFB8F00143CC7 /* SearchResults.swift */; };
@@ -61,6 +61,8 @@
 		B87313182C3D1C1D000AF9FB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313172C3D1C1D000AF9FB /* Observable.swift */; };
 		B873131C2C3D70FE000AF9FB /* AddCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873131B2C3D70FE000AF9FB /* AddCategoryViewController.swift */; };
 		B87313202C3E0664000AF9FB /* SelectCharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873131F2C3E0664000AF9FB /* SelectCharacterViewModel.swift */; };
+		B873133E2C3E4C6B000AF9FB /* MeaningOutListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873133D2C3E4C6B000AF9FB /* MeaningOutListViewModel.swift */; };
+		B87313412C3E683E000AF9FB /* ProductWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313402C3E683E000AF9FB /* ProductWebViewModel.swift */; };
 		B8759EFC2C2AC1F700D8B30B /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8759EFB2C2AC1F700D8B30B /* BaseTableViewCell.swift */; };
 		B89D65F42C2C004B004E418F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89D65F32C2C004B004E418F /* APIManager.swift */; };
 		B8D93ED52C21601D00034165 /* CharacterStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D93ED42C21601D00034165 /* CharacterStyle.swift */; };
@@ -117,7 +119,7 @@
 		B85C872E2C1B3B3C00143CC7 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		B85C87302C1B430D00143CC7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		B85C87322C1B433800143CC7 /* MeaningOutListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningOutListViewController.swift; sourceTree = "<group>"; };
-		B85C87342C1B437400143CC7 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		B85C87342C1B437400143CC7 /* ProductWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductWebViewController.swift; sourceTree = "<group>"; };
 		B85C87372C1B43AD00143CC7 /* MeaningOutItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningOutItemCell.swift; sourceTree = "<group>"; };
 		B85C873B2C1B449000143CC7 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		B85C873E2C1BFB8F00143CC7 /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
@@ -139,6 +141,8 @@
 		B87313172C3D1C1D000AF9FB /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		B873131B2C3D70FE000AF9FB /* AddCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
 		B873131F2C3E0664000AF9FB /* SelectCharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCharacterViewModel.swift; sourceTree = "<group>"; };
+		B873133D2C3E4C6B000AF9FB /* MeaningOutListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeaningOutListViewModel.swift; sourceTree = "<group>"; };
+		B87313402C3E683E000AF9FB /* ProductWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductWebViewModel.swift; sourceTree = "<group>"; };
 		B8759EFB2C2AC1F700D8B30B /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		B89D65F32C2C004B004E418F /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		B8D93ED42C21601D00034165 /* CharacterStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterStyle.swift; sourceTree = "<group>"; };
@@ -242,10 +246,9 @@
 			isa = PBXGroup;
 			children = (
 				B85C874A2C1C3B9000143CC7 /* SearchVC */,
-				B85C87322C1B433800143CC7 /* MeaningOutListViewController.swift */,
-				B85C87372C1B43AD00143CC7 /* MeaningOutItemCell.swift */,
-				B85C87342C1B437400143CC7 /* DetailViewController.swift */,
-				B85C874D2C1D4C4000143CC7 /* MeaningOutListHeaderView.swift */,
+				B873133F2C3E4C7C000AF9FB /* MeaningOutList */,
+				B85C87342C1B437400143CC7 /* ProductWebViewController.swift */,
+				B87313402C3E683E000AF9FB /* ProductWebViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -293,8 +296,8 @@
 		B85C87292C1B2E0A00143CC7 /* SelectCharacter */ = {
 			isa = PBXGroup;
 			children = (
+				B873133C2C3E4AEF000AF9FB /* Cell */,
 				B85C87252C1B2DF700143CC7 /* SelectCharacterViewController.swift */,
-				B85C872A2C1B2E3A00143CC7 /* CharacterCollectionViewCell.swift */,
 				B873131F2C3E0664000AF9FB /* SelectCharacterViewModel.swift */,
 			);
 			path = SelectCharacter;
@@ -367,6 +370,25 @@
 				B873130B2C3CB294000AF9FB /* CategoryListTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		B873133C2C3E4AEF000AF9FB /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B85C872A2C1B2E3A00143CC7 /* CharacterCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		B873133F2C3E4C7C000AF9FB /* MeaningOutList */ = {
+			isa = PBXGroup;
+			children = (
+				B85C874D2C1D4C4000143CC7 /* MeaningOutListHeaderView.swift */,
+				B85C87372C1B43AD00143CC7 /* MeaningOutItemCell.swift */,
+				B85C87322C1B433800143CC7 /* MeaningOutListViewController.swift */,
+				B873133D2C3E4C6B000AF9FB /* MeaningOutListViewModel.swift */,
+			);
+			path = MeaningOutList;
 			sourceTree = "<group>";
 		};
 		B8F4ED032C37A786004D68E5 /* Repository */ = {
@@ -526,7 +548,9 @@
 				B8D93ED52C21601D00034165 /* CharacterStyle.swift in Sources */,
 				B85C86E12C1AD6D800143CC7 /* APIInfo.swift in Sources */,
 				B85C86FD2C1ADBE000143CC7 /* UIColor+Extension.swift in Sources */,
-				B85C87352C1B437500143CC7 /* DetailViewController.swift in Sources */,
+				B85C87352C1B437500143CC7 /* ProductWebViewController.swift in Sources */,
+				B873133E2C3E4C6B000AF9FB /* MeaningOutListViewModel.swift in Sources */,
+				B87313412C3E683E000AF9FB /* ProductWebViewModel.swift in Sources */,
 				B8F4ED0D2C37C8ED004D68E5 /* FileManager+Extension.swift in Sources */,
 				B85C87332C1B433800143CC7 /* MeaningOutListViewController.swift in Sources */,
 				B85C87502C1D507A00143CC7 /* FilterButton.swift in Sources */,

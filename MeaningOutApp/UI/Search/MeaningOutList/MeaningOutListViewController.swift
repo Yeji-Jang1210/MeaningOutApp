@@ -59,27 +59,8 @@ class MeaningOutListViewController: BaseVC {
     }()
     
     //MARK: - properties
-    var repository: CartRepository = CartRepository()
-    var content: ShoppingItemList?
-    var text: String = ""
-    var filter: FilterType = .similarity {
-        didSet {
-            start = 1
-            callAPI()
-        }
-    }
-    var selectIndex: Int?
+    var viewModel: MeaningOutListViewModel!
     
-    var start = 1
-    var isEnd: Bool {
-        if let total = content?.total {
-            if start > total - 30 || start > 1000 {
-                return true
-            }
-        }
-        return false
-    }
-
     var animationType: LottieAnimationType = .none {
         didSet {
             switch animationType {
@@ -106,7 +87,7 @@ class MeaningOutListViewController: BaseVC {
     //MARK: - life cycle
     override init(title: String = "", isChild: Bool = false) {
         super.init(title: title, isChild: isChild)
-        text = title
+        viewModel = MeaningOutListViewModel(text: title)
     }
     
     required init?(coder: NSCoder) {
@@ -116,9 +97,6 @@ class MeaningOutListViewController: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindAction()
-        
-        header.buttonCollecction[0].isSelected = true
-        filter = .similarity
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -166,6 +144,10 @@ class MeaningOutListViewController: BaseVC {
     
     override func configureUI(){
         configureCollectionView()
+        
+        for button in header.buttonCollecction {
+            button.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
+        }
     }
     
     private func configureCollectionView(){
@@ -178,91 +160,73 @@ class MeaningOutListViewController: BaseVC {
     }
     
     //MARK: - function
-    
     private func bindAction(){
-        for button in header.buttonCollecction {
-            button.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
+        viewModel.outputProducts.bind { products in
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+                self.animationType = .none
+                
+                if self.viewModel.start == 1 && !products.isEmpty {
+                    self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
+            }
         }
-    }
-    
-    private func callAPI(){
-        animationType = .loading
-        APIService.shared.networking(api: .search(query: text, sort: filter, start: start), of: ShoppingItemList.self) { networkResult in
-            switch networkResult {
-            case .success(let data):
-                
-                if self.start == 1 {
-                    self.content = data
+        
+        viewModel.outputTotal.bind { total in
+            DispatchQueue.main.async {
+                self.header.resultCountLabel.text = Localized.result_count_text(count: total).text
+            }
+        }
+        
+        viewModel.outputCallAPIError.bind { error in
+            guard let error else { return }
+            
+            self.handlingError(error)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+        
+        viewModel.outputFilter.bind { type in
+            print(type.rawValue)
+            self.header.buttonCollecction[type.rawValue].isSelected = true
+            for button in self.header.buttonCollecction {
+                if button.tag == type.rawValue {
+                    button.isSelected = true
                 } else {
-                    self.content?.items.append(contentsOf: data.items)
-                }
-                
-                DispatchQueue.main.async {
-                    self.header.resultCountLabel.text = Localized.result_count_text(count: data.total).text
-                    self.collectionView.reloadData()
-                    
-                    self.animationType = .none
-                    
-                    if self.start == 1 && !data.items.isEmpty {
-                        self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-                    }
-                }
-                
-            case .error(let error):
-                self.handlingError(error)
-                DispatchQueue.main.async {
-                    self.navigationController?.popViewController(animated: true)
+                    button.isSelected = false
                 }
             }
         }
     }
     
     @objc func filterButtonTapped(_ sender: FilterButton){
-        guard let content else { return }
-        if !content.items.isEmpty {
-            for button in header.buttonCollecction {
-                if button.tag == sender.tag {
-                    button.isSelected = true
-                } else {
-                    button.isSelected = false
-                }
-            }
-            filter = FilterType(rawValue: sender.tag)!
+        if !viewModel.outputProducts.value.isEmpty {
+            viewModel.inputFilter.value = FilterType(rawValue: sender.tag)!
         }
     }
     
     @objc func likeButtonTapped(_ sender: UIButton){
-        guard let product = content?.items[sender.tag] else { return }
-        
         sender.isSelected.toggle()
+        viewModel.inputProductSelected.value = (sender.tag, sender.isSelected)
         
-        if sender.isSelected {
-            
-            print("append")
-            animationType = .adding
-            
-            //add record
-            let item = CartItem(product)
-            //이미지 파일에 저장
-
-            repository.addItem(item: item)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-                self.animationType = .none
-            }
-            
-        } else {
-            print("delete")
-            
-            //delete record
-            repository.deleteItemForId(productId: product.productId)
-        }
-        
-        view.makeToast(sender.isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
+        //        if sender.isSelected {
+        //            animationType = .adding
+        //            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+        //                self.animationType = .none
+        //            }
+        //        } else {
+        //            print("delete")
+        //        }
+        //        view.makeToast(sender.isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
     }
     
     func handlingError(_ error: NetworkingError){
         // 메인 스레드에서 토스트 메시지 표시
-        view.makeToast(error.message)
+        DispatchQueue.main.async {
+            self.view.makeToast(error.message)
+        }
+        
     }
 }
 
@@ -274,15 +238,14 @@ extension MeaningOutListViewController: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return content?.items.count ?? 0
+        return viewModel.outputProducts.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MeaningOutItemCell.identifier, for: indexPath) as! MeaningOutItemCell
         
-        if let item = self.content?.items[indexPath.row] {
-            cell.setData(item, searchText: text, isSelected: repository.findProductId(productId: item.productId))
-        }
+        let item = self.viewModel.outputProducts.value[indexPath.row]
+        cell.setData(item, searchText: self.viewModel.text, isSelected: self.viewModel.productIsAddedCart(item))
         
         cell.cartButton.tag = indexPath.row
         cell.cartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
@@ -290,23 +253,17 @@ extension MeaningOutListViewController: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let item = content?.items[indexPath.row] {
-            selectIndex = indexPath.row
-            let vc = DetailViewController(title: item.removedHTMLTagTitle, isChild: true)
-            vc.setData(url: item.link, product: item)
-            navigationController?.pushViewController(vc, animated: true)
-        }
+        let item = viewModel.outputProducts.value[indexPath.row]
+        let vc = ProductWebViewController(title: item.removedHTMLTagTitle, isChild: true, url: item.link, product: item)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension MeaningOutListViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            if let count = content?.items.count {
-                if count - 2 == indexPath.row && !isEnd {
-                    start += 30
-                    callAPI()
-                }
+            if self.viewModel.outputProducts.value.count - 2 == indexPath.row && !viewModel.isEnd {
+                viewModel.inputNextPageTrigger.value = ()
             }
         }
     }
