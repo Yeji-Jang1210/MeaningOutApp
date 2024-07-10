@@ -69,18 +69,19 @@ class SearchViewController: BaseVC {
     }()
     
     //MARK: - properties
+    let viewModel = SearchViewModel()
     
     //MARK: - life cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         bindAction()
+        headerButton.addTarget(self, action: #selector(deleteListAll), for: .touchUpInside)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = Localized.search_tab_nav.title
-        reloadTableView()
     }
     
     //MARK: - configure function
@@ -159,43 +160,37 @@ class SearchViewController: BaseVC {
     
     //MARK: - function
     private func bindAction(){
-        headerButton.addTarget(self, action: #selector(deleteListAll), for: .touchUpInside)
-    }
-    
-    private func checkIsTableViewEmpty(){
-        tableView.isHidden = SearchResults.shared.list.isEmpty
-        emptyView.isHidden = !SearchResults.shared.list.isEmpty
-        headerView.isHidden = SearchResults.shared.list.isEmpty
-    }
-    
-    private func reloadTableView(){
-        checkIsTableViewEmpty()
-        tableView.reloadData()
+        viewModel.outputSearchList.bind { list in
+            self.tableView.reloadData()
+        }
+        
+        viewModel.outputListisEmpty.bind { isEmpty in
+            guard let isEmpty = isEmpty else { return }
+            self.tableView.isHidden = isEmpty
+            self.emptyView.isHidden = !isEmpty
+            self.headerView.isHidden = isEmpty
+        }
+        
+        viewModel.outputSelectedCellTrigger.bind { text in
+            guard let text else { return }
+            let vc = MeaningOutListViewController(title: text, isChild: true)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @objc func deleteItem(_ sender: UIButton){
-        SearchResults.shared.deleteItem(sender.tag)
-        reloadTableView()
+        viewModel.inputSearchResultTrigger.value = .delete(sender.tag)
     }
     
     @objc func deleteListAll(){
-        SearchResults.shared.deleteAll()
-        reloadTableView()
-    }
-    
-    func searchItem(text: String){
-        SearchResults.shared.saveItem(text)
-        reloadTableView()
-        
-        let vc = MeaningOutListViewController(title: text, isChild: true)
-        navigationController?.pushViewController(vc, animated: true)
+        viewModel.inputSearchResultTrigger.value = .deleteAll
     }
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SearchResults.shared.list.count
+        return viewModel.outputSearchList.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -207,7 +202,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        searchItem(text: SearchResults.shared.list[indexPath.row])
+        viewModel.inputSearchResultTrigger.value = .searchForIndex(indexPath.row)
     }
 }
 
@@ -217,8 +212,8 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        if let text = searchBar.text ,!text.isEmpty{
-            searchItem(text: text)
+        if let text = searchBar.text ,!text.isEmpty {
+            self.viewModel.inputSearchResultTrigger.value = .searchForText(text)
         }
     }
 }
