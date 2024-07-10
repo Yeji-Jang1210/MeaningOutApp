@@ -50,7 +50,12 @@ class CartCategoryViewController: BaseVC {
     
     @objc 
     func addCategoryButtonTapped(){
-        print(#function)
+        let vc = AddCategoryViewController()
+        if let sheet = vc.sheetPresentationController {
+            sheet.detents = [.medium()]
+        }
+        
+        self.present(vc, animated: true)
     }
 }
 

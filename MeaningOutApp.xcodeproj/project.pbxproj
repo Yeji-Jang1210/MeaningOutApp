@@ -59,6 +59,8 @@
 		B873130C2C3CB294000AF9FB /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873130B2C3CB294000AF9FB /* CategoryListTableViewCell.swift */; };
 		B87313162C3D1B42000AF9FB /* ProfileSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313152C3D1B42000AF9FB /* ProfileSettingViewModel.swift */; };
 		B87313182C3D1C1D000AF9FB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313172C3D1C1D000AF9FB /* Observable.swift */; };
+		B873131C2C3D70FE000AF9FB /* AddCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873131B2C3D70FE000AF9FB /* AddCategoryViewController.swift */; };
+		B87313202C3E0664000AF9FB /* SelectCharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873131F2C3E0664000AF9FB /* SelectCharacterViewModel.swift */; };
 		B8759EFC2C2AC1F700D8B30B /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8759EFB2C2AC1F700D8B30B /* BaseTableViewCell.swift */; };
 		B89D65F42C2C004B004E418F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89D65F32C2C004B004E418F /* APIManager.swift */; };
 		B8D93ED52C21601D00034165 /* CharacterStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D93ED42C21601D00034165 /* CharacterStyle.swift */; };
@@ -135,6 +137,8 @@
 		B873130B2C3CB294000AF9FB /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
 		B87313152C3D1B42000AF9FB /* ProfileSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewModel.swift; sourceTree = "<group>"; };
 		B87313172C3D1C1D000AF9FB /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		B873131B2C3D70FE000AF9FB /* AddCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
+		B873131F2C3E0664000AF9FB /* SelectCharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCharacterViewModel.swift; sourceTree = "<group>"; };
 		B8759EFB2C2AC1F700D8B30B /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		B89D65F32C2C004B004E418F /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		B8D93ED42C21601D00034165 /* CharacterStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterStyle.swift; sourceTree = "<group>"; };
@@ -291,6 +295,7 @@
 			children = (
 				B85C87252C1B2DF700143CC7 /* SelectCharacterViewController.swift */,
 				B85C872A2C1B2E3A00143CC7 /* CharacterCollectionViewCell.swift */,
+				B873131F2C3E0664000AF9FB /* SelectCharacterViewModel.swift */,
 			);
 			path = SelectCharacter;
 			sourceTree = "<group>";
@@ -351,6 +356,7 @@
 			children = (
 				B873130A2C3CB288000AF9FB /* Cell */,
 				B87313082C3CB183000AF9FB /* CartCategoryViewController.swift */,
+				B873131B2C3D70FE000AF9FB /* AddCategoryViewController.swift */,
 			);
 			path = "Cart Category";
 			sourceTree = "<group>";
@@ -505,6 +511,7 @@
 				B85C87452C1C33F700143CC7 /* ShoppingItemList.swift in Sources */,
 				B85C87472C1C3AC900143CC7 /* APIService.swift in Sources */,
 				B85C86CB2C1AD61B00143CC7 /* AppDelegate.swift in Sources */,
+				B87313202C3E0664000AF9FB /* SelectCharacterViewModel.swift in Sources */,
 				B85C873C2C1B449000143CC7 /* SettingViewController.swift in Sources */,
 				B85C872F2C1B3B3C00143CC7 /* Character.swift in Sources */,
 				B85C871E2C1AF34500143CC7 /* ProfileSettingViewController.swift in Sources */,
@@ -538,6 +545,7 @@
 				B85C87162C1AE3D800143CC7 /* BaseButton.swift in Sources */,
 				B85C87082C1ADF8900143CC7 /* OnboardingViewController.swift in Sources */,
 				B89D65F42C2C004B004E418F /* APIManager.swift in Sources */,
+				B873131C2C3D70FE000AF9FB /* AddCategoryViewController.swift in Sources */,
 				B8F4ED0B2C37ADE5004D68E5 /* CartRepository.swift in Sources */,
 				B85C87572C1F259D00143CC7 /* SettingType.swift in Sources */,
 				B85C875B2C1F26C500143CC7 /* FilterType.swift in Sources */,

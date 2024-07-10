@@ -31,22 +31,21 @@ class SelectCharacterViewController: BaseVC {
     }()
     
     //MARK: - properties
-    var selectNumber: Int = 0 {
-        didSet {
-            characterView.image = Character.getImage(num: selectNumber)
-            collectionView.reloadData()
-        }
-    }
-    
+    let viewModel = SelectCharacterViewModel()
     var delegate: SendProfileImageId?
     
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewModel.outputCharacterNum.bind { num in
+            self.characterView.image = Character.getImage(num: num)
+            self.collectionView.reloadData()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        delegate?.dataSend(id: selectNumber)
+        delegate?.dataSend(id: viewModel.outputCharacterNum.value)
     }
     
     //MARK: - configure function
@@ -95,7 +94,7 @@ extension SelectCharacterViewController: UICollectionViewDelegate, UICollectionV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CharacterCollectionViewCell.identifier, for: indexPath) as! CharacterCollectionViewCell
         
-        if selectNumber == indexPath.row {
+        if viewModel.outputCharacterNum.value == indexPath.row {
             cell.characterView.style = .select
         } else {
             cell.characterView.style = .unselect
@@ -106,6 +105,6 @@ extension SelectCharacterViewController: UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectNumber = indexPath.row
+        viewModel.inputCharacterNum.value = indexPath.row
     }
 }

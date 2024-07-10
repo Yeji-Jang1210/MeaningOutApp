@@ -17,7 +17,7 @@ enum Localized {
     case title
     case profile_setting
     case profile_edit
-    case profile_edit_save_button
+    case save_button
     case start
     case complete
     case nickname_placeholder
@@ -106,7 +106,7 @@ enum Localized {
             return "PROFILE SETTING"
         case .profile_edit:
             return "EDIT PROFILE"
-        case .profile_edit_save_button:
+        case .save_button:
             return "저장"
         case .profile_tab_title:
             return "SETTING"

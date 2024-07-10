@@ -107,7 +107,7 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     override func configureUI(){
         if type == .edit {
             acceptButton.isHidden = true
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localized.profile_edit_save_button.title, style: .done, target: self, action: #selector(saveData))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localized.save_button.title, style: .done, target: self, action: #selector(saveData))
             navigationItem.rightBarButtonItem?.tintColor = Color.black
         }
     }
@@ -171,7 +171,7 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
         let vc = SelectCharacterViewController(title: type.navTitle, isChild: true)
         //delegate 연결
         vc.delegate = self
-        vc.selectNumber = viewModel.outputImageNum.value
+        vc.viewModel.inputCharacterNum.value = viewModel.outputImageNum.value
         navigationController?.pushViewController(vc, animated: true)
     }
     
