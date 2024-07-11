@@ -28,16 +28,20 @@ enum ValidateNicknameError: Error {
 }
 
 class ProfileSettingViewModel {
+    let repository = CartRepository()
+    
 //MARK: - Input
     var inputNickname = Observable<String?>(User.shared.nickname)
     var inputImageNum = Observable<Int?>(User.shared.profileImageId)
-    var inputIsSaved: Observable<Bool> = Observable(false)
+    var inputUpdateTrigger: Observable<Void?> = Observable(nil)
+    var inputSaveTrigger: Observable<Void?> = Observable(nil)
     
 //MARK: - Output
     var outputNickname = Observable<String?>(nil)
     var outputNicknameStatus = Observable<ValidateNicknameError?>(nil)
     var outputIsNicknameValid = Observable<Bool>(false)
     var outputImageNum = Observable(0)
+    var outputIsUpdate = Observable<Bool?>(nil)
     var outputIsSaved = Observable<Bool?>(nil)
     
     init(){
@@ -53,10 +57,14 @@ class ProfileSettingViewModel {
             self.outputImageNum.value = num ?? Int.random(in: 0...Character.maxCount)
         }
         
-        inputIsSaved.bind { isSave in
-            if isSave {
-                self.saveData()
-            }
+        inputUpdateTrigger.bind { trigger in
+            guard trigger != nil else { return }
+            self.updateData()
+        }
+        
+        inputSaveTrigger.bind { trigger in
+            guard trigger != nil else { return }
+            self.createData()
         }
     }
     
@@ -88,17 +96,29 @@ class ProfileSettingViewModel {
         return
     }
     
-    func saveData(){
+    func updateData(){
+        userDataSaved { result in
+            self.outputIsSaved.value = result
+        }
+    }
+    
+    func createData(){
+        userDataSaved{ result in
+            User.shared.signupDate = Date.now
+            self.repository.createDefaultCategory()
+            self.outputIsUpdate.value = true
+        }
+    }
+    
+    func userDataSaved(completion: @escaping (Bool)->Void){
         guard let nickname = outputNickname.value else {
-            outputIsSaved.value = false
+            completion(false)
             return
         }
         
         User.shared.nickname = nickname
         User.shared.profileImageId = outputImageNum.value
-        User.shared.signupDate = Date.now
-        
-        outputIsSaved.value = true
-        
+        completion(true)
     }
+    
 }

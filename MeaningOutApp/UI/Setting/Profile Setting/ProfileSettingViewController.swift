@@ -9,19 +9,22 @@ import UIKit
 import SnapKit
 import SwiftyUserDefaults
 
-class ProfileSettingViewController: BaseVC, SendProfileImageId {
+final class ProfileSettingViewController: BaseVC, SendProfileImageId {
     
     //MARK: - object
-    let characterView: CharacterView = {
+    lazy var characterView: CharacterView = {
         let object = CharacterView(style: .setting)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(characterViewTapped))
+        object.addGestureRecognizer(gesture)
         return object
     }()
     
-    let nicknameTextField: UITextField = {
+    lazy var nicknameTextField: UITextField = {
         let object = UITextField()
         object.attributedPlaceholder = NSAttributedString(string: Localized.nickname_placeholder.text,
                                                           attributes: [.font : BaseFont.medium.basicFont, .foregroundColor : Color.warmGray])
         object.borderStyle = .none
+        object.addTarget(self, action: #selector(nicknameTextChanged), for: .editingChanged)
         return object
     }()
     
@@ -38,30 +41,25 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
         return object
     }()
     
-    let acceptButton: BaseButton = {
+    lazy var completeButton: BaseButton = {
         let object = BaseButton(style: .primary)
         object.setTitle(Localized.complete.text, for: .normal)
+        object.addTarget(self, action: #selector(acceptButtonTapped), for: .touchUpInside)
         return object
     }()
     
     //MARK: - properties
-    let viewModel = ProfileSettingViewModel()
-    let repository = CartRepository()
-    var type: ProfileVCType = .edit
+    private let viewModel = ProfileSettingViewModel()
+    private let type: ProfileVCType
     
     //MARK: - life cycle
     init(type: ProfileVCType){
-        super.init(title: type.navTitle, isChild: true)
         self.type = type
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(title: type.navTitle, isChild: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUIAction()
         bindData()
     }
     
@@ -71,7 +69,7 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
         view.addSubview(separatorLine)
         view.addSubview(nicknameTextField)
         view.addSubview(nicknameStatusLabel)
-        view.addSubview(acceptButton)
+        view.addSubview(completeButton)
     }
     
     override func configureLayout(){
@@ -97,7 +95,7 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
             make.top.equalTo(separatorLine.snp.bottom).offset(12)
         }
         
-        acceptButton.snp.makeConstraints { make in
+        completeButton.snp.makeConstraints { make in
             make.top.equalTo(nicknameStatusLabel.snp.bottom).offset(20)
             make.horizontalEdges.equalTo(separatorLine.snp.horizontalEdges)
             make.height.equalTo(BaseButtonStyle.primary.height)
@@ -106,22 +104,11 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     
     override func configureUI(){
         if type == .edit {
-            acceptButton.isHidden = true
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localized.save_button.title, style: .done, target: self, action: #selector(saveData))
+            completeButton.isHidden = true
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localized.save_button.title, style: .done, target: self, action: #selector(updateData))
             navigationItem.rightBarButtonItem?.tintColor = Color.black
+            navigationItem.rightBarButtonItem?.tag = type.rawValue
         }
-    }
-    
-    private func configureUIAction(){
-        //characterView Tap Action
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(characterViewTapped))
-        characterView.addGestureRecognizer(gesture)
-        
-        //accept button Tap Action
-        acceptButton.addTarget(self, action: #selector(acceptButtonTapped), for: .touchUpInside)
-        
-        //nicknameTextField addAction
-        nicknameTextField.addTarget(self, action: #selector(nicknameTextChanged), for: .editingChanged)
     }
     
     private func bindData(){
@@ -140,29 +127,29 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
         viewModel.outputIsNicknameValid.bind { result in
             switch self.type {
             case .setting:
-                self.acceptButton.isEnabled = result
+                self.completeButton.isEnabled = result
             case .edit:
                 self.navigationItem.rightBarButtonItem?.isEnabled = result
             }
         }
         
-        viewModel.outputIsSaved.bind { result in
+        viewModel.outputIsUpdate.bind { result in
             guard let result else { return }
-            
             if result {
-                switch self.type {
-                case .setting:
-                    self.repository.createDefaultCategory()
-                    let vc = MainTabBarController()
-                    self.changeRootViewController(vc)
-                    return
-                case .edit:
-                    self.navigationController?.popViewController(animated: true)
-                }
+                let vc = MainTabBarController()
+                self.changeRootViewController(vc)
             } else {
                 self.view.makeToast(Localized.user_info_saved_error.text)
             }
-            
+        }
+        
+        viewModel.outputIsSaved.bind { result in
+            guard let result else { return }
+            if result {
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                self.view.makeToast(Localized.user_info_saved_error.text)
+            }
         }
     }
     
@@ -176,18 +163,19 @@ class ProfileSettingViewController: BaseVC, SendProfileImageId {
     }
     
     @objc func acceptButtonTapped(){
-        viewModel.inputIsSaved.value = true
+        viewModel.inputSaveTrigger.value = ()
     }
     
-    func dataSend(id: Int) {
-        viewModel.inputImageNum.value = id
-    }
-    
-    @objc func saveData(){
-        viewModel.inputIsSaved.value = true
+    @objc
+    func updateData(){
+        viewModel.inputUpdateTrigger.value = ()
     }
     
     @objc func nicknameTextChanged(_ sender: UITextField) {
         viewModel.inputNickname.value = sender.text
+    }
+    
+    func dataSend(id: Int) {
+        viewModel.inputImageNum.value = id
     }
 }

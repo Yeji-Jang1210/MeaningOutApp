@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ProfileVCType {
+enum ProfileVCType: Int {
     case setting
     case edit
     
