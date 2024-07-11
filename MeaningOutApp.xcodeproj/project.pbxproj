@@ -238,7 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				B87313442C3EDAD1000AF9FB /* SettingView */,
-				B87313072C3CB172000AF9FB /* Cart Category */,
+				B87313072C3CB172000AF9FB /* Cart */,
 				B85C87292C1B2E0A00143CC7 /* SelectCharacter */,
 				B85C873A2C1B447D00143CC7 /* Profile Setting */,
 			);
@@ -313,7 +313,6 @@
 				B85C87072C1ADF8900143CC7 /* OnboardingViewController.swift */,
 				B85C86F72C1ADAA000143CC7 /* Search */,
 				B85C86F62C1ADA9600143CC7 /* Setting */,
-				B8F4ED042C37A798004D68E5 /* Cart */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -358,14 +357,15 @@
 			path = Enum;
 			sourceTree = "<group>";
 		};
-		B87313072C3CB172000AF9FB /* Cart Category */ = {
+		B87313072C3CB172000AF9FB /* Cart */ = {
 			isa = PBXGroup;
 			children = (
 				B873130A2C3CB288000AF9FB /* Cell */,
 				B87313082C3CB183000AF9FB /* CartCategoryViewController.swift */,
+				B8F4ED062C37A7CB004D68E5 /* CartViewController.swift */,
 				B873131B2C3D70FE000AF9FB /* AddCategoryViewController.swift */,
 			);
-			path = "Cart Category";
+			path = Cart;
 			sourceTree = "<group>";
 		};
 		B873130A2C3CB288000AF9FB /* Cell */ = {
@@ -411,14 +411,6 @@
 				B8F4ED0A2C37ADE5004D68E5 /* CartRepository.swift */,
 			);
 			path = Repository;
-			sourceTree = "<group>";
-		};
-		B8F4ED042C37A798004D68E5 /* Cart */ = {
-			isa = PBXGroup;
-			children = (
-				B8F4ED062C37A7CB004D68E5 /* CartViewController.swift */,
-			);
-			path = Cart;
 			sourceTree = "<group>";
 		};
 		B8F4ED052C37A7BB004D68E5 /* Cell */ = {

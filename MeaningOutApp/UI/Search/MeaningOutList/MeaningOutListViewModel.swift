@@ -7,16 +7,25 @@
 
 import Foundation
 
+enum LottieAnimationType {
+    case none
+    case adding
+    case loading
+}
+
 final class MeaningOutListViewModel {
     let repository = CartRepository()
     
     var inputFilter: Observable<FilterType> = Observable(.similarity)
     var inputProductSelected: Observable<(Int?, Bool?)> = Observable((nil, nil))
     var inputNextPageTrigger: Observable<Void?> = Observable(nil)
+    var inputCallAnimation: Observable<LottieAnimationType> = Observable(.none)
     
     var outputProducts: Observable<[Product]> = Observable([])
     var outputTotal = Observable(0)
     var outputCallAPIError: Observable<NetworkingError?> = Observable(nil)
+    var outputCallAnimation: Observable<LottieAnimationType?> = Observable(nil)
+    var outputCallSelectedProductToast: Observable<Bool?> = Observable(nil)
     lazy var outputFilter: Observable<FilterType> = Observable(inputFilter.value)
     
     var text: String = ""
@@ -44,21 +53,29 @@ final class MeaningOutListViewModel {
             
             if isSelected {
                 self.repository.addItem(item: CartItem(product))
+                self.outputCallAnimation.value = .adding
             } else {
                 self.repository.deleteItemForId(productId: product.productId)
             }
+            
+            self.outputCallSelectedProductToast.value = isSelected
+            
         }
         
         inputNextPageTrigger.bind { _ in
             self.start += 30
             self.callAPI()
         }
+        
+        inputCallAnimation.bind { type in
+            self.outputCallAnimation.value = type
+        }
 
     }
     
     
     private func callAPI(){
-        //animationType = .loading
+        self.outputCallAnimation.value = .loading
         APIService.shared.networking(api: .search(query: text, sort: inputFilter.value, start: start), of: ShoppingItemList.self) { networkResult in
             switch networkResult {
             case .success(let data):
@@ -69,7 +86,7 @@ final class MeaningOutListViewModel {
                 }
                 
                 self.outputTotal.value = data.total
-                
+                self.outputCallAnimation.value = LottieAnimationType.none
             case .error(let error):
                 self.outputCallAPIError.value = error
             }

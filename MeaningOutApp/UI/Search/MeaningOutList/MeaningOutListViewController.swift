@@ -12,14 +12,7 @@ import Lottie
 import SwiftyUserDefaults
 import Toast
 
-class MeaningOutListViewController: BaseVC {
-    
-    enum LottieAnimationType {
-        case none
-        case adding
-        case loading
-    }
-    
+final class MeaningOutListViewController: BaseVC {
     //MARK: - object
     let collectionView: UICollectionView = {
         let layer = UICollectionViewFlowLayout()
@@ -60,29 +53,6 @@ class MeaningOutListViewController: BaseVC {
     
     //MARK: - properties
     var viewModel: MeaningOutListViewModel!
-    
-    var animationType: LottieAnimationType = .none {
-        didSet {
-            switch animationType {
-            case .none:
-                container.isHidden = true
-                cartAnimation.stop()
-                cartAnimation.isHidden = true
-                loadAnimation.stop()
-                loadAnimation.isHidden = true
-            case .adding:
-                container.isHidden = false
-                loadAnimation.isHidden = true
-                cartAnimation.isHidden = false
-                cartAnimation.play()
-            case .loading:
-                container.isHidden = false
-                cartAnimation.isHidden = true
-                loadAnimation.isHidden = false
-                loadAnimation.play()
-            }
-        }
-    }
     
     //MARK: - life cycle
     override init(title: String = "", isChild: Bool = false) {
@@ -164,8 +134,6 @@ class MeaningOutListViewController: BaseVC {
         viewModel.outputProducts.bind { products in
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
-                self.animationType = .none
-                
                 if self.viewModel.start == 1 && !products.isEmpty {
                     self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
                 }
@@ -198,6 +166,41 @@ class MeaningOutListViewController: BaseVC {
                 }
             }
         }
+        
+        viewModel.outputCallAnimation.bind { [weak self] type in
+            guard let self = self, let type = type else { return }
+            DispatchQueue.main.async {
+                switch type {
+                case .none:
+                    self.container.isHidden = true
+                    self.cartAnimation.stop()
+                    self.cartAnimation.isHidden = true
+                    self.loadAnimation.stop()
+                    self.loadAnimation.isHidden = true
+                case .adding:
+                    self.container.isHidden = false
+                    self.loadAnimation.isHidden = true
+                    self.cartAnimation.isHidden = false
+                    self.cartAnimation.play()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                        self.viewModel.outputCallAnimation.value = LottieAnimationType.none
+                    }
+                case .loading:
+                    self.container.isHidden = false
+                    self.cartAnimation.isHidden = true
+                    self.loadAnimation.isHidden = false
+                    self.loadAnimation.play()
+                }
+            }
+        }
+        
+        viewModel.outputCallSelectedProductToast.bind { isSelected in
+            guard let isSelected else { return }
+            
+            DispatchQueue.main.async {
+                self.view.makeToast(isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
+            }
+        }
     }
     
     @objc func filterButtonTapped(_ sender: FilterButton){
@@ -209,16 +212,6 @@ class MeaningOutListViewController: BaseVC {
     @objc func likeButtonTapped(_ sender: UIButton){
         sender.isSelected.toggle()
         viewModel.inputProductSelected.value = (sender.tag, sender.isSelected)
-        
-        //        if sender.isSelected {
-        //            animationType = .adding
-        //            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-        //                self.animationType = .none
-        //            }
-        //        } else {
-        //            print("delete")
-        //        }
-        //        view.makeToast(sender.isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
     }
     
     func handlingError(_ error: NetworkingError){

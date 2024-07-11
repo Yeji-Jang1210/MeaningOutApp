@@ -24,5 +24,6 @@ class CategoryListTableViewCell: BaseTableViewCell {
     public func setData(_ category: Category){
         textLabel?.text = category.name
         detailTextLabel?.text = category.categoryDescription
+        
     }
 }

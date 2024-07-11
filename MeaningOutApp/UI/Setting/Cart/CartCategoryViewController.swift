@@ -73,4 +73,9 @@ extension CartCategoryViewController: UITableViewDelegate, UITableViewDataSource
         cell.setData(list[indexPath.row])
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = CartViewController(isChild: true)
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }

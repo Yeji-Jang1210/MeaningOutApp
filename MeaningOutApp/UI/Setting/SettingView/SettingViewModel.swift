@@ -35,7 +35,7 @@ final class SettingViewModel {
         }
         
         inputDeleteAccountTrigger.bind { trigger in
-            guard let trigger else { return }
+            guard trigger != nil else { return }
             
             User.shared.delete()
             self.repository.deleteAll { result in

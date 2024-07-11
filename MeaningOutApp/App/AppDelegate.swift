@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.toolbarConfiguration.tintColor = Color.primaryOrange
         IQKeyboardManager.shared.toolbarConfiguration.barTintColor = Color.white
         
-        print(Realm.Configuration.defaultConfiguration.fileURL)
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
         
         let config = Realm.Configuration(schemaVersion: 4){ migration, oldSchemaVersion in
             
