@@ -18,7 +18,7 @@ final class MeaningOutListViewModel {
     var inputNextPageTrigger: Observable<Void?> = Observable(nil)
     var inputCallAnimation: Observable<LottieAnimationType> = Observable(.none)
     var inputIsLikeButtonSelected: Observable<(Bool?, Int?)> = Observable((nil, nil))
-    var inputAddProductTrigger: Observable<Int?> = Observable(nil)
+    var inputAddProductTrigger: Observable<Category?> = Observable(nil)
     
     var outputProducts: Observable<[Product]> = Observable([])
     var outputTotal = Observable(0)
@@ -60,11 +60,11 @@ final class MeaningOutListViewModel {
             }
         }
         
-        inputAddProductTrigger.bind { index in
+        inputAddProductTrigger.bind { category in
             //index is category index
-            guard let category = index, let selectProductIndex = self.selectProductIndex  else { return }
+            guard let category = category, let selectProductIndex = self.selectProductIndex  else { return }
             
-            self.repository.createProductInCategory(categoryIndex: category, product: self.outputProducts.value[selectProductIndex])
+            self.repository.createProductInCategory(category: category, product: self.outputProducts.value[selectProductIndex])
                 
             self.outputCallSelectedProductToast.value = true
             self.outputCallAnimation.value = .adding

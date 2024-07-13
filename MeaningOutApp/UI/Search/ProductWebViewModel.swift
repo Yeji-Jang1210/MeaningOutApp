@@ -18,8 +18,10 @@ class ProductWebViewModel {
     var inputLoadWebLinkTrigger: Observable<Void?> = Observable(nil)
     var inputFindProductTrigger: Observable<Void?> = Observable(nil)
     var inputIsSelected: Observable<Bool?> = Observable(nil)
+    var inputAddProductTrigger: Observable<Category?> = Observable(nil)
     
     var outputIsSelected: Observable<Bool?> = Observable(nil)
+    var outputPresentCategoryVC: Observable<Void?> = Observable(nil)
     var outputPresentToast: Observable<Bool?> = Observable(nil)
     var outputWebLink: Observable<URL?> = Observable(nil)
     var outputIsLoading: Observable<Bool?> = Observable(nil)
@@ -41,18 +43,28 @@ class ProductWebViewModel {
             guard let product = self.product, let result = result else { return }
             
             if result {
-                self.repository.addItem(item: CartItem(product))
+                self.outputPresentCategoryVC.value = ()
             } else {
-                self.repository.deleteItemForId(productId: product.productId)
+                self.deleteProductInCategory(id: product.productId, isSelected: result)
             }
-            
-            self.outputIsSelected.value = result
-            self.outputPresentToast.value = result
+        }
+        
+        inputAddProductTrigger.bind { category in
+            guard let category = category, let product = self.product else { return }
+            self.repository.createProductInCategory(category: category, product: product)
+            self.outputIsSelected.value = true
+            self.outputPresentToast.value = true
         }
         
         inputLoadWebLinkTrigger.bind { _ in
             print(self.url)
             self.outputWebLink.value = URL(string: self.url)
         }
+    }
+    
+    private func deleteProductInCategory(id: String, isSelected: Bool){
+        self.repository.deleteItemForId(productId: id)
+        self.outputIsSelected.value = isSelected
+        self.outputPresentToast.value = isSelected
     }
 }

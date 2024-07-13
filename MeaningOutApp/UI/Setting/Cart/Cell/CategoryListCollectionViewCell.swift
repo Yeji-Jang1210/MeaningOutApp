@@ -21,6 +21,7 @@ class CategoryListCollectionViewCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let object = UIImageView()
         object.backgroundColor = .lightGray
+        object.contentMode = .scaleAspectFill
         object.clipsToBounds = true
         object.layer.cornerRadius = 8
         return object

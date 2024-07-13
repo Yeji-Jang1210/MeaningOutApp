@@ -20,10 +20,8 @@ final class AddProductViewController: UIViewController {
         return object
     }()
     
-    let repository = CartRepository()
-    lazy var categoryList = repository.fetchCategory()
-    var passIndex: ((Int?) -> Void)?
-    var selectIndex: Int?
+    private let viewModel = AddProductViewModel()
+    var passIndex: ((Category?) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +29,19 @@ final class AddProductViewController: UIViewController {
         
         configureHierarchy()
         configureLayout()
+        bind()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        passIndex?(selectIndex)
+    }
+    
+    private func bind(){
+        viewModel.outputSelectedCategory.bind { category in
+            guard let category else { return }
+            self.passIndex?(category)
+            self.dismiss(animated: true)
+        }
     }
     
     func configureHierarchy(){
@@ -61,18 +67,16 @@ extension AddProductViewController: UITableViewDelegate, UITableViewDataSource {
         return Localized.category.title
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoryList.count
+        return viewModel.outputCategoryList.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AddProductTableViewCell.identifier, for: indexPath) as! AddProductTableViewCell
-        cell.setData(categoryList[indexPath.row])
+        cell.setData(viewModel.outputCategoryList.value[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectIndex = indexPath.row
-        
-        dismiss(animated: true)
+        viewModel.inputSelectIndex.value = indexPath.row
     }
 }

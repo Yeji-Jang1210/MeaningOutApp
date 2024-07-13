@@ -14,7 +14,7 @@ class AddProductTableViewCell: UITableViewCell {
     
     let categoryImageView: UIImageView = {
         let object = UIImageView()
-        object.contentMode = .scaleAspectFit
+        object.contentMode = .scaleAspectFill
         object.clipsToBounds = true
         object.layer.cornerRadius = 8
         return object

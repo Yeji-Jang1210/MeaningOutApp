@@ -101,6 +101,20 @@ class ProductWebViewController: BaseVC {
             self.rightBarButtonItem.image = isSelected ? ImageAssets.like_selected :  ImageAssets.like_unselected
         }
         
+        viewModel.outputPresentCategoryVC.bind { present in
+            guard let present else { return }
+            
+            let vc = AddProductViewController()
+            if let sheet = vc.sheetPresentationController {
+                sheet.detents = [.medium()]
+            }
+            
+            vc.passIndex = { category in
+                self.viewModel.inputAddProductTrigger.value = category
+            }
+            self.present(vc, animated: true)
+        }
+        
         viewModel.outputPresentToast.bind { isSelected in
             guard let isSelected else { return }
             
@@ -130,8 +144,8 @@ class ProductWebViewController: BaseVC {
     
     //MARK: - function
     @objc func likeButtonTapped(_ sender: UIBarButtonItem){
-        sender.isSelected.toggle()
-        viewModel.inputIsSelected.value = sender.isSelected
+        //sender.isSelected.toggle()
+        viewModel.inputIsSelected.value = !sender.isSelected
     }
     
     public func setData(url: String, product: Product){

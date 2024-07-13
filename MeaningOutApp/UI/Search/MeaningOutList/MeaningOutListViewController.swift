@@ -202,9 +202,8 @@ final class MeaningOutListViewController: BaseVC {
                 sheet.detents = [.medium()]
             }
             
-            vc.passIndex = { index in
-                //index: category Index
-                self.viewModel.inputAddProductTrigger.value = index
+            vc.passIndex = { category in
+                self.viewModel.inputAddProductTrigger.value = category
             }
             self.present(vc, animated: true)
         }
