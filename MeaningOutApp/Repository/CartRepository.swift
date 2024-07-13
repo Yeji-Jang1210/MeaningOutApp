@@ -81,6 +81,26 @@ extension CartRepository {
             print("Error")
         }
     }
+    
+    func createProductInCategory(categoryIndex: Int?, product: Product){
+        let list = fetchCategory()
+        let cartItem = CartItem(product)
+        
+        do {
+            try realm.write {
+                if let index = categoryIndex, index < list.count {
+                    list[index].products.append(cartItem)
+                }
+                
+                // 0번 인덱스에도 제품 추가
+                if list.count > 0 {
+                    list[0].products.append(cartItem)
+                }
+            }
+        } catch {
+            print(error)
+        }
+    }
 }
 
 protocol CartRepositoryProtocol {

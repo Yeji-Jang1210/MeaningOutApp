@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import RealmSwift
 
 class CartCategoryViewController: BaseVC {
     //MARK: - object
@@ -30,6 +31,11 @@ class CartCategoryViewController: BaseVC {
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
     }
     
     //MARK: - configure function
@@ -88,6 +94,9 @@ extension CartCategoryViewController: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = CartViewController(title: list[indexPath.row].name, isChild: true)
+        vc.list = repository.fetch().where {
+            $0.category.name == list[indexPath.row].name
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
     

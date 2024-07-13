@@ -133,7 +133,6 @@ final class MeaningOutListViewController: BaseVC {
     private func bindAction(){
         viewModel.outputProducts.bind { products in
             DispatchQueue.main.async {
-                self.collectionView.reloadData()
                 if self.viewModel.start == 1 && !products.isEmpty {
                     self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
                 }
@@ -143,6 +142,7 @@ final class MeaningOutListViewController: BaseVC {
         viewModel.outputTotal.bind { total in
             DispatchQueue.main.async {
                 self.header.resultCountLabel.text = Localized.result_count_text(count: total).text
+                self.collectionView.reloadData()
             }
         }
         
@@ -194,10 +194,26 @@ final class MeaningOutListViewController: BaseVC {
             }
         }
         
+        viewModel.outputPresentCategoryVC.bind { trigger in
+            guard trigger != nil else { return }
+            
+            let vc = AddProductViewController()
+            if let sheet = vc.sheetPresentationController {
+                sheet.detents = [.medium()]
+            }
+            
+            vc.passIndex = { index in
+                //index: category Index
+                self.viewModel.inputAddProductTrigger.value = index
+            }
+            self.present(vc, animated: true)
+        }
+        
         viewModel.outputCallSelectedProductToast.bind { isSelected in
             guard let isSelected else { return }
             
             DispatchQueue.main.async {
+                self.collectionView.reloadData()
                 self.view.makeToast(isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
             }
         }
@@ -210,8 +226,7 @@ final class MeaningOutListViewController: BaseVC {
     }
     
     @objc func likeButtonTapped(_ sender: UIButton){
-        sender.isSelected.toggle()
-        viewModel.inputProductSelected.value = (sender.tag, sender.isSelected)
+        viewModel.inputIsLikeButtonSelected.value = (!sender.isSelected, sender.tag)
     }
     
     func handlingError(_ error: NetworkingError){

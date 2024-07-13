@@ -36,6 +36,7 @@ class CategoryListCollectionViewCell: UICollectionViewCell {
     let descriptionLabel: UILabel = {
         let object = UILabel()
         object.font = BaseFont.small.basicFont
+        object.textColor = Color.darkGray
         object.textAlignment = .left
         return object
     }()

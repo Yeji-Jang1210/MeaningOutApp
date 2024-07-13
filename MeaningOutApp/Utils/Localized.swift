@@ -15,6 +15,7 @@ enum Localized {
     case tabbar_cart
     
     case title
+    case category
     case profile_setting
     case profile_edit
     case save_button
@@ -108,6 +109,8 @@ enum Localized {
     
     var title: String {
         switch self {
+        case .category:
+            return "카테고리"
         case .profile_setting:
             return "PROFILE SETTING"
         case .profile_edit:

@@ -36,7 +36,7 @@ final class CartViewController: BaseVC {
     }()
     
     var repository = CartRepository()
-    lazy var list = repository.fetch()
+    var list: Results<CartItem>?
     lazy var filteredList = list
     
     override func viewDidLoad() {
@@ -45,11 +45,7 @@ final class CartViewController: BaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        list = repository.fetch()
-        
-        filteredList = list
-        searchBar.text = ""
-        
+        searchBar.text = ""        
         collectionView.reloadData()
     }
     
@@ -74,10 +70,12 @@ final class CartViewController: BaseVC {
     
     @objc
     func likeButtonTapped(_ sender: UIButton){
-        repository.deleteItem(item: list[sender.tag])
-        
-        view.makeToast("장바구니에서 삭제되었습니다.")
-        collectionView.reloadData()
+        if let item = list?[sender.tag] {
+            repository.deleteItem(item: item)
+            
+            view.makeToast("장바구니에서 삭제되었습니다.")
+            collectionView.reloadData()
+        }
     }
 }
 
@@ -89,17 +87,19 @@ extension CartViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filteredList.count
+        return filteredList?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MeaningOutItemCell.identifier, for: indexPath) as! MeaningOutItemCell
         
-        let item = filteredList[indexPath.row]
-        cell.setData(data: item, isSelected: repository.findProductId(productId: item.productId))
+        if let item = filteredList?[indexPath.row] {
+            cell.setData(data: item, isSelected: repository.findProductId(productId: item.productId))
+            
+            cell.cartButton.tag = indexPath.row
+            cell.cartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        }
         
-        cell.cartButton.tag = indexPath.row
-        cell.cartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         return cell
     }
 }
@@ -107,7 +107,7 @@ extension CartViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension CartViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(#function)
-        let filtered = list.where {
+        let filtered = list?.where {
             $0.title.contains(searchText, options: .caseInsensitive)
         }
         

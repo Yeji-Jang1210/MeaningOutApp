@@ -14,28 +14,28 @@ enum LottieAnimationType {
 }
 
 final class MeaningOutListViewModel {
-    let repository = CartRepository()
-    
     var inputFilter: Observable<FilterType> = Observable(.similarity)
-    var inputProductSelected: Observable<(Int?, Bool?)> = Observable((nil, nil))
     var inputNextPageTrigger: Observable<Void?> = Observable(nil)
     var inputCallAnimation: Observable<LottieAnimationType> = Observable(.none)
+    var inputIsLikeButtonSelected: Observable<(Bool?, Int?)> = Observable((nil, nil))
+    var inputAddProductTrigger: Observable<Int?> = Observable(nil)
     
     var outputProducts: Observable<[Product]> = Observable([])
     var outputTotal = Observable(0)
     var outputCallAPIError: Observable<NetworkingError?> = Observable(nil)
     var outputCallAnimation: Observable<LottieAnimationType?> = Observable(nil)
+    var outputPresentCategoryVC: Observable<Void?> = Observable(nil)
     var outputCallSelectedProductToast: Observable<Bool?> = Observable(nil)
     lazy var outputFilter: Observable<FilterType> = Observable(inputFilter.value)
     
+    let repository = CartRepository()
     var text: String = ""
-    var selectIndex: Int?
-    var selectedProduct: Product?
-    
+    var selectProductIndex: Int?
     var start:Int = 1
     var isEnd: Bool {
         return start > outputTotal.value  - 30 || start > 1000
     }
+    
     
     init(text: String){
         self.text = text
@@ -45,21 +45,29 @@ final class MeaningOutListViewModel {
             self.outputFilter.value = type
         }
         
-        inputProductSelected.bind { index, isSelected in
-            guard let index else { return }
-            self.selectedProduct = self.outputProducts.value[index]
+        inputIsLikeButtonSelected.bind { isSelected, index in
+            guard let isSelected = isSelected, let index = index else { return }
             
-            guard let isSelected, let product = self.selectedProduct else { return }
+            self.selectProductIndex = index
             
             if isSelected {
-                self.repository.addItem(item: CartItem(product))
-                self.outputCallAnimation.value = .adding
+                //present addCategory VC
+                self.outputPresentCategoryVC.value = ()
             } else {
-                self.repository.deleteItemForId(productId: product.productId)
+                //delete
+                self.repository.deleteItemForId(productId: self.outputProducts.value[index].productId)
+                self.outputCallSelectedProductToast.value = false
             }
+        }
+        
+        inputAddProductTrigger.bind { index in
+            //index is category index
+            guard let category = index, let selectProductIndex = self.selectProductIndex  else { return }
             
-            self.outputCallSelectedProductToast.value = isSelected
-            
+            self.repository.createProductInCategory(categoryIndex: category, product: self.outputProducts.value[selectProductIndex])
+                
+            self.outputCallSelectedProductToast.value = true
+            self.outputCallAnimation.value = .adding
         }
         
         inputNextPageTrigger.bind { _ in
@@ -72,7 +80,6 @@ final class MeaningOutListViewModel {
         }
 
     }
-    
     
     private func callAPI(){
         self.outputCallAnimation.value = .loading
