@@ -35,18 +35,40 @@ final class CartViewController: BaseVC {
         return object
     }()
     
-    var repository = CartRepository()
-    var list: Results<CartItem>?
-    lazy var filteredList = list
+    var viewModel: CartViewModel
+    
+    init(title: String = "", isChild: Bool = false, list: Results<CartItem>) {
+        self.viewModel = CartViewModel(list: list)
+        super.init(title: title, isChild: isChild)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         searchBar.text = ""        
         collectionView.reloadData()
+    }
+    
+    private func bind(){
+        viewModel.outputCartItemIsDeleted.bind { isDeleted in
+            guard isDeleted != nil else { return }
+            
+            DispatchQueue.main.async {
+                self.view.makeToast("장바구니에서 삭제되었습니다.")
+                self.collectionView.reloadData()
+            }
+        }
+        
+        viewModel.outputCartItemFilteredList.bind { filtered in
+            guard filtered != nil else { return }
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     override func configureHierarchy() {
@@ -70,12 +92,7 @@ final class CartViewController: BaseVC {
     
     @objc
     func likeButtonTapped(_ sender: UIButton){
-        if let item = list?[sender.tag] {
-            repository.deleteItem(item: item)
-            
-            view.makeToast("장바구니에서 삭제되었습니다.")
-            collectionView.reloadData()
-        }
+        viewModel.inputPassLikeButtonSenderTag.value = sender.tag
     }
 }
 
@@ -87,14 +104,14 @@ extension CartViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filteredList?.count ?? 0
+        return viewModel.outputCartItemFilteredList.value?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MeaningOutItemCell.identifier, for: indexPath) as! MeaningOutItemCell
         
-        if let item = filteredList?[indexPath.row] {
-            cell.setData(data: item, isSelected: repository.findProductId(productId: item.productId))
+        if let item = viewModel.outputCartItemFilteredList.value?[indexPath.row]{
+            cell.setData(data: item, isSelected: viewModel.findProductId(item.productId))
             
             cell.cartButton.tag = indexPath.row
             cell.cartButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
@@ -106,12 +123,6 @@ extension CartViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 extension CartViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(#function)
-        let filtered = list?.where {
-            $0.title.contains(searchText, options: .caseInsensitive)
-        }
-        
-        filteredList = searchText.isEmpty ? list : filtered
-        collectionView.reloadData()
+        viewModel.inputSearchText.value = searchText
     }
 }

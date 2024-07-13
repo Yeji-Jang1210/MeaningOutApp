@@ -69,6 +69,8 @@
 		B873135A2C42736E000AF9FB /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313592C42736E000AF9FB /* AddProductViewController.swift */; };
 		B873135C2C4273EE000AF9FB /* AddProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873135B2C4273EE000AF9FB /* AddProductTableViewCell.swift */; };
 		B873135E2C42BE03000AF9FB /* AddProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873135D2C42BE03000AF9FB /* AddProductViewModel.swift */; };
+		B87313602C42CA17000AF9FB /* CartCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873135F2C42CA17000AF9FB /* CartCategoryViewModel.swift */; };
+		B87313622C42CE43000AF9FB /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313612C42CE43000AF9FB /* CartViewModel.swift */; };
 		B8759EFC2C2AC1F700D8B30B /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8759EFB2C2AC1F700D8B30B /* BaseTableViewCell.swift */; };
 		B89D65F42C2C004B004E418F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89D65F32C2C004B004E418F /* APIManager.swift */; };
 		B8D93ED52C21601D00034165 /* CharacterStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D93ED42C21601D00034165 /* CharacterStyle.swift */; };
@@ -155,6 +157,8 @@
 		B87313592C42736E000AF9FB /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
 		B873135B2C4273EE000AF9FB /* AddProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductTableViewCell.swift; sourceTree = "<group>"; };
 		B873135D2C42BE03000AF9FB /* AddProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewModel.swift; sourceTree = "<group>"; };
+		B873135F2C42CA17000AF9FB /* CartCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCategoryViewModel.swift; sourceTree = "<group>"; };
+		B87313612C42CE43000AF9FB /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		B8759EFB2C2AC1F700D8B30B /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		B89D65F32C2C004B004E418F /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		B8D93ED42C21601D00034165 /* CharacterStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterStyle.swift; sourceTree = "<group>"; };
@@ -373,7 +377,9 @@
 			children = (
 				B873130A2C3CB288000AF9FB /* Cell */,
 				B87313082C3CB183000AF9FB /* CartCategoryViewController.swift */,
+				B873135F2C42CA17000AF9FB /* CartCategoryViewModel.swift */,
 				B8F4ED062C37A7CB004D68E5 /* CartViewController.swift */,
+				B87313612C42CE43000AF9FB /* CartViewModel.swift */,
 				B873131B2C3D70FE000AF9FB /* AddCategoryViewController.swift */,
 			);
 			path = Cart;
@@ -558,6 +564,7 @@
 				B8F4ED0F2C390CFF004D68E5 /* UIView+Extension.swift in Sources */,
 				B87313432C3ECF3F000AF9FB /* SearchViewModel.swift in Sources */,
 				B85C87452C1C33F700143CC7 /* ShoppingItemList.swift in Sources */,
+				B87313602C42CA17000AF9FB /* CartCategoryViewModel.swift in Sources */,
 				B873135C2C4273EE000AF9FB /* AddProductTableViewCell.swift in Sources */,
 				B85C87472C1C3AC900143CC7 /* APIService.swift in Sources */,
 				B87313572C42641B000AF9FB /* CategoryListCollectionViewCell.swift in Sources */,
@@ -570,6 +577,7 @@
 				B85C874C2C1C3DF400143CC7 /* String+Extension.swift in Sources */,
 				B8F4ED072C37A7CB004D68E5 /* CartViewController.swift in Sources */,
 				B85C87412C1C006500143CC7 /* SearchItemCell.swift in Sources */,
+				B87313622C42CE43000AF9FB /* CartViewModel.swift in Sources */,
 				B85C86FF2C1ADD9300143CC7 /* ImageAssets.swift in Sources */,
 				B87313162C3D1B42000AF9FB /* ProfileSettingViewModel.swift in Sources */,
 				B85C87312C1B430D00143CC7 /* SearchViewController.swift in Sources */,

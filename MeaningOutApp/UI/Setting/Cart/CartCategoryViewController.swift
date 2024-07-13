@@ -25,12 +25,12 @@ class CartCategoryViewController: BaseVC {
     }()
     
     //MARK: - properties
-    let repository = CartRepository()
-    lazy var list = repository.fetchCategory()
+    let viewModel = CartCategoryViewModel()
     
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,10 +38,33 @@ class CartCategoryViewController: BaseVC {
         collectionView.reloadData()
     }
     
+    private func bind(){
+        viewModel.outputPresentProductListForCategory.bind{ category, cartItems in
+            guard let category = category, let cartItems = cartItems else { return }
+            let vc = CartViewController(title: category.name, isChild: true, list: cartItems)
+            
+            DispatchQueue.main.async{
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+        
+        viewModel.outputPresentAddCategoryVC.bind { trigger in
+            guard let trigger else { return }
+            
+            let vc = AddCategoryViewController()
+            if let sheet = vc.sheetPresentationController {
+                sheet.detents = [.medium()]
+            }
+            vc.saveCategory = {
+                self.collectionView.reloadData()
+            }
+            self.present(vc, animated: true)
+        }
+    }
+    
     //MARK: - configure function
     override func configureHierarchy(){
         super.configureHierarchy()
-        //view.addSubview(tableView)
         view.addSubview(collectionView)
     }
     
@@ -62,14 +85,7 @@ class CartCategoryViewController: BaseVC {
     
     @objc
     func addCategoryButtonTapped(){
-        let vc = AddCategoryViewController()
-        if let sheet = vc.sheetPresentationController {
-            sheet.detents = [.medium()]
-        }
-        vc.saveCategory = {
-            self.collectionView.reloadData()
-        }
-        self.present(vc, animated: true)
+        viewModel.inputAddCategoryButtonTappedTrigger.value = ()
     }
 }
 
@@ -82,22 +98,18 @@ extension CartCategoryViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return list.count
+        return viewModel.outputCategoryList.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryListCollectionViewCell.identifier, for: indexPath) as! CategoryListCollectionViewCell
-        cell.setData(list[indexPath.row])
+        cell.setData(viewModel.outputCategoryList.value[indexPath.row])
         return cell
         
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = CartViewController(title: list[indexPath.row].name, isChild: true)
-        vc.list = repository.fetch().where {
-            $0.category.name == list[indexPath.row].name
-        }
-        navigationController?.pushViewController(vc, animated: true)
+        viewModel.inputDidSelectItemIndex.value = indexPath.row
     }
     
 }
