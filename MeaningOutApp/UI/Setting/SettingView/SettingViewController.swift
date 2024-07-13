@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import SwiftyUserDefaults
 
-class SettingViewController: BaseVC {
+final class SettingViewController: BaseVC {
     //MARK: - object
     lazy var tableView: UITableView = {
         let object = UITableView()
@@ -26,7 +26,7 @@ class SettingViewController: BaseVC {
     }()
     
     //MARK: - properties
-    let viewModel = SettingViewModel()
+    private let viewModel = SettingViewModel()
     
     var cartListText: NSMutableAttributedString!
     

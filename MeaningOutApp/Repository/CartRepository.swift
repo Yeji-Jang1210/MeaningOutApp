@@ -68,8 +68,17 @@ extension CartRepository {
     func createDefaultCategory(){
         let category = Category(name: Localized.category_allProducs.title, categoryDescription: Localized.category_allProducs.text)
         
-        try! realm.write {
-            realm.add(category)
+        createCategory(category)
+    }
+    
+    func createCategory(_ category: Category){
+        
+        do {
+            try realm.write {
+                realm.add(category)
+            }
+        } catch {
+            print("Error")
         }
     }
 }

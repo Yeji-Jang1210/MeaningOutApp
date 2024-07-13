@@ -10,12 +10,16 @@ import SnapKit
 
 class CartCategoryViewController: BaseVC {
     //MARK: - object
-    lazy var tableView: UITableView = {
-        let object = UITableView()
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 20
+        layout.minimumInteritemSpacing = 10
+        
+        let object = UICollectionView(frame: .zero, collectionViewLayout: layout)
         object.backgroundColor = .clear
         object.delegate = self
         object.dataSource = self
-        object.register(CategoryListTableViewCell.self, forCellReuseIdentifier: CategoryListTableViewCell.identifier)
+        object.register(CategoryListCollectionViewCell.self, forCellWithReuseIdentifier: CategoryListCollectionViewCell.identifier)
         return object
     }()
     
@@ -31,13 +35,15 @@ class CartCategoryViewController: BaseVC {
     //MARK: - configure function
     override func configureHierarchy(){
         super.configureHierarchy()
-        view.addSubview(tableView)
+        //view.addSubview(tableView)
+        view.addSubview(collectionView)
     }
     
     override func configureLayout(){
         super.configureLayout()
-        tableView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+        collectionView.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(10)
+            make.verticalEdges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
@@ -48,34 +54,41 @@ class CartCategoryViewController: BaseVC {
         navigationItem.rightBarButtonItem = barItem
     }
     
-    @objc 
+    @objc
     func addCategoryButtonTapped(){
         let vc = AddCategoryViewController()
         if let sheet = vc.sheetPresentationController {
             sheet.detents = [.medium()]
         }
-        
+        vc.saveCategory = {
+            self.collectionView.reloadData()
+        }
         self.present(vc, animated: true)
     }
 }
 
-extension CartCategoryViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+
+extension CartCategoryViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.bounds.width - 10) / 2
+        let height = width + 6 + 16 + 4 + 14
+        return CGSize(width: width, height: height)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return list.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CategoryListTableViewCell.identifier, for: indexPath) as! CategoryListTableViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryListCollectionViewCell.identifier, for: indexPath) as! CategoryListCollectionViewCell
         cell.setData(list[indexPath.row])
         return cell
+        
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = CartViewController(isChild: true)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = CartViewController(title: list[indexPath.row].name, isChild: true)
         navigationController?.pushViewController(vc, animated: true)
     }
+    
 }

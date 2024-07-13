@@ -30,7 +30,7 @@ class CharacterCollectionViewCell: UICollectionViewCell {
     
     //MARK: - configure function
     private func configureHierarchy(){
-        addSubview(characterView)
+        contentView.addSubview(characterView)
     }
     
     private func configureLayout(){

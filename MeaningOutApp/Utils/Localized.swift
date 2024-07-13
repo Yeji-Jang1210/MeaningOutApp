@@ -33,6 +33,8 @@ enum Localized {
     case like_unselect_message
     case search_cartItem_placeholder
     case user_info_saved_error
+    case add_category_title_placeholder
+    case add_category_description_placeholder
     
     //settingType
     case cartList
@@ -95,6 +97,10 @@ enum Localized {
             return "저장에 실패했습니다."
         case .category_allProducs:
             return "장바구니에 추가한 전체 상품을 보여줘요"
+        case .add_category_title_placeholder:
+            return "카테고리 제목을 입력해주세요."
+        case .add_category_description_placeholder:
+            return "카테고리 설명을 입력해주세요."
         default:
             return ""
         }

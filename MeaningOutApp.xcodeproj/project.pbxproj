@@ -56,7 +56,6 @@
 		B85C875B2C1F26C500143CC7 /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C875A2C1F26C500143CC7 /* FilterType.swift */; };
 		B85C875D2C1F26E400143CC7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85C875C2C1F26E400143CC7 /* User.swift */; };
 		B87313092C3CB183000AF9FB /* CartCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313082C3CB183000AF9FB /* CartCategoryViewController.swift */; };
-		B873130C2C3CB294000AF9FB /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873130B2C3CB294000AF9FB /* CategoryListTableViewCell.swift */; };
 		B87313162C3D1B42000AF9FB /* ProfileSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313152C3D1B42000AF9FB /* ProfileSettingViewModel.swift */; };
 		B87313182C3D1C1D000AF9FB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313172C3D1C1D000AF9FB /* Observable.swift */; };
 		B873131C2C3D70FE000AF9FB /* AddCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B873131B2C3D70FE000AF9FB /* AddCategoryViewController.swift */; };
@@ -65,6 +64,8 @@
 		B87313412C3E683E000AF9FB /* ProductWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313402C3E683E000AF9FB /* ProductWebViewModel.swift */; };
 		B87313432C3ECF3F000AF9FB /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313422C3ECF3F000AF9FB /* SearchViewModel.swift */; };
 		B87313462C3EDAE5000AF9FB /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313452C3EDAE5000AF9FB /* SettingViewModel.swift */; };
+		B87313552C3FCF53000AF9FB /* NSAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313542C3FCF53000AF9FB /* NSAttributedString+Extension.swift */; };
+		B87313572C42641B000AF9FB /* CategoryListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87313562C42641B000AF9FB /* CategoryListCollectionViewCell.swift */; };
 		B8759EFC2C2AC1F700D8B30B /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8759EFB2C2AC1F700D8B30B /* BaseTableViewCell.swift */; };
 		B89D65F42C2C004B004E418F /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89D65F32C2C004B004E418F /* APIManager.swift */; };
 		B8D93ED52C21601D00034165 /* CharacterStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D93ED42C21601D00034165 /* CharacterStyle.swift */; };
@@ -138,7 +139,6 @@
 		B85C875A2C1F26C500143CC7 /* FilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
 		B85C875C2C1F26E400143CC7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B87313082C3CB183000AF9FB /* CartCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCategoryViewController.swift; sourceTree = "<group>"; };
-		B873130B2C3CB294000AF9FB /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
 		B87313152C3D1B42000AF9FB /* ProfileSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewModel.swift; sourceTree = "<group>"; };
 		B87313172C3D1C1D000AF9FB /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		B873131B2C3D70FE000AF9FB /* AddCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewController.swift; sourceTree = "<group>"; };
@@ -147,6 +147,8 @@
 		B87313402C3E683E000AF9FB /* ProductWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductWebViewModel.swift; sourceTree = "<group>"; };
 		B87313422C3ECF3F000AF9FB /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		B87313452C3EDAE5000AF9FB /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		B87313542C3FCF53000AF9FB /* NSAttributedString+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extension.swift"; sourceTree = "<group>"; };
+		B87313562C42641B000AF9FB /* CategoryListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListCollectionViewCell.swift; sourceTree = "<group>"; };
 		B8759EFB2C2AC1F700D8B30B /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		B89D65F32C2C004B004E418F /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		B8D93ED42C21601D00034165 /* CharacterStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterStyle.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				B85C874B2C1C3DF400143CC7 /* String+Extension.swift */,
 				B8F4ED0C2C37C8ED004D68E5 /* FileManager+Extension.swift */,
 				B8F4ED0E2C390CFF004D68E5 /* UIView+Extension.swift */,
+				B87313542C3FCF53000AF9FB /* NSAttributedString+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -371,7 +374,7 @@
 		B873130A2C3CB288000AF9FB /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				B873130B2C3CB294000AF9FB /* CategoryListTableViewCell.swift */,
+				B87313562C42641B000AF9FB /* CategoryListCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -539,6 +542,7 @@
 				B87313432C3ECF3F000AF9FB /* SearchViewModel.swift in Sources */,
 				B85C87452C1C33F700143CC7 /* ShoppingItemList.swift in Sources */,
 				B85C87472C1C3AC900143CC7 /* APIService.swift in Sources */,
+				B87313572C42641B000AF9FB /* CategoryListCollectionViewCell.swift in Sources */,
 				B85C86CB2C1AD61B00143CC7 /* AppDelegate.swift in Sources */,
 				B87313202C3E0664000AF9FB /* SelectCharacterViewModel.swift in Sources */,
 				B85C873C2C1B449000143CC7 /* SettingViewController.swift in Sources */,
@@ -551,7 +555,6 @@
 				B87313162C3D1B42000AF9FB /* ProfileSettingViewModel.swift in Sources */,
 				B85C87312C1B430D00143CC7 /* SearchViewController.swift in Sources */,
 				B85C873F2C1BFB8F00143CC7 /* SearchResults.swift in Sources */,
-				B873130C2C3CB294000AF9FB /* CategoryListTableViewCell.swift in Sources */,
 				B8D93ED52C21601D00034165 /* CharacterStyle.swift in Sources */,
 				B85C86E12C1AD6D800143CC7 /* APIInfo.swift in Sources */,
 				B85C86FD2C1ADBE000143CC7 /* UIColor+Extension.swift in Sources */,
@@ -561,6 +564,7 @@
 				B8F4ED0D2C37C8ED004D68E5 /* FileManager+Extension.swift in Sources */,
 				B85C87332C1B433800143CC7 /* MeaningOutListViewController.swift in Sources */,
 				B85C87502C1D507A00143CC7 /* FilterButton.swift in Sources */,
+				B87313552C3FCF53000AF9FB /* NSAttributedString+Extension.swift in Sources */,
 				B85C875D2C1F26E400143CC7 /* User.swift in Sources */,
 				B85C87262C1B2DF700143CC7 /* SelectCharacterViewController.swift in Sources */,
 				B85C87182C1AE3E800143CC7 /* BaseVC.swift in Sources */,
