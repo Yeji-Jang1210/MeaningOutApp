@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class AddProductTableViewCell: UITableViewCell {
+final class AddProductTableViewCell: UITableViewCell {
     static let identifier = String(describing: AddProductTableViewCell.self)
     
     let categoryImageView: UIImageView = {

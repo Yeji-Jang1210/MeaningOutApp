@@ -25,10 +25,14 @@ class SearchViewController: BaseVC {
     }()
     
     
-    let tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let object = UITableView()
         object.backgroundColor = .clear
         object.separatorStyle = .none
+        object.rowHeight = 44
+        object.delegate = self
+        object.dataSource = self
+        object.register(SearchItemCell.self, forCellReuseIdentifier: SearchItemCell.identifier)
         return object
     }()
     
@@ -69,7 +73,7 @@ class SearchViewController: BaseVC {
     }()
     
     //MARK: - properties
-    let viewModel = SearchViewModel()
+    private let viewModel = SearchViewModel()
     
     //MARK: - life cycle
     override func viewDidLoad() {
@@ -137,7 +141,6 @@ class SearchViewController: BaseVC {
     }
     
     override func configureUI(){
-        configureTableView()
         configureNavigationBar()
     }
     
@@ -149,13 +152,6 @@ class SearchViewController: BaseVC {
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-    }
-    
-    private func configureTableView(){
-        tableView.rowHeight = 44
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(SearchItemCell.self, forCellReuseIdentifier: SearchItemCell.identifier)
     }
     
     //MARK: - function

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SearchItemCell: BaseTableViewCell {
+final class SearchItemCell: BaseTableViewCell {
     static let identifier = String(describing: SearchItemCell.self)
     
     //MARK: - object

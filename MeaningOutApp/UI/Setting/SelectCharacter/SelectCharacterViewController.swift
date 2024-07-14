@@ -12,7 +12,7 @@ protocol SendProfileImageId {
     func dataSend(id: Int)
 }
 
-class SelectCharacterViewController: BaseVC {
+final class SelectCharacterViewController: BaseVC {
     //MARK: - object
     let characterView: CharacterView = {
         let object = CharacterView(style: .setting)

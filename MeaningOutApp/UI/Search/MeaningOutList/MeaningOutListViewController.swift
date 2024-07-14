@@ -52,7 +52,7 @@ final class MeaningOutListViewController: BaseVC {
     }()
     
     //MARK: - properties
-    var viewModel: MeaningOutListViewModel!
+    private var viewModel: MeaningOutListViewModel!
     
     //MARK: - life cycle
     override init(title: String = "", isChild: Bool = false) {

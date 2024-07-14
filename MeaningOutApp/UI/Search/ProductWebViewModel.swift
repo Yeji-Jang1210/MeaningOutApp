@@ -8,7 +8,7 @@
 import Foundation
 import WebKit
 
-class ProductWebViewModel {
+final class ProductWebViewModel {
     var repository = CartRepository()
     lazy var categories = repository.fetchCategory()
     

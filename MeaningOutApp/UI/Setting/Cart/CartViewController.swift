@@ -35,7 +35,7 @@ final class CartViewController: BaseVC {
         return object
     }()
     
-    var viewModel: CartViewModel
+    private var viewModel: CartViewModel
     
     init(title: String = "", isChild: Bool = false, list: Results<CartItem>) {
         self.viewModel = CartViewModel(list: list)

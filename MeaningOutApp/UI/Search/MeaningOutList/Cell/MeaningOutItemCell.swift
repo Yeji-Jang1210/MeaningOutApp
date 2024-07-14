@@ -13,7 +13,7 @@ protocol PassImageDelegate {
     func passImage(_ image: UIImage)
 }
 
-class MeaningOutItemCell: UICollectionViewCell {
+final class MeaningOutItemCell: UICollectionViewCell {
     
     static var identifier = String(describing: MeaningOutItemCell.self)
     var delegate: PassImageDelegate?

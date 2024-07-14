@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MeaningOutListHeaderView: UIView {
+final class MeaningOutListHeaderView: UIView {
     
     static var identifier = String(describing: MeaningOutListHeaderView.self)
     

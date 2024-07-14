@@ -27,7 +27,7 @@ enum ValidateNicknameError: Error {
     }
 }
 
-class ProfileSettingViewModel {
+final class ProfileSettingViewModel {
     let repository = CartRepository()
     
 //MARK: - Input

@@ -25,7 +25,7 @@ class CartCategoryViewController: BaseVC {
     }()
     
     //MARK: - properties
-    let viewModel = CartCategoryViewModel()
+    private let viewModel = CartCategoryViewModel()
     
     //MARK: - life cycle
     override func viewDidLoad() {

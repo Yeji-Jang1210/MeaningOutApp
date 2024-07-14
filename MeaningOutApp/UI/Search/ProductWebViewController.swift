@@ -12,12 +12,11 @@ import Lottie
 import SnapKit
 import Toast
 
-class ProductWebViewController: BaseVC {
+final class ProductWebViewController: BaseVC {
     
     //MARK: - object
     let webView: WKWebView = {
         let configuration = WKWebViewConfiguration()
-        
         let object = WKWebView(frame: .zero, configuration: configuration)
         return object
     }()
@@ -43,7 +42,7 @@ class ProductWebViewController: BaseVC {
     }()
     
     //MARK: - properties
-    var viewModel: ProductWebViewModel!
+    private var viewModel: ProductWebViewModel!
     
     //MARK: - life cycle
     init(title: String = "", isChild: Bool = false, url: String, product: Product) {

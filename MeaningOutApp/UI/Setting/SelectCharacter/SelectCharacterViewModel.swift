@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SelectCharacterViewModel {
+final class SelectCharacterViewModel {
     var inputCharacterNum = Observable(0)
     var outputCharacterNum = Observable(0)
     
