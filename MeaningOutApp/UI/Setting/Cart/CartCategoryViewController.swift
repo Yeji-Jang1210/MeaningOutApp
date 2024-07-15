@@ -49,7 +49,7 @@ class CartCategoryViewController: BaseVC {
         }
         
         viewModel.outputPresentAddCategoryVC.bind { trigger in
-            guard let trigger else { return }
+            guard trigger != nil else { return }
             
             let vc = AddCategoryViewController()
             if let sheet = vc.sheetPresentationController {
@@ -112,4 +112,34 @@ extension CartCategoryViewController: UICollectionViewDelegate, UICollectionView
         viewModel.inputDidSelectItemIndex.value = indexPath.row
     }
     
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+        guard let row = indexPaths.first?.row else { return nil }
+        return configureContextMenu(row)
+    }
+    
+    func configureContextMenu(_ index: Int) -> UIContextMenuConfiguration {
+        let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil){ (action) -> UIMenu? in
+            let updateAction = UIAction(title: "수정", image: UIImage(systemName: "pencil")) { _ in
+                self.viewModel.outputPresentAddCategoryVC.value = ()
+            }
+            
+            let deleteAction = UIAction(title: "삭제", image: UIImage(systemName: "trash"), attributes: .destructive){ _ in
+                
+                let alert = UIAlertController(title: "삭제하시겠습니까?", message: "카테고리를 삭제하면 저장된 상품도 삭제됩니다.", preferredStyle: .alert)
+                
+                let delete = UIAlertAction(title: "삭제", style: .destructive)
+                
+                let cancel = UIAlertAction(title: "취소", style: .cancel)
+                cancel.setValue(Color.warmGray, forKey: "titleTextColor")
+                
+                alert.addAction(delete)
+                alert.addAction(cancel)
+
+                self.present(alert, animated: true)
+            }
+            
+            return UIMenu(title: "", children: [updateAction, deleteAction])
+        }
+        return context
+    }
 }

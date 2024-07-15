@@ -69,7 +69,7 @@ class CategoryListCollectionViewCell: UICollectionViewCell {
     
     private func configureLayout(){
         backView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalToSuperview().inset(8)
         }
         
         imageView.snp.makeConstraints { make in
