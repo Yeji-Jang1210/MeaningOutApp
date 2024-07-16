@@ -45,38 +45,46 @@ final class MeaningOutListViewModel {
             self.outputFilter.value = type
         }
         
-        inputIsLikeButtonSelected.bind { isSelected, index in
-            guard let isSelected = isSelected, let index = index else { return }
+        inputIsLikeButtonSelected.bind { [weak self] isSelected, index in
+            guard let self = self, let isSelected = isSelected, let index = index else { return }
             
-            self.selectProductIndex = index
+            selectProductIndex = index
             
-            if isSelected {
-                //present addCategory VC
-                self.outputPresentCategoryVC.value = ()
-            } else {
-                //delete
-                self.repository.deleteItemForId(productId: self.outputProducts.value[index].productId)
-                self.outputCallSelectedProductToast.value = false
+            DispatchQueue.main.async {
+                if isSelected {
+                    //present addCategory VC
+                    self.outputPresentCategoryVC.value = ()
+                } else {
+                    //delete
+                    self.repository.deleteItemForId(productId: self.outputProducts.value[index].productId)
+                    self.outputCallSelectedProductToast.value = false
+                }
             }
         }
         
-        inputAddProductTrigger.bind { category in
+        inputAddProductTrigger.bind { [weak self] category in
             //index is category index
-            guard let category = category, let selectProductIndex = self.selectProductIndex  else { return }
+            guard let self = self, let category = category, let selectProductIndex = selectProductIndex  else { return }
             
-            self.repository.createProductInCategory(category: category, product: self.outputProducts.value[selectProductIndex])
+            repository.createProductInCategory(category: category, product: outputProducts.value[selectProductIndex])
                 
-            self.outputCallSelectedProductToast.value = true
-            self.outputCallAnimation.value = .adding
+            DispatchQueue.main.async {
+                self.outputCallSelectedProductToast.value = true
+                self.outputCallAnimation.value = .adding
+            }
         }
         
-        inputNextPageTrigger.bind { _ in
-            self.start += 30
-            self.callAPI()
+        inputNextPageTrigger.bind { [weak self] _ in
+            guard let self else { return }
+            start += 30
+            callAPI()
         }
         
-        inputCallAnimation.bind { type in
-            self.outputCallAnimation.value = type
+        inputCallAnimation.bind { [weak self] type in
+            guard let self else { return }
+            DispatchQueue.main.async {
+                self.outputCallAnimation.value = type
+            }
         }
 
     }
@@ -84,18 +92,20 @@ final class MeaningOutListViewModel {
     private func callAPI(){
         self.outputCallAnimation.value = .loading
         APIService.shared.networking(api: .search(query: text, sort: inputFilter.value, start: start), of: ShoppingItemList.self) { networkResult in
-            switch networkResult {
-            case .success(let data):
-                if self.start == 1 {
-                    self.outputProducts.value = data.items
-                } else {
-                    self.outputProducts.value.append(contentsOf: data.items)
+            DispatchQueue.main.async {
+                switch networkResult {
+                case .success(let data):
+                    if self.start == 1 {
+                        self.outputProducts.value = data.items
+                    } else {
+                        self.outputProducts.value.append(contentsOf: data.items)
+                    }
+                    
+                    self.outputTotal.value = data.total
+                    self.outputCallAnimation.value = LottieAnimationType.none
+                case .error(let error):
+                    self.outputCallAPIError.value = error
                 }
-                
-                self.outputTotal.value = data.total
-                self.outputCallAnimation.value = LottieAnimationType.none
-            case .error(let error):
-                self.outputCallAPIError.value = error
             }
         }
     }

@@ -8,11 +8,11 @@
 import UIKit
 
 class BaseVC: UIViewController {
-
-//MARK: - property
+    
+    //MARK: - property
     private var isChild: Bool = false
-  
-//MARK: - life cycle
+    
+    //MARK: - life cycle
     init(title: String = "", isChild: Bool = false){
         super.init(nibName: nil, bundle: nil)
         self.isChild = isChild
@@ -22,6 +22,10 @@ class BaseVC: UIViewController {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("\(String(describing: type(of: self))) deinitialized")
     }
     
     override func viewDidLoad() {
@@ -39,16 +43,19 @@ class BaseVC: UIViewController {
         configureHierarchy()
         configureLayout()
         configureUI()
+        bind()
     }
     
-//MARK: - configure function
+    //MARK: - configure function
     func configureHierarchy(){ }
     
     func configureLayout(){ }
     
     func configureUI(){ }
     
-//MARK: - function
+    //MARK: - function
+    func bind(){}
+    
     @objc private func dismissButtonTapped(){
         if isChild {
             self.navigationController?.popViewController(animated: true)

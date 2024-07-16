@@ -38,7 +38,7 @@ class OnboardingViewController: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        bindAction()
+        configureAction()
     }
     
     //MARK: - configure function
@@ -68,8 +68,7 @@ class OnboardingViewController: BaseVC {
     }
     
     //MARK: - function
-    
-    private func bindAction(){
+    private func configureAction(){
         startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
     }
     

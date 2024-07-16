@@ -45,25 +45,29 @@ final class ProfileSettingViewModel {
     var outputIsSaved = Observable<Bool?>(nil)
     
     init(){
-        inputNickname.bind { nickname in
-            self.outputNickname.value = nickname
-            self.validateNickname { status, isValid in
-                self.outputNicknameStatus.value = status
-                self.outputIsNicknameValid.value = isValid
+        inputNickname.bind { [weak self] nickname in
+            guard let self else { return }
+            outputNickname.value = nickname
+            
+            validateNickname { [weak self] status, isValid in
+                guard let self else { return }
+                outputNicknameStatus.value = status
+                outputIsNicknameValid.value = isValid
             }
         }
         
-        inputImageNum.bind { num in
-            self.outputImageNum.value = num ?? Int.random(in: 0...Character.maxCount)
+        inputImageNum.bind { [weak self] num in
+            guard let self else { return }
+            outputImageNum.value = num ?? Int.random(in: 0...Character.maxCount)
         }
         
-        inputUpdateTrigger.bind { trigger in
-            guard trigger != nil else { return }
-            self.updateData()
+        inputUpdateTrigger.bind { [weak self] trigger in
+            guard let self, trigger != nil else { return }
+            updateData()
         }
         
-        inputSaveTrigger.bind { trigger in
-            guard trigger != nil else { return }
+        inputSaveTrigger.bind { [weak self] trigger in
+            guard let self, trigger != nil else { return }
             self.createData()
         }
     }

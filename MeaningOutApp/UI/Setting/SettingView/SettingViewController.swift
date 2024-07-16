@@ -34,7 +34,6 @@ final class SettingViewController: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         headerView.editSettingButton.addTarget(self, action: #selector(editSettingButtonTapped), for: .touchUpInside)
-        bindAction()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -63,8 +62,9 @@ final class SettingViewController: BaseVC {
     }
     
     //MARK: - function
-    private func bindAction(){
-        viewModel.outputCartListText.bind { boldString, fullString in
+    override func bind(){
+        viewModel.outputCartListText.bind { [weak self] boldString, fullString in
+            guard let self else { return }
             let attributedString = NSMutableAttributedString(string: fullString)
             let boldFontAttribute: [NSAttributedString.Key: Any] = [.font: BaseFont.medium.boldFont]
             
@@ -79,23 +79,23 @@ final class SettingViewController: BaseVC {
             self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
         }
         
-        viewModel.outputSelectSettingType.bind { type in
-            guard let type else { return }
+        viewModel.outputSelectSettingType.bind { [weak self] type in
+            guard let self, let type else { return }
             switch type {
             case .cartList:
-                self.navigationController?.pushViewController(CartCategoryViewController(title: Localized.usersCartList.title, isChild: true), animated: true)
+                navigationController?.pushViewController(CartCategoryViewController(title: Localized.usersCartList.title, isChild: true), animated: true)
             case .deleteAccount:
-                self.presentDeleteAlert()
+                presentDeleteAlert()
             default:
                 return
             }
         }
         
-        viewModel.outputIsDeleteSucceeded.bind { result in
-            guard let result else { return }
+        viewModel.outputIsDeleteSucceeded.bind { [weak self] result in
+            guard let self, let result else { return }
             if result {
                 let nvc = UINavigationController(rootViewController: OnboardingViewController())
-                self.changeRootViewController(nvc)
+                changeRootViewController(nvc)
             }
         }
     }

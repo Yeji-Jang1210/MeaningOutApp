@@ -23,23 +23,25 @@ final class SettingViewModel {
     }
     
     func bind(){
-        inputRefreshCartListCountTrigger.bind { trigger in
-            let count = self.repository.fetch().count
+        inputRefreshCartListCountTrigger.bind { [weak self] trigger in
+            guard let self else { return }
+            let count = repository.fetch().count
             let boldString = "\(count)개"
-            self.outputCartListText.value = (boldString, boldString + "의 상품")
+            outputCartListText.value = (boldString, boldString + "의 상품")
         }
         
-        inputSelectSettingType.bind { rawValue in
-            guard let rawValue, let type = SettingType(rawValue: rawValue) else { return }
-            self.outputSelectSettingType.value = type
+        inputSelectSettingType.bind { [weak self] rawValue in
+            guard let self, let rawValue, let type = SettingType(rawValue: rawValue) else { return }
+            outputSelectSettingType.value = type
         }
         
-        inputDeleteAccountTrigger.bind { trigger in
-            guard trigger != nil else { return }
+        inputDeleteAccountTrigger.bind { [weak self] trigger in
+            guard let self, trigger != nil else { return }
             
             User.shared.delete()
-            self.repository.deleteAll { result in
-                self.outputIsDeleteSucceeded.value = result
+            repository.deleteAll { [weak self] result in
+                guard let self else { return }
+                outputIsDeleteSucceeded.value = result
             }
         }
     }

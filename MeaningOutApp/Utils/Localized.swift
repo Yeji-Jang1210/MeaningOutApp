@@ -25,6 +25,8 @@ enum Localized {
     case searchBar_placeholder
     case current_search
     case delete_all
+    case edit
+    case delete
     case empty
     case profile_tab_title
     case result_count_text(count: Int)
@@ -36,6 +38,7 @@ enum Localized {
     case user_info_saved_error
     case add_category_title_placeholder
     case add_category_description_placeholder
+    case deleteCategory_dlg
     
     //settingType
     case cartList
@@ -80,6 +83,10 @@ enum Localized {
             return "최근검색"
         case .delete_all:
             return "전체삭제"
+        case .edit:
+            return "수정"
+        case .delete:
+            return "삭제"
         case .searchBar_placeholder:
             return "브랜드, 상품 등을 입력하세요"
         case .empty:
@@ -129,6 +136,8 @@ enum Localized {
             return "\(User.shared.nickname)'s MEANING OUT"
         case .deleteAccount_dlg, .deleteAccount:
             return "탈퇴하기"
+        case .deleteCategory_dlg:
+            return "삭제하시겠습니까?"
         case .cartList:
             return "나의 장바구니 목록"
         case .usersCartList:
@@ -150,6 +159,8 @@ enum Localized {
         switch self {
         case .deleteAccount_dlg:
             return "탈퇴를 하면 데이터가 모두 초기화됩니다.\n탈퇴 하시겠습니까?"
+        case .deleteCategory_dlg:
+            return "카테고리를 삭제하면 저장된 상품도 삭제됩니다."
         case .like_select_message:
             return "장바구니에 추가했습니다."
         case .like_unselect_message:
@@ -185,6 +196,8 @@ enum Localized {
         switch self {
         case .deleteAccount_dlg:
             return "확인"
+        case .deleteCategory_dlg:
+            return "삭제"
         default:
             return ""
         }
@@ -192,7 +205,7 @@ enum Localized {
     
     var cancel: String {
         switch self {
-        case .deleteAccount_dlg:
+        case .deleteAccount_dlg, .deleteCategory_dlg:
             return "취소"
         default:
             return ""

@@ -60,7 +60,6 @@ final class ProfileSettingViewController: BaseVC, SendProfileImageId {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindData()
     }
     
     //MARK: - configure function
@@ -111,44 +110,48 @@ final class ProfileSettingViewController: BaseVC, SendProfileImageId {
         }
     }
     
-    private func bindData(){
-        viewModel.outputImageNum.bind { num in
-            self.characterView.image = Character.getImage(num: num)
+    override func bind(){
+        viewModel.outputImageNum.bind { [weak self] num in
+            guard let self else { return }
+            characterView.image = Character.getImage(num: num)
         }
         
-        viewModel.outputNickname.bind { nickname in
-            self.nicknameTextField.text = nickname
+        viewModel.outputNickname.bind { [weak self] nickname in
+            guard let self else { return }
+            nicknameTextField.text = nickname
         }
         
-        viewModel.outputNicknameStatus.bind { status in
-            self.nicknameStatusLabel.text = status?.message
+        viewModel.outputNicknameStatus.bind { [weak self] status in
+            guard let self else { return }
+            nicknameStatusLabel.text = status?.message
         }
         
-        viewModel.outputIsNicknameValid.bind { result in
+        viewModel.outputIsNicknameValid.bind { [weak self] result in
+            guard let self else { return }
             switch self.type {
             case .setting:
-                self.completeButton.isEnabled = result
+                completeButton.isEnabled = result
             case .edit:
-                self.navigationItem.rightBarButtonItem?.isEnabled = result
+                navigationItem.rightBarButtonItem?.isEnabled = result
             }
         }
         
-        viewModel.outputIsUpdate.bind { result in
-            guard let result else { return }
+        viewModel.outputIsUpdate.bind { [weak self] result in
+            guard let self, let result else { return }
             if result {
                 let vc = MainTabBarController()
-                self.changeRootViewController(vc)
+                changeRootViewController(vc)
             } else {
-                self.view.makeToast(Localized.user_info_saved_error.text)
+                view.makeToast(Localized.user_info_saved_error.text)
             }
         }
         
-        viewModel.outputIsSaved.bind { result in
-            guard let result else { return }
+        viewModel.outputIsSaved.bind { [weak self] result in
+            guard let self, let result else { return }
             if result {
-                self.navigationController?.popViewController(animated: true)
+                navigationController?.popViewController(animated: true)
             } else {
-                self.view.makeToast(Localized.user_info_saved_error.text)
+                view.makeToast(Localized.user_info_saved_error.text)
             }
         }
     }

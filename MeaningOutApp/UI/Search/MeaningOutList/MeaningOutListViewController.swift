@@ -66,7 +66,6 @@ final class MeaningOutListViewController: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindAction()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -130,35 +129,31 @@ final class MeaningOutListViewController: BaseVC {
     }
     
     //MARK: - function
-    private func bindAction(){
-        viewModel.outputProducts.bind { products in
-            DispatchQueue.main.async {
-                if self.viewModel.start == 1 && !products.isEmpty {
-                    self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-                }
+    override func bind(){
+        viewModel.outputProducts.bind { [weak self] products in
+            guard let self else { return }
+            if viewModel.start == 1 && !products.isEmpty {
+                collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
             }
         }
         
-        viewModel.outputTotal.bind { total in
-            DispatchQueue.main.async {
-                self.header.resultCountLabel.text = Localized.result_count_text(count: total).text
-                self.collectionView.reloadData()
-            }
+        viewModel.outputTotal.bind { [weak self] total in
+            guard let self else { return }
+            header.resultCountLabel.text = Localized.result_count_text(count: total).text
+            collectionView.reloadData()
         }
         
-        viewModel.outputCallAPIError.bind { error in
-            guard let error else { return }
+        viewModel.outputCallAPIError.bind { [weak self] error in
+            guard let self = self, let error = error else { return }
             
-            self.handlingError(error)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.navigationController?.popViewController(animated: true)
-            }
+            handlingError(error)
+            navigationController?.popViewController(animated: true)
         }
         
-        viewModel.outputFilter.bind { type in
-            print(type.rawValue)
-            self.header.buttonCollecction[type.rawValue].isSelected = true
-            for button in self.header.buttonCollecction {
+        viewModel.outputFilter.bind { [weak self] type in
+            guard let self else { return }
+            header.buttonCollecction[type.rawValue].isSelected = true
+            for button in header.buttonCollecction {
                 if button.tag == type.rawValue {
                     button.isSelected = true
                 } else {
@@ -169,6 +164,7 @@ final class MeaningOutListViewController: BaseVC {
         
         viewModel.outputCallAnimation.bind { [weak self] type in
             guard let self = self, let type = type else { return }
+            
             DispatchQueue.main.async {
                 switch type {
                 case .none:
@@ -194,22 +190,23 @@ final class MeaningOutListViewController: BaseVC {
             }
         }
         
-        viewModel.outputPresentCategoryVC.bind { trigger in
-            guard trigger != nil else { return }
+        viewModel.outputPresentCategoryVC.bind { [weak self] trigger in
+            guard let self = self, trigger != nil else { return }
             
             let vc = AddProductViewController()
             if let sheet = vc.sheetPresentationController {
                 sheet.detents = [.medium()]
             }
             
-            vc.passIndex = { category in
-                self.viewModel.inputAddProductTrigger.value = category
+            vc.passIndex = { [weak self] category in
+                guard let self else { return }
+                viewModel.inputAddProductTrigger.value = category
             }
-            self.present(vc, animated: true)
+            present(vc, animated: true)
         }
         
-        viewModel.outputCallSelectedProductToast.bind { isSelected in
-            guard let isSelected else { return }
+        viewModel.outputCallSelectedProductToast.bind { [weak self] isSelected in
+            guard let self = self, let isSelected = isSelected else { return }
             
             DispatchQueue.main.async {
                 self.collectionView.reloadData()

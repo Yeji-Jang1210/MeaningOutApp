@@ -29,36 +29,37 @@ final class ProductWebViewModel {
     init(url: String, product: Product){
         self.url = url
         self.product = product
-        bindAction()
+        bind()
     }
     
-    private func bindAction(){
-        inputFindProductTrigger.bind { _ in
-            if let id = self.product?.productId {
-                self.outputIsSelected.value = self.repository.findProductId(productId: id)
+    private func bind(){
+        inputFindProductTrigger.bind { [weak self] trigger in
+            guard let self, trigger != nil else { return }
+            if let id = product?.productId {
+                outputIsSelected.value = repository.findProductId(productId: id)
             }
         }
         
-        inputIsSelected.bind { result in
-            guard let product = self.product, let result = result else { return }
+        inputIsSelected.bind { [weak self] result in
+            guard let self, let result, let product else { return }
             
             if result {
-                self.outputPresentCategoryVC.value = ()
+                outputPresentCategoryVC.value = ()
             } else {
-                self.deleteProductInCategory(id: product.productId, isSelected: result)
+                deleteProductInCategory(id: product.productId, isSelected: result)
             }
         }
         
-        inputAddProductTrigger.bind { category in
-            guard let category = category, let product = self.product else { return }
-            self.repository.createProductInCategory(category: category, product: product)
-            self.outputIsSelected.value = true
-            self.outputPresentToast.value = true
+        inputAddProductTrigger.bind { [weak self] category in
+            guard let self, let category, let product else { return }
+            repository.createProductInCategory(category: category, product: product)
+            outputIsSelected.value = true
+            outputPresentToast.value = true
         }
         
-        inputLoadWebLinkTrigger.bind { _ in
-            print(self.url)
-            self.outputWebLink.value = URL(string: self.url)
+        inputLoadWebLinkTrigger.bind { [weak self] trigger in
+            guard let self, trigger != nil else { return }
+            outputWebLink.value = URL(string: self.url)
         }
     }
     

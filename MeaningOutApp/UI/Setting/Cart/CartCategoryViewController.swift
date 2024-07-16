@@ -30,7 +30,6 @@ class CartCategoryViewController: BaseVC {
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,9 +37,9 @@ class CartCategoryViewController: BaseVC {
         collectionView.reloadData()
     }
     
-    private func bind(){
-        viewModel.outputPresentProductListForCategory.bind{ category, cartItems in
-            guard let category = category, let cartItems = cartItems else { return }
+    override func bind(){
+        viewModel.outputPresentProductListForCategory.bind{ [weak self] category, cartItems in
+            guard let self, let category, let cartItems else { return }
             let vc = CartViewController(title: category.name, isChild: true, list: cartItems)
             
             DispatchQueue.main.async{
@@ -48,8 +47,8 @@ class CartCategoryViewController: BaseVC {
             }
         }
         
-        viewModel.outputPresentAddCategoryVC.bind { trigger in
-            guard trigger != nil else { return }
+        viewModel.outputPresentAddCategoryVC.bind { [weak self] trigger in
+            guard let self, trigger != nil else { return }
             
             let vc = AddCategoryViewController()
             if let sheet = vc.sheetPresentationController {
@@ -58,7 +57,7 @@ class CartCategoryViewController: BaseVC {
             vc.saveCategory = {
                 self.collectionView.reloadData()
             }
-            self.present(vc, animated: true)
+            present(vc, animated: true)
         }
     }
     
@@ -119,17 +118,17 @@ extension CartCategoryViewController: UICollectionViewDelegate, UICollectionView
     
     func configureContextMenu(_ index: Int) -> UIContextMenuConfiguration {
         let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil){ (action) -> UIMenu? in
-            let updateAction = UIAction(title: "수정", image: UIImage(systemName: "pencil")) { _ in
+            let updateAction = UIAction(title: Localized.edit.text, image: ImageAssets.pencil) { _ in
                 self.viewModel.outputPresentAddCategoryVC.value = ()
             }
             
-            let deleteAction = UIAction(title: "삭제", image: UIImage(systemName: "trash"), attributes: .destructive){ _ in
+            let deleteAction = UIAction(title: Localized.delete.text, image: ImageAssets.trash, attributes: .destructive){ _ in
                 
-                let alert = UIAlertController(title: "삭제하시겠습니까?", message: "카테고리를 삭제하면 저장된 상품도 삭제됩니다.", preferredStyle: .alert)
+                let alert = UIAlertController(title: Localized.deleteCategory_dlg.title, message: Localized.deleteCategory_dlg.message, preferredStyle: .alert)
                 
-                let delete = UIAlertAction(title: "삭제", style: .destructive)
+                let delete = UIAlertAction(title: Localized.deleteCategory_dlg.confirm, style: .destructive)
                 
-                let cancel = UIAlertAction(title: "취소", style: .cancel)
+                let cancel = UIAlertAction(title: Localized.deleteCategory_dlg.cancel, style: .cancel)
                 cancel.setValue(Color.warmGray, forKey: "titleTextColor")
                 
                 alert.addAction(delete)

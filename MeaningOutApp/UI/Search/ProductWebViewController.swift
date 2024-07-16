@@ -54,7 +54,6 @@ final class ProductWebViewController: BaseVC {
         super.viewDidLoad()
         viewModel.inputLoadWebLinkTrigger.value = ()
         viewModel.inputFindProductTrigger.value = ()
-        bindAction()
     }
     
     //MARK: - configure function
@@ -92,50 +91,50 @@ final class ProductWebViewController: BaseVC {
         rightBarButtonItem.action = #selector(likeButtonTapped)
     }
     
-    private func bindAction(){
-        viewModel.outputIsSelected.bind { isSelected in
-            guard let isSelected else { return }
+    override func bind(){
+        viewModel.outputIsSelected.bind { [weak self] isSelected in
+            guard let self, let isSelected else { return }
             
-            self.rightBarButtonItem.isSelected = isSelected
-            self.rightBarButtonItem.image = isSelected ? ImageAssets.like_selected :  ImageAssets.like_unselected
+            rightBarButtonItem.isSelected = isSelected
+            rightBarButtonItem.image = isSelected ? ImageAssets.like_selected :  ImageAssets.like_unselected
         }
         
-        viewModel.outputPresentCategoryVC.bind { present in
-            guard let present else { return }
+        viewModel.outputPresentCategoryVC.bind { [weak self] present in
+            guard let self, present != nil else { return }
             
             let vc = AddProductViewController()
             if let sheet = vc.sheetPresentationController {
                 sheet.detents = [.medium()]
             }
             
-            vc.passIndex = { category in
-                self.viewModel.inputAddProductTrigger.value = category
+            vc.passIndex = { [weak self] category in
+                guard let self else { return }
+                viewModel.inputAddProductTrigger.value = category
             }
             self.present(vc, animated: true)
         }
         
-        viewModel.outputPresentToast.bind { isSelected in
-            guard let isSelected else { return }
+        viewModel.outputPresentToast.bind { [weak self] isSelected in
+            guard let self, let isSelected else { return }
             
             DispatchQueue.main.async {
                 self.view.makeToast(isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
             }
         }
         
-        viewModel.outputWebLink.bind { url in
-            guard let url else { return }
-            print(url)
-            self.webView.load(URLRequest(url: url))
+        viewModel.outputWebLink.bind { [weak self] url in
+            guard let self, let url else { return }
+            webView.load(URLRequest(url: url))
         }
         
-        viewModel.outputIsLoading.bind { [self] isLoading in
-            guard let isLoading else { return }
+        viewModel.outputIsLoading.bind { [weak self] isLoading in
+            guard let self, let isLoading else { return }
             
             if isLoading {
-                self.container.isHidden = false
-                self.loadingAnimationView.play()
+                container.isHidden = false
+                loadingAnimationView.play()
             } else {
-                self.loadingAnimationView.stop()
+                loadingAnimationView.stop()
                 container.isHidden = true
             }
         }
@@ -143,7 +142,6 @@ final class ProductWebViewController: BaseVC {
     
     //MARK: - function
     @objc func likeButtonTapped(_ sender: UIBarButtonItem){
-        //sender.isSelected.toggle()
         viewModel.inputIsSelected.value = !sender.isSelected
     }
     

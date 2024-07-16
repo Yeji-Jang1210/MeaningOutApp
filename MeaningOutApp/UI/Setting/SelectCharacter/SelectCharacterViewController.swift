@@ -38,9 +38,10 @@ final class SelectCharacterViewController: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.outputCharacterNum.bind { num in
-            self.characterView.image = Character.getImage(num: num)
-            self.collectionView.reloadData()
+        viewModel.outputCharacterNum.bind { [weak self] num in
+            guard let self else { return }
+            characterView.image = Character.getImage(num: num)
+            collectionView.reloadData()
         }
     }
     
@@ -77,8 +78,6 @@ final class SelectCharacterViewController: BaseVC {
         collectionView.dataSource = self
         collectionView.register(CharacterCollectionViewCell.self, forCellWithReuseIdentifier: CharacterCollectionViewCell.identifier)
     }
-    //MARK: - function
-    
 }
 
 extension SelectCharacterViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

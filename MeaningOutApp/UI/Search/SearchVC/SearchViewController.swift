@@ -78,7 +78,6 @@ class SearchViewController: BaseVC {
     //MARK: - life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindAction()
         headerButton.addTarget(self, action: #selector(deleteListAll), for: .touchUpInside)
         
     }
@@ -155,23 +154,24 @@ class SearchViewController: BaseVC {
     }
     
     //MARK: - function
-    private func bindAction(){
-        viewModel.outputSearchList.bind { list in
-            self.tableView.reloadData()
+    override func bind(){
+        viewModel.outputSearchList.bind { [weak self] list in
+            guard let self else { return }
+            tableView.reloadData()
         }
         
-        viewModel.outputListisEmpty.bind { isEmpty in
-            guard let isEmpty = isEmpty else { return }
-            self.tableView.isHidden = isEmpty
-            self.emptyView.isHidden = !isEmpty
-            self.headerView.isHidden = isEmpty
-            self.searchController.searchBar.text = ""
+        viewModel.outputListisEmpty.bind { [weak self] isEmpty in
+            guard let self , let isEmpty = isEmpty else { return }
+            tableView.isHidden = isEmpty
+            emptyView.isHidden = !isEmpty
+            headerView.isHidden = isEmpty
+            searchController.searchBar.text = ""
         }
         
-        viewModel.outputSelectedCellTrigger.bind { text in
-            guard let text else { return }
+        viewModel.outputSelectedCellTrigger.bind { [weak self] text in
+            guard let self = self, let text = text else { return }
             let vc = MeaningOutListViewController(title: text, isChild: true)
-            self.navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     

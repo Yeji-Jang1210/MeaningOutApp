@@ -37,10 +37,10 @@ final class AddProductViewController: UIViewController {
     }
     
     private func bind(){
-        viewModel.outputSelectedCategory.bind { category in
-            guard let category else { return }
-            self.passIndex?(category)
-            self.dismiss(animated: true)
+        viewModel.outputSelectedCategory.bind { [weak self] category in
+            guard let self = self, let category = category else { return }
+            passIndex?(category)
+            dismiss(animated: true)
         }
     }
     

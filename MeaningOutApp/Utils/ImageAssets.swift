@@ -22,6 +22,8 @@ struct ImageAssets {
     static var cart = UIImage(systemName: "cart")
     static var plus = UIImage(systemName: "plus")
     static var plusCircle = UIImage(systemName: "plus.circle")
+    static var pencil = UIImage(systemName: "pencil")
+    static var trash = UIImage(systemName: "trash")
 
 //MARK: - Assets
     static var empty = UIImage(named: "empty")

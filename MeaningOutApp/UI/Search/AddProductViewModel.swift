@@ -20,10 +20,10 @@ final class AddProductViewModel {
     }
     
     private func bind(){
-        inputSelectIndex.bind { index in
-            guard let index else { return }
+        inputSelectIndex.bind { [weak self] index in
+            guard let self = self, let index = index else { return }
             
-            self.outputSelectedCategory.value = self.outputCategoryList.value[index]
+            outputSelectedCategory.value = outputCategoryList.value[index]
         }
     }
 }

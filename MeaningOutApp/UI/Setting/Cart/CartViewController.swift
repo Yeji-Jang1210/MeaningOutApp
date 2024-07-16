@@ -44,7 +44,6 @@ final class CartViewController: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,21 +52,17 @@ final class CartViewController: BaseVC {
         collectionView.reloadData()
     }
     
-    private func bind(){
-        viewModel.outputCartItemIsDeleted.bind { isDeleted in
-            guard isDeleted != nil else { return }
+    override func bind(){
+        viewModel.outputCartItemIsDeleted.bind { [weak self] isDeleted in
+            guard let self, isDeleted != nil else { return }
             
-            DispatchQueue.main.async {
-                self.view.makeToast("장바구니에서 삭제되었습니다.")
-                self.collectionView.reloadData()
-            }
+            view.makeToast("장바구니에서 삭제되었습니다.")
+            collectionView.reloadData()
         }
         
-        viewModel.outputCartItemFilteredList.bind { filtered in
-            guard filtered != nil else { return }
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
+        viewModel.outputCartItemFilteredList.bind { [weak self] filtered in
+            guard let self, filtered != nil else { return }
+            collectionView.reloadData()
         }
     }
     

@@ -31,14 +31,16 @@ final class CartViewModel {
             self.outputCartItemIsDeleted.value = true
         }
         
-        inputSearchText.bind { text in
-            guard let text else { return }
+        inputSearchText.bind { [weak self] text in
+            guard let self, let text else { return }
             
-            let filtered = self.outputCartItemFilteredList.value?.where {
-                $0.title.contains(text, options: .caseInsensitive)
+            DispatchQueue.main.async {
+                let filtered = self.outputCartItemFilteredList.value?.where {
+                    $0.title.contains(text, options: .caseInsensitive)
+                }
+                
+                self.outputCartItemFilteredList.value = text.isEmpty ? self.list : filtered
             }
-            
-            self.outputCartItemFilteredList.value = text.isEmpty ? self.list : filtered
         }
     }
     

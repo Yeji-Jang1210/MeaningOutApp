@@ -22,19 +22,21 @@ final class CartCategoryViewModel {
     }
     
     private func bind(){
-        inputDidSelectItemIndex.bind { index in
-            guard let index else { return }
+        inputDidSelectItemIndex.bind { [weak self] index in
+            guard let self, let index else { return }
             
-            let list = self.repository.fetch().where {
-                $0.category.name == self.outputCategoryList.value[index].name
+            DispatchQueue.main.async {
+                let list = self.repository.fetch().where {
+                    $0.category.name == self.outputCategoryList.value[index].name
+                }
+                
+                self.outputPresentProductListForCategory.value = (self.outputCategoryList.value[index], list)
             }
-            
-            self.outputPresentProductListForCategory.value = (self.outputCategoryList.value[index], list)
         }
         
-        inputAddCategoryButtonTappedTrigger.bind { trigger in
-            guard let trigger else { return }
-            self.outputPresentAddCategoryVC.value = ()
+        inputAddCategoryButtonTappedTrigger.bind { [weak self] trigger in
+            guard let self, trigger != nil else { return }
+            outputPresentAddCategoryVC.value = ()
         }
     }
 }

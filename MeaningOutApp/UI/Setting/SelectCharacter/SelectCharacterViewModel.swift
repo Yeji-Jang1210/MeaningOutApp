@@ -12,9 +12,10 @@ final class SelectCharacterViewModel {
     var outputCharacterNum = Observable(0)
     
     init(){
-        inputCharacterNum.bind { num in
-            self.outputCharacterNum.value = num
+        inputCharacterNum.bind { [weak self] num in
+            DispatchQueue.main.async {
+                self?.outputCharacterNum.value = num
+            }
         }
-        
     }
 }
