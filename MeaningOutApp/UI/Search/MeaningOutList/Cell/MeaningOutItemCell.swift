@@ -9,14 +9,14 @@ import UIKit
 import Kingfisher
 import SwiftyUserDefaults
 
-protocol PassImageDelegate {
+protocol PassImageDelegate: AnyObject {
     func passImage(_ image: UIImage)
 }
 
 final class MeaningOutItemCell: UICollectionViewCell {
     
     static var identifier = String(describing: MeaningOutItemCell.self)
-    var delegate: PassImageDelegate?
+    weak var delegate: PassImageDelegate?
     
     //MARK: - object
     let itemImageView: UIImageView = {
