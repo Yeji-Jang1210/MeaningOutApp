@@ -12,6 +12,7 @@ final class AddProductViewModel {
     let repository = CartRepository()
     
     var inputSelectIndex: Observable<Int?> = Observable(nil)
+    
     lazy var outputCategoryList: Observable<Results<Category>> = Observable(repository.fetchCategory())
     var outputSelectedCategory: Observable<Category?> = Observable(nil)
     
