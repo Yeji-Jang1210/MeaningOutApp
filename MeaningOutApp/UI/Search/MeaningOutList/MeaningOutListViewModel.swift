@@ -13,7 +13,7 @@ enum LottieAnimationType {
     case loading
 }
 
-final class MeaningOutListViewModel {
+final class MeaningOutListViewModel: BaseVM {
     var inputFilter: Observable<FilterType> = Observable(.similarity)
     var inputNextPageTrigger: Observable<Void?> = Observable(nil)
     var inputCallAnimation: Observable<LottieAnimationType> = Observable(.none)
@@ -39,10 +39,15 @@ final class MeaningOutListViewModel {
     
     init(text: String){
         self.text = text
-        inputFilter.bind { type in
-            self.start = 1
-            self.callAPI()
-            self.outputFilter.value = type
+        super.init()
+    }
+    
+    override func bind() {
+        inputFilter.bind { [weak self] type in
+            guard let self else { return }
+            start = 1
+            callAPI()
+            outputFilter.value = type
         }
         
         inputIsLikeButtonSelected.bind { [weak self] isSelected, index in
@@ -74,8 +79,8 @@ final class MeaningOutListViewModel {
             }
         }
         
-        inputNextPageTrigger.bind { [weak self] _ in
-            guard let self else { return }
+        inputNextPageTrigger.bind { [weak self] trigger in
+            guard let self, let trigger else { return }
             start += 30
             callAPI()
         }
@@ -86,7 +91,6 @@ final class MeaningOutListViewModel {
                 self.outputCallAnimation.value = type
             }
         }
-
     }
     
     private func callAPI(){

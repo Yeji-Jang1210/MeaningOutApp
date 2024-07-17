@@ -59,11 +59,7 @@ final class MeaningOutListViewController: BaseVC {
         super.init(title: title, isChild: isChild)
         viewModel = MeaningOutListViewModel(text: title)
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -132,6 +128,8 @@ final class MeaningOutListViewController: BaseVC {
     override func bind(){
         viewModel.outputProducts.bind { [weak self] products in
             guard let self else { return }
+            
+            collectionView.reloadData()
             if viewModel.start == 1 && !products.isEmpty {
                 collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
             }
@@ -152,6 +150,7 @@ final class MeaningOutListViewController: BaseVC {
         
         viewModel.outputFilter.bind { [weak self] type in
             guard let self else { return }
+            
             header.buttonCollecction[type.rawValue].isSelected = true
             for button in header.buttonCollecction {
                 if button.tag == type.rawValue {

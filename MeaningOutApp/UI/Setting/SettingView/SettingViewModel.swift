@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class SettingViewModel {
+final class SettingViewModel: BaseVM {
     let repository = CartRepository()
     
     var inputRefreshCartListCountTrigger = Observable<Void?>(nil)
@@ -18,11 +18,7 @@ final class SettingViewModel {
     var outputSelectSettingType = Observable<SettingType?>(nil)
     var outputIsDeleteSucceeded = Observable<Bool?>(nil)
     
-    init(){
-        bind()
-    }
-    
-    func bind(){
+    override func bind(){
         inputRefreshCartListCountTrigger.bind { [weak self] trigger in
             guard let self else { return }
             let count = repository.fetch().count

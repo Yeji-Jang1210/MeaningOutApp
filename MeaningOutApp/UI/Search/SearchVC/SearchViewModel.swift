@@ -14,7 +14,7 @@ enum SearchResultAction {
     case searchForIndex(_ index: Int)
 }
 
-final class SearchViewModel {
+final class SearchViewModel: BaseVM {
     var inputSearchList = Observable<[String]>(SearchResults.shared.list)
     var inputSearchResultTrigger = Observable<SearchResultAction?>(nil)
     
@@ -22,11 +22,7 @@ final class SearchViewModel {
     var outputListisEmpty = Observable<Bool?>(nil)
     var outputSelectedCellTrigger = Observable<String?>(nil)
     
-    init(){
-        bind()
-    }
-    
-    private func bind(){
+    override func bind(){
         inputSearchList.bind { list in
             self.outputSearchList.value = list
             self.outputListisEmpty.value = list.isEmpty

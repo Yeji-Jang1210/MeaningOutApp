@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-final class AddProductViewModel {
+final class AddProductViewModel: BaseVM {
     let repository = CartRepository()
     
     var inputSelectIndex: Observable<Int?> = Observable(nil)
@@ -16,11 +16,7 @@ final class AddProductViewModel {
     lazy var outputCategoryList: Observable<Results<Category>> = Observable(repository.fetchCategory())
     var outputSelectedCategory: Observable<Category?> = Observable(nil)
     
-    init(){
-        bind()
-    }
-    
-    private func bind(){
+    override func bind(){
         inputSelectIndex.bind { [weak self] index in
             guard let self = self, let index = index else { return }
             

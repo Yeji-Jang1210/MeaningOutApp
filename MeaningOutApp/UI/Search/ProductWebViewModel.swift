@@ -8,10 +8,9 @@
 import Foundation
 import WebKit
 
-final class ProductWebViewModel {
+final class ProductWebViewModel: BaseVM {
     var repository = CartRepository()
     lazy var categories = repository.fetchCategory()
-    
     var url: String = ""
     var product: Product?
     
@@ -29,10 +28,10 @@ final class ProductWebViewModel {
     init(url: String, product: Product){
         self.url = url
         self.product = product
-        bind()
+        super.init()
     }
     
-    private func bind(){
+    override func bind(){
         inputFindProductTrigger.bind { [weak self] trigger in
             guard let self, trigger != nil else { return }
             if let id = product?.productId {

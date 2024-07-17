@@ -27,7 +27,7 @@ enum ValidateNicknameError: Error {
     }
 }
 
-final class ProfileSettingViewModel {
+final class ProfileSettingViewModel: BaseVM {
     let repository = CartRepository()
     
 //MARK: - Input
@@ -44,7 +44,7 @@ final class ProfileSettingViewModel {
     var outputIsUpdate = Observable<Bool?>(nil)
     var outputIsSaved = Observable<Bool?>(nil)
     
-    init(){
+    override func bind(){
         inputNickname.bind { [weak self] nickname in
             guard let self else { return }
             outputNickname.value = nickname

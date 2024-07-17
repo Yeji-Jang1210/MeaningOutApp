@@ -53,6 +53,11 @@ final class ProductWebViewController: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.inputLoadWebLinkTrigger.value = ()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(#function)
         viewModel.inputFindProductTrigger.value = ()
     }
     

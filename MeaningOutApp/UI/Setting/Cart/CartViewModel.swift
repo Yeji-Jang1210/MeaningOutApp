@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-final class CartViewModel {
+final class CartViewModel: BaseVM {
     let repository = CartRepository()
     var list: Results<CartItem>?
     
@@ -21,10 +21,10 @@ final class CartViewModel {
     init(list: Results<CartItem>){
         self.list = list
         self.outputCartItemFilteredList.value = self.list
-        bind()
+        super.init()
     }
     
-    private func bind(){
+    override func bind(){
         inputPassLikeButtonSenderTag.bind { index in
             guard let index = index, let list = self.outputCartItemFilteredList.value else { return }
             self.repository.deleteItem(item: list[index])
