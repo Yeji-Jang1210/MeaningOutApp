@@ -208,8 +208,8 @@ final class MeaningOutListViewController: BaseVC {
         viewModel.outputCallSelectedProductToast.bind { [weak self] isSelected in
             guard let self = self, let isSelected = isSelected else { return }
     
-                self.collectionView.reloadData()
-                self.view.makeToast(isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
+                collectionView.reloadData()
+                view.makeToast(isSelected ? Localized.like_select_message.message : Localized.like_unselect_message.message)
         }
     }
     
